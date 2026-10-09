@@ -16861,7 +16861,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "m11 18 6-6-6-6", key: "8c2y43" }],
       ["path", { d: "M21 5v14", key: "nzette" }]
     ]);
-    var ArrowRight2 = createLucideIcon("ArrowRight", [
+    var ArrowRight = createLucideIcon("ArrowRight", [
       ["path", { d: "M5 12h14", key: "1ays0h" }],
       ["path", { d: "m12 5 7 7-7 7", key: "xquz4c" }]
     ]);
@@ -18580,10 +18580,10 @@ var require_lucide_react = __commonJS({
       ["path", { d: "m7 18 6-6-6-6", key: "lwmzdw" }],
       ["path", { d: "M17 6v12", key: "1o0aio" }]
     ]);
-    var ChevronLeft = createLucideIcon("ChevronLeft", [
+    var ChevronLeft2 = createLucideIcon("ChevronLeft", [
       ["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]
     ]);
-    var ChevronRight2 = createLucideIcon("ChevronRight", [
+    var ChevronRight3 = createLucideIcon("ChevronRight", [
       ["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]
     ]);
     var ChevronUp = createLucideIcon("ChevronUp", [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]]);
@@ -22852,7 +22852,7 @@ var require_lucide_react = __commonJS({
       ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
       ["path", { d: "M7 11V7a5 5 0 0 1 9.9-1", key: "1mm8w8" }]
     ]);
-    var Lock = createLucideIcon("Lock", [
+    var Lock2 = createLucideIcon("Lock", [
       ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
       ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
     ]);
@@ -22949,7 +22949,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "m17 17 4 4", key: "1b3523" }],
       ["path", { d: "m21 17-4 4", key: "uinynz" }]
     ]);
-    var Mail = createLucideIcon("Mail", [
+    var Mail2 = createLucideIcon("Mail", [
       ["rect", { width: "20", height: "16", x: "2", y: "4", rx: "2", key: "18n3k1" }],
       ["path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7", key: "1ocrg3" }]
     ]);
@@ -25551,7 +25551,7 @@ var require_lucide_react = __commonJS({
       ],
       ["path", { d: "m4.243 5.21 14.39 12.472", key: "1c9a7c" }]
     ]);
-    var ShieldCheck2 = createLucideIcon("ShieldCheck", [
+    var ShieldCheck = createLucideIcon("ShieldCheck", [
       [
         "path",
         {
@@ -27476,7 +27476,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "m17 17 5 5", key: "p7ous7" }],
       ["path", { d: "m22 17-5 5", key: "gqnmv0" }]
     ]);
-    var UserRound = createLucideIcon("UserRound", [
+    var UserRound2 = createLucideIcon("UserRound", [
       ["circle", { cx: "12", cy: "8", r: "5", key: "1hypcn" }],
       ["path", { d: "M20 21a8 8 0 0 0-16 0", key: "rfgkzh" }]
     ]);
@@ -27492,7 +27492,7 @@ var require_lucide_react = __commonJS({
       ["line", { x1: "17", x2: "22", y1: "8", y2: "13", key: "3nzzx3" }],
       ["line", { x1: "22", x2: "17", y1: "8", y2: "13", key: "1swrse" }]
     ]);
-    var User2 = createLucideIcon("User", [
+    var User = createLucideIcon("User", [
       ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
       ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
     ]);
@@ -28101,7 +28101,7 @@ var require_lucide_react = __commonJS({
       ArrowLeftFromLine,
       ArrowLeftRight,
       ArrowLeftToLine,
-      ArrowRight: ArrowRight2,
+      ArrowRight,
       ArrowRightFromLine,
       ArrowRightLeft,
       ArrowRightToLine,
@@ -28308,8 +28308,8 @@ var require_lucide_react = __commonJS({
       ChevronDown: ChevronDown2,
       ChevronFirst,
       ChevronLast,
-      ChevronLeft,
-      ChevronRight: ChevronRight2,
+      ChevronLeft: ChevronLeft2,
+      ChevronRight: ChevronRight3,
       ChevronUp,
       ChevronsDown,
       ChevronsDownUp,
@@ -28831,7 +28831,7 @@ var require_lucide_react = __commonJS({
       Locate,
       LocateFixed,
       LocateOff,
-      Lock,
+      Lock: Lock2,
       LockKeyhole,
       LockKeyholeOpen,
       LockOpen,
@@ -28840,7 +28840,7 @@ var require_lucide_react = __commonJS({
       Lollipop,
       Luggage,
       Magnet,
-      Mail,
+      Mail: Mail2,
       MailCheck,
       MailMinus,
       MailOpen,
@@ -29176,7 +29176,7 @@ var require_lucide_react = __commonJS({
       Shield,
       ShieldAlert: ShieldAlert2,
       ShieldBan,
-      ShieldCheck: ShieldCheck2,
+      ShieldCheck,
       ShieldEllipsis,
       ShieldHalf,
       ShieldMinus,
@@ -29419,12 +29419,12 @@ var require_lucide_react = __commonJS({
       Unplug,
       Upload,
       Usb,
-      User: User2,
+      User,
       UserCheck,
       UserCog,
       UserMinus,
       UserPlus,
-      UserRound,
+      UserRound: UserRound2,
       UserRoundCheck,
       UserRoundCog,
       UserRoundMinus,
@@ -29690,12 +29690,12 @@ var require_lucide_react = __commonJS({
     exports2.ArrowLeftSquareIcon = SquareArrowLeft;
     exports2.ArrowLeftToLine = ArrowLeftToLine;
     exports2.ArrowLeftToLineIcon = ArrowLeftToLine;
-    exports2.ArrowRight = ArrowRight2;
+    exports2.ArrowRight = ArrowRight;
     exports2.ArrowRightCircle = CircleArrowRight;
     exports2.ArrowRightCircleIcon = CircleArrowRight;
     exports2.ArrowRightFromLine = ArrowRightFromLine;
     exports2.ArrowRightFromLineIcon = ArrowRightFromLine;
-    exports2.ArrowRightIcon = ArrowRight2;
+    exports2.ArrowRightIcon = ArrowRight;
     exports2.ArrowRightLeft = ArrowRightLeft;
     exports2.ArrowRightLeftIcon = ArrowRightLeft;
     exports2.ArrowRightSquare = SquareArrowRight;
@@ -30150,16 +30150,16 @@ var require_lucide_react = __commonJS({
     exports2.ChevronFirstIcon = ChevronFirst;
     exports2.ChevronLast = ChevronLast;
     exports2.ChevronLastIcon = ChevronLast;
-    exports2.ChevronLeft = ChevronLeft;
+    exports2.ChevronLeft = ChevronLeft2;
     exports2.ChevronLeftCircle = CircleChevronLeft;
     exports2.ChevronLeftCircleIcon = CircleChevronLeft;
-    exports2.ChevronLeftIcon = ChevronLeft;
+    exports2.ChevronLeftIcon = ChevronLeft2;
     exports2.ChevronLeftSquare = SquareChevronLeft;
     exports2.ChevronLeftSquareIcon = SquareChevronLeft;
-    exports2.ChevronRight = ChevronRight2;
+    exports2.ChevronRight = ChevronRight3;
     exports2.ChevronRightCircle = CircleChevronRight;
     exports2.ChevronRightCircleIcon = CircleChevronRight;
-    exports2.ChevronRightIcon = ChevronRight2;
+    exports2.ChevronRightIcon = ChevronRight3;
     exports2.ChevronRightSquare = SquareChevronRight;
     exports2.ChevronRightSquareIcon = SquareChevronRight;
     exports2.ChevronUp = ChevronUp;
@@ -31295,8 +31295,8 @@ var require_lucide_react = __commonJS({
     exports2.LocateIcon = Locate;
     exports2.LocateOff = LocateOff;
     exports2.LocateOffIcon = LocateOff;
-    exports2.Lock = Lock;
-    exports2.LockIcon = Lock;
+    exports2.Lock = Lock2;
+    exports2.LockIcon = Lock2;
     exports2.LockKeyhole = LockKeyhole;
     exports2.LockKeyholeIcon = LockKeyhole;
     exports2.LockKeyholeOpen = LockKeyholeOpen;
@@ -31410,7 +31410,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideArrowLeftRight = ArrowLeftRight;
     exports2.LucideArrowLeftSquare = SquareArrowLeft;
     exports2.LucideArrowLeftToLine = ArrowLeftToLine;
-    exports2.LucideArrowRight = ArrowRight2;
+    exports2.LucideArrowRight = ArrowRight;
     exports2.LucideArrowRightCircle = CircleArrowRight;
     exports2.LucideArrowRightFromLine = ArrowRightFromLine;
     exports2.LucideArrowRightLeft = ArrowRightLeft;
@@ -31640,10 +31640,10 @@ var require_lucide_react = __commonJS({
     exports2.LucideChevronDownSquare = SquareChevronDown;
     exports2.LucideChevronFirst = ChevronFirst;
     exports2.LucideChevronLast = ChevronLast;
-    exports2.LucideChevronLeft = ChevronLeft;
+    exports2.LucideChevronLeft = ChevronLeft2;
     exports2.LucideChevronLeftCircle = CircleChevronLeft;
     exports2.LucideChevronLeftSquare = SquareChevronLeft;
-    exports2.LucideChevronRight = ChevronRight2;
+    exports2.LucideChevronRight = ChevronRight3;
     exports2.LucideChevronRightCircle = CircleChevronRight;
     exports2.LucideChevronRightSquare = SquareChevronRight;
     exports2.LucideChevronUp = ChevronUp;
@@ -32212,7 +32212,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideLocate = Locate;
     exports2.LucideLocateFixed = LocateFixed;
     exports2.LucideLocateOff = LocateOff;
-    exports2.LucideLock = Lock;
+    exports2.LucideLock = Lock2;
     exports2.LucideLockKeyhole = LockKeyhole;
     exports2.LucideLockKeyholeOpen = LockKeyholeOpen;
     exports2.LucideLockOpen = LockOpen;
@@ -32222,7 +32222,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideLuggage = Luggage;
     exports2.LucideMSquare = SquareM;
     exports2.LucideMagnet = Magnet;
-    exports2.LucideMail = Mail;
+    exports2.LucideMail = Mail2;
     exports2.LucideMailCheck = MailCheck;
     exports2.LucideMailMinus = MailMinus;
     exports2.LucideMailOpen = MailOpen;
@@ -32601,7 +32601,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideShield = Shield;
     exports2.LucideShieldAlert = ShieldAlert2;
     exports2.LucideShieldBan = ShieldBan;
-    exports2.LucideShieldCheck = ShieldCheck2;
+    exports2.LucideShieldCheck = ShieldCheck;
     exports2.LucideShieldClose = ShieldX;
     exports2.LucideShieldEllipsis = ShieldEllipsis;
     exports2.LucideShieldHalf = ShieldHalf;
@@ -32866,8 +32866,8 @@ var require_lucide_react = __commonJS({
     exports2.LucideUpload = Upload;
     exports2.LucideUploadCloud = CloudUpload;
     exports2.LucideUsb = Usb;
-    exports2.LucideUser = User2;
-    exports2.LucideUser2 = UserRound;
+    exports2.LucideUser = User;
+    exports2.LucideUser2 = UserRound2;
     exports2.LucideUserCheck = UserCheck;
     exports2.LucideUserCheck2 = UserRoundCheck;
     exports2.LucideUserCircle = CircleUser;
@@ -32878,7 +32878,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideUserMinus2 = UserRoundMinus;
     exports2.LucideUserPlus = UserPlus;
     exports2.LucideUserPlus2 = UserRoundPlus;
-    exports2.LucideUserRound = UserRound;
+    exports2.LucideUserRound = UserRound2;
     exports2.LucideUserRoundCheck = UserRoundCheck;
     exports2.LucideUserRoundCog = UserRoundCog;
     exports2.LucideUserRoundMinus = UserRoundMinus;
@@ -32957,10 +32957,10 @@ var require_lucide_react = __commonJS({
     exports2.MSquareIcon = SquareM;
     exports2.Magnet = Magnet;
     exports2.MagnetIcon = Magnet;
-    exports2.Mail = Mail;
+    exports2.Mail = Mail2;
     exports2.MailCheck = MailCheck;
     exports2.MailCheckIcon = MailCheck;
-    exports2.MailIcon = Mail;
+    exports2.MailIcon = Mail2;
     exports2.MailMinus = MailMinus;
     exports2.MailMinusIcon = MailMinus;
     exports2.MailOpen = MailOpen;
@@ -33714,8 +33714,8 @@ var require_lucide_react = __commonJS({
     exports2.ShieldAlertIcon = ShieldAlert2;
     exports2.ShieldBan = ShieldBan;
     exports2.ShieldBanIcon = ShieldBan;
-    exports2.ShieldCheck = ShieldCheck2;
-    exports2.ShieldCheckIcon = ShieldCheck2;
+    exports2.ShieldCheck = ShieldCheck;
+    exports2.ShieldCheckIcon = ShieldCheck;
     exports2.ShieldClose = ShieldX;
     exports2.ShieldCloseIcon = ShieldX;
     exports2.ShieldEllipsis = ShieldEllipsis;
@@ -34245,9 +34245,9 @@ var require_lucide_react = __commonJS({
     exports2.UploadIcon = Upload;
     exports2.Usb = Usb;
     exports2.UsbIcon = Usb;
-    exports2.User = User2;
-    exports2.User2 = UserRound;
-    exports2.User2Icon = UserRound;
+    exports2.User = User;
+    exports2.User2 = UserRound2;
+    exports2.User2Icon = UserRound2;
     exports2.UserCheck = UserCheck;
     exports2.UserCheck2 = UserRoundCheck;
     exports2.UserCheck2Icon = UserRoundCheck;
@@ -34260,7 +34260,7 @@ var require_lucide_react = __commonJS({
     exports2.UserCog2 = UserRoundCog;
     exports2.UserCog2Icon = UserRoundCog;
     exports2.UserCogIcon = UserCog;
-    exports2.UserIcon = User2;
+    exports2.UserIcon = User;
     exports2.UserMinus = UserMinus;
     exports2.UserMinus2 = UserRoundMinus;
     exports2.UserMinus2Icon = UserRoundMinus;
@@ -34269,12 +34269,12 @@ var require_lucide_react = __commonJS({
     exports2.UserPlus2 = UserRoundPlus;
     exports2.UserPlus2Icon = UserRoundPlus;
     exports2.UserPlusIcon = UserPlus;
-    exports2.UserRound = UserRound;
+    exports2.UserRound = UserRound2;
     exports2.UserRoundCheck = UserRoundCheck;
     exports2.UserRoundCheckIcon = UserRoundCheck;
     exports2.UserRoundCog = UserRoundCog;
     exports2.UserRoundCogIcon = UserRoundCog;
-    exports2.UserRoundIcon = UserRound;
+    exports2.UserRoundIcon = UserRound2;
     exports2.UserRoundMinus = UserRoundMinus;
     exports2.UserRoundMinusIcon = UserRoundMinus;
     exports2.UserRoundPlus = UserRoundPlus;
@@ -41208,21 +41208,22 @@ var import_lucide_react4 = __toESM(require_lucide_react(), 1);
 // src/components/Brand.tsx
 init_define_import_meta_env();
 var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
-function OmniMark({ size: size2 = 36 }) {
+function OmniMark({ size: size2 = 36, mono = false }) {
+  const accent = mono ? "currentColor" : "var(--accent)";
   return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("svg", { width: size2, height: size2, viewBox: "0 0 32 32", "aria-hidden": "true", style: { flexShrink: 0, display: "block" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("rect", { width: "32", height: "32", rx: "5", fill: "var(--bg-primary)", stroke: "var(--line-strong)" }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("circle", { cx: "16", cy: "16", r: "9.5", fill: "none", stroke: "var(--text-primary)", strokeWidth: "2.2" }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("circle", { cx: "16", cy: "16", r: "3.4", fill: "var(--accent)" }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("path", { d: "M16 2.5v6M16 23.5v6", stroke: "var(--accent)", strokeWidth: "2.2", strokeLinecap: "round" })
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("rect", { width: "32", height: "32", rx: "5", fill: mono ? "transparent" : "var(--bg-primary)", stroke: mono ? "currentColor" : "var(--line-strong)", strokeOpacity: mono ? 0.25 : 1 }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("circle", { cx: "16", cy: "16", r: "9.5", fill: "none", stroke: "currentColor", strokeWidth: "2.2" }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("circle", { cx: "16", cy: "16", r: "3.4", fill: accent }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("path", { d: "M16 2.5v6M16 23.5v6", stroke: accent, strokeWidth: "2.2", strokeLinecap: "round" })
   ] });
 }
-function Wordmark({ sub, size: size2 = 36 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 11 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(OmniMark, { size: size2 }),
+function Wordmark({ sub, size: size2 = 36, mono = false }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 11, color: "var(--text-primary)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(OmniMark, { size: size2, mono }),
     /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { lineHeight: 1.15 }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontFamily: "var(--font-display)", fontWeight: 600, fontSize: size2 * 0.5, letterSpacing: "-0.01em" }, children: [
         "Omni",
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: "var(--accent)" }, children: "Deploy" })
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: mono ? "inherit" : "var(--accent)" }, children: "Deploy" })
       ] }),
       sub && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "eyebrow", style: { marginTop: 2 }, children: sub })
     ] })
@@ -41299,33 +41300,69 @@ async function setupAdmin(name, email, password, remember = true) {
 
 // src/LoginPage.tsx
 var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
-function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "customer", lockPortal = false, status = null }) {
+var LINES = [
+  { h: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+    "Your server. Your apps. ",
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "No cloud bill." })
+  ] }), p: "OmniDeploy runs your apps on a machine you already own." },
+  { h: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+    "Push to GitHub. ",
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "It is live" }),
+    " on your own hardware."
+  ] }), p: "Clone, build, run and route. Nothing to configure by hand." },
+  { h: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+    "When something breaks, ",
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "it tells you why." })
+  ] }), p: "Live build logs and an AI copilot that reads them for you." }
+];
+function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "customer", lockPortal = false, status = null, initialMode = "login" }) {
   const [portal, setPortal] = (0, import_react6.useState)(initialPortal);
-  const [mode, setMode] = (0, import_react6.useState)("login");
+  const [mode, setMode] = (0, import_react6.useState)(initialMode);
   const [name, setName] = (0, import_react6.useState)("");
   const [email, setEmail] = (0, import_react6.useState)("");
   const [password, setPassword] = (0, import_react6.useState)("");
+  const [confirm, setConfirm] = (0, import_react6.useState)("");
   const [showPw, setShowPw] = (0, import_react6.useState)(false);
   const [remember, setRemember] = (0, import_react6.useState)(true);
   const [forgot, setForgot] = (0, import_react6.useState)(false);
   const [busy, setBusy] = (0, import_react6.useState)(false);
   const [err, setErr] = (0, import_react6.useState)("");
+  const [emailTaken, setEmailTaken] = (0, import_react6.useState)(false);
+  const [slide, setSlide] = (0, import_react6.useState)(0);
   const owner = portal === "admin";
   const setup = owner && status !== null && !status.admin_exists;
   const canSetup = setup && lockPortal && status.on_admin_laptop;
   const creating = owner ? canSetup : mode === "register";
+  const mismatch = creating && confirm.length > 0 && confirm !== password;
+  const tooShort = creating && password.length > 0 && password.length < 8;
+  const reset = () => {
+    setErr("");
+    setEmailTaken(false);
+    setForgot(false);
+    setConfirm("");
+  };
   const choosePortal = (p) => {
     setPortal(p);
     setMode("login");
-    setErr("");
-    setForgot(false);
+    reset();
+  };
+  const chooseMode = (m) => {
+    setMode(m);
+    reset();
   };
   const submit = async (e) => {
     e.preventDefault();
     setErr("");
-    if (creating && password.length < 8) {
-      setErr("Password must be at least 8 characters.");
-      return;
+    setEmailTaken(false);
+    if (creating) {
+      if (password.length < 8) {
+        setErr("Password must be at least 8 characters.");
+        return;
+      }
+      if (confirm !== password) {
+        setErr("The two passwords do not match.");
+        return;
+      }
     }
     setBusy(true);
     try {
@@ -41334,148 +41371,185 @@ function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "custom
       else user = mode === "register" ? await register(name, email, password, remember) : await login("customer", email, password, remember);
       onLogin(user, portal);
     } catch (e2) {
-      setErr(e2.message === "Failed to fetch" ? "Cannot reach the platform. The admin laptop must be on, on the same network, and running the backend (port 3000)." : e2.message);
+      const msg = e2.message || "Something went wrong.";
+      if (msg === "Failed to fetch") {
+        setErr("Cannot reach the platform. The admin laptop must be on, on the same network, and running the backend (port 3000).");
+      } else if (creating && /already exists/i.test(msg)) {
+        setEmailTaken(true);
+        setErr(`An account with ${email.trim().toLowerCase()} already exists.`);
+      } else {
+        setErr(msg);
+      }
     } finally {
       setBusy(false);
     }
   };
-  const steps = [
-    { title: "Connect your server", text: "Your own VPS, home lab or office machine. OmniDeploy reaches it over SSH with its own key." },
-    { title: "Pick your app type", text: "Flask, Django, Node.js, Next.js, a static site. The Dockerfile and port are set up for you." },
-    { title: "Deploy and watch", text: "Live build logs, a link to your running app, and an AI copilot that explains what broke." }
-  ];
-  const heading = canSetup ? "Create the owner account" : owner ? "Owner sign-in" : mode === "register" ? "Create your account" : "Welcome back";
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("header", { className: "auth-topbar", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Wordmark, { sub: lockPortal ? "Admin site" : "Customer portal", size: 34 }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 22, fontSize: 13 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "eyebrow", style: { color: "var(--text-secondary)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `status-dot ${backendOk ? "on" : "off"}` }),
-          backendOk ? "Platform online" : "Platform offline"
-        ] }),
-        lockPortal ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { className: "topbar-link", href: "/", style: { color: "var(--text-secondary)" }, children: "Customer portal" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { className: "topbar-link", href: "/admin", style: { color: "var(--text-secondary)" }, children: "Admin site" })
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("main", { className: "auth-body", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("section", { className: "auth-pitch", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "eyebrow", children: "Self-hosted deployment platform" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("h1", { children: [
-          "Your server.",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("br", {}),
-          "Your apps.",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("br", {}),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "No cloud bill." })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { style: { color: "var(--text-secondary)", fontSize: 16, maxWidth: 460 }, children: "Point OmniDeploy at a Linux machine you already own. It clones your GitHub repo, builds a container, wires up the port and tells you, in plain words, when something goes wrong." }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("ol", { className: "auth-steps", children: steps.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("li", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "num", children: [
-            "0",
-            i + 1
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "title", children: s.title }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "text", children: s.text })
-          ] })
-        ] }, s.title)) })
+  const heading = canSetup ? "Create the owner account" : owner ? "Owner sign-in" : mode === "register" ? "Create account" : "Sign in";
+  const lead = canSetup ? "Done once, on this laptop. Customers sign up on the customer portal instead." : owner ? "The single owner account for every customer, app and server." : mode === "register" ? "One account per email. Sign in from any device afterwards." : "Your apps, servers and deployment logs.";
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "auth", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("section", { className: "auth-form", "aria-label": heading, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "brand", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Wordmark, { sub: lockPortal ? "Admin site" : "Customer portal", size: 32, mono: true }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { children: heading }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "lead", children: lead }),
+      owner && status === null && !backendOk && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note note-warn", children: [
+        "The backend is not reachable, so the owner account cannot be checked yet.",
+        lockPortal && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+          " Start it on this laptop: ",
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "cd core-platform/backend && npm run start:dev" })
+        ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("section", { className: "auth-card", "aria-label": "Sign in", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "eyebrow", children: "Account type" }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "seg", role: "group", "aria-label": "Account type", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "button", "aria-pressed": !owner, disabled: lockPortal, onClick: () => choosePortal("customer"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.User, { size: 15 }),
-            " Customer"
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "button", "aria-pressed": owner, disabled: lockPortal, onClick: () => choosePortal("admin"), children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.ShieldCheck, { size: 15 }),
-            " Platform owner"
+      setup && !canSetup ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note", children: [
+        "No owner account exists yet. For safety it can only be created ",
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("strong", { children: "on the admin laptop" }),
+        ": open ",
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "http://localhost:5173/admin" }),
+        " there."
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: submit, children: [
+        creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "lbl", children: "Your name" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.UserRound, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "input", value: name, onChange: (e) => setName(e.target.value), required: true, autoComplete: "name", placeholder: "Enter your name" })
           ] })
         ] }),
-        !owner && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "tabs", role: "tablist", children: ["login", "register"].map((m) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", role: "tab", "aria-selected": mode === m, onClick: () => {
-          setMode(m);
-          setErr("");
-          setForgot(false);
-        }, children: m === "login" ? "Sign in" : "Create account" }, m)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { style: { fontFamily: "var(--font-display)", fontWeight: 500, fontSize: 26, marginBottom: 6 }, children: heading }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { style: { color: "var(--text-muted)", fontSize: 13, marginBottom: 20 }, children: canSetup ? "Done once, on this laptop. Customers sign up on the customer portal instead." : owner ? "The single owner account. Manage every customer, app and server." : mode === "register" ? "Your account is stored on the platform, so you can sign in from any device." : "Sign in to see your apps, servers and deployment logs." }),
-        owner && status === null && !backendOk && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note note-warn", children: [
-          "The backend is not reachable, so the owner account cannot be checked yet.",
-          lockPortal && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
-            " Start it on this laptop: ",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "cd core-platform/backend && npm run start:dev" })
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "lbl", children: "Email" }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Mail, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "input",
+              {
+                className: `input${emailTaken ? " bad" : ""}`,
+                type: "email",
+                value: email,
+                onChange: (e) => {
+                  setEmail(e.target.value);
+                  setEmailTaken(false);
+                },
+                required: true,
+                autoComplete: "email",
+                placeholder: "Enter your email",
+                inputMode: "email"
+              }
+            )
           ] })
         ] }),
-        setup && !canSetup ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note", children: [
-          "No owner account exists yet. For safety it can only be created ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("strong", { children: "on the admin laptop" }),
-          ": open ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "http://localhost:5173/admin" }),
-          " there."
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: submit, noValidate: false, children: [
-          creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "eyebrow", children: "Your name" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "input", value: name, onChange: (e) => setName(e.target.value), required: true, autoComplete: "name", placeholder: "Ada Lovelace" })
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "lbl", children: [
+            "Password",
+            creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `hint${tooShort ? " bad" : ""}`, children: tooShort ? `${8 - password.length} more character${8 - password.length === 1 ? "" : "s"}` : "at least 8 characters" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "eyebrow", children: "Email" }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "input", type: "email", value: email, onChange: (e) => setEmail(e.target.value), required: true, autoComplete: "email", placeholder: "you@example.com", inputMode: "email" })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "eyebrow", children: [
-              "Password",
-              creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "hint", children: "at least 8 characters" })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
-                "input",
-                {
-                  className: "input",
-                  type: showPw ? "text" : "password",
-                  value: password,
-                  onChange: (e) => setPassword(e.target.value),
-                  required: true,
-                  minLength: creating ? 8 : void 0,
-                  autoComplete: creating ? "new-password" : "current-password",
-                  placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "input-eye", onClick: () => setShowPw((v) => !v), "aria-label": showPw ? "Hide password" : "Show password", title: showPw ? "Hide password" : "Show password", children: showPw ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.EyeOff, { size: 16 }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Eye, { size: 16 }) })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-row", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "check", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "checkbox", checked: remember, onChange: (e) => setRemember(e.target.checked) }),
-              "Keep me signed in"
-            ] }),
-            !creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => setForgot((v) => !v), "aria-expanded": forgot, children: "Forgot password?" })
-          ] }),
-          forgot && !creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "note", children: owner ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
-            "There is no e-mail reset. On the admin laptop, stop the backend, delete your account line from ",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "~/.paas-data/users.json" }),
-            " and open ",
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "/admin" }),
-            " to create the owner account again."
-          ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children: "Passwords are never stored, so nobody can look yours up. Ask the platform owner to remove your account from the admin site, then create it again here." }) }),
-          err && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "note note-error", role: "alert", children: err }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "submit", className: "btn-primary", disabled: busy, children: [
-            busy ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }) : null,
-            canSetup ? "Create owner account" : creating ? "Create my account" : "Sign in",
-            !busy && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.ArrowRight, { size: 16 })
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap eye", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Lock, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "input",
+              {
+                className: "input",
+                type: showPw ? "text" : "password",
+                value: password,
+                onChange: (e) => setPassword(e.target.value),
+                required: true,
+                minLength: creating ? 8 : void 0,
+                autoComplete: creating ? "new-password" : "current-password",
+                placeholder: "Enter your password"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "input-eye", onClick: () => setShowPw((v) => !v), "aria-label": showPw ? "Hide password" : "Show password", title: showPw ? "Hide password" : "Show password", children: showPw ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.EyeOff, { size: 15 }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Eye, { size: 15 }) })
           ] })
         ] }),
-        onDemo && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "eyebrow", style: { textAlign: "center", margin: "18px 0 12px" }, children: "or" }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "button", className: "btn-outline", onClick: onDemo, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.FlaskConical, { size: 15, color: "var(--warn)" }),
-            " Try the demo (sample data, no account)"
+        creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "lbl", children: [
+            "Confirm password",
+            confirm.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `hint ${mismatch ? "bad" : "good"}`, children: mismatch ? "does not match" : "matches" })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Lock, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+              "input",
+              {
+                className: `input${mismatch ? " bad" : ""}`,
+                type: showPw ? "text" : "password",
+                value: confirm,
+                onChange: (e) => setConfirm(e.target.value),
+                required: true,
+                autoComplete: "new-password",
+                placeholder: "Enter it again",
+                "aria-invalid": mismatch || void 0
+              }
+            )
           ] })
         ] }),
-        !backendOk && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { style: { marginTop: 16, fontSize: 12, color: "var(--text-muted)", textAlign: "center", lineHeight: 1.5 }, children: "Platform offline: the admin laptop must be running the backend (port 3000)." })
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "check", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "checkbox", checked: remember, onChange: (e) => setRemember(e.target.checked) }),
+            "Keep me signed in"
+          ] }),
+          !creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => setForgot((v) => !v), "aria-expanded": forgot, children: "Forgot password?" })
+        ] }),
+        forgot && !creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "note", children: owner ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+          "There is no e-mail reset. On the admin laptop, stop the backend, delete your account line from ",
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "~/.paas-data/users.json" }),
+          " and open ",
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "/admin" }),
+          " to create the owner account again."
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children: "Passwords are never stored, so nobody can look yours up. Ask the platform owner to remove your account from the admin site, then create it again here." }) }),
+        err && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note note-error", role: "alert", children: [
+          err,
+          emailTaken && !owner && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("login"), children: "Sign in instead" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "submit", className: "btn-primary", disabled: busy || mismatch, children: [
+          busy && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Loader2, { size: 15, style: { animation: "spin 1s linear infinite" } }),
+          canSetup ? "Create owner account" : creating ? "Create my account" : "Sign in"
+        ] })
+      ] }),
+      onDemo && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "button", className: "btn-outline", onClick: onDemo, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.FlaskConical, { size: 14, color: "var(--warn)" }),
+        " Try the demo (sample data, no account)"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "bottom", children: [
+        !owner && (mode === "login" ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+          "Don't have an account? ",
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("register"), children: "Create account" })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+          "Already have an account? ",
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("login"), children: "Sign in" })
+        ] })),
+        !lockPortal && (owner ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => choosePortal("customer"), children: "Customer sign-in" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => choosePortal("admin"), children: "Platform owner?" })),
+        lockPortal && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { className: "linkish", href: "/", children: "Customer portal" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("footer", { className: "auth-foot eyebrow", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: "OmniDeploy \xB7 self-hosted \xB7 version 7" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { children: "Accounts are stored on the platform laptop, passwords as scrypt hashes" })
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("aside", { className: "auth-visual", "aria-label": "About OmniDeploy", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Art, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "status", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `status-dot ${backendOk ? "on" : "off"}` }),
+        backendOk ? "Platform online" : "Platform offline"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "line", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { children: LINES[slide].h }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: LINES[slide].p })
+      ] }, slide),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "nav", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "dots", "aria-hidden": "true", children: LINES.map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: i === slide ? "on" : "" }, i)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "arrows", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", "aria-label": "Previous", onClick: () => setSlide((s) => (s + LINES.length - 1) % LINES.length), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.ChevronLeft, { size: 16 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", "aria-label": "Next", onClick: () => setSlide((s) => (s + 1) % LINES.length), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.ChevronRight, { size: 16 }) })
+        ] })
+      ] })
     ] })
+  ] }) });
+}
+function Art() {
+  const rings = Array.from({ length: 16 }, (_, i) => 60 + i * 42);
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("svg", { className: "art", viewBox: "0 0 640 640", preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("defs", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("radialGradient", { id: "auth-glow", cx: "78%", cy: "72%", r: "60%", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("stop", { offset: "0%", stopColor: "#262626" }),
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("stop", { offset: "100%", stopColor: "#0a0a0a" })
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("rect", { width: "640", height: "640", fill: "url(#auth-glow)" }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("g", { fill: "none", stroke: "#ffffff", strokeWidth: "1", children: rings.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r, strokeOpacity: 0.04 + (i % 4 === 0 ? 0.06 : 0) }, r)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r: "312", fill: "none", stroke: "#ffffff", strokeOpacity: "0.22", strokeWidth: "1.5", strokeDasharray: "4 10" }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r: "18", fill: "none", stroke: "#ffffff", strokeOpacity: "0.8", strokeWidth: "2" }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r: "4", fill: "#ffffff" })
   ] });
 }
 
@@ -46334,17 +46408,37 @@ test("DeployBanner: success is a big clickable link; failure offers diagnosis; b
   import_strict.default.ok(text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DeployBanner, { status: "building", appName: "blog" }))).includes("Deploying blog"));
   import_strict.default.equal((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DeployBanner, { status: "idle", appName: "x" })), "");
 });
-test("LoginPage: sign-in form, offline hint only when the platform is down, demo button only when offered", () => {
+test("LoginPage: punch line + form only, offline hint only when the platform is down, demo button only when offered", () => {
   const off = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(LoginPage, { backendOk: false, onLogin: () => {
   } })));
   import_strict.default.ok(off.includes("Sign in") && off.includes("Create account"));
   import_strict.default.ok(off.includes('type="password"') && off.includes("Platform offline"));
-  import_strict.default.ok(off.includes("Pick your app type"));
+  import_strict.default.ok(off.includes("No cloud bill"), "punch line is shown");
+  import_strict.default.ok(!off.includes("Pick your app type"), "the how-it-works details are behind the login now");
+  import_strict.default.ok(!off.includes("Confirm password"), "sign-in form has no confirm field");
   import_strict.default.ok(!off.includes("Try the demo"), "customer portal has no demo button");
   const on2 = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(LoginPage, { backendOk: true, onLogin: () => {
   }, onDemo: () => {
   } })));
   import_strict.default.ok(!on2.includes("Platform offline") && on2.includes("Try the demo"));
+});
+test("LoginPage: create-account tab asks for name, password and confirm password", () => {
+  const reg = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  }, initialMode: "register" })));
+  import_strict.default.ok(reg.includes("Your name") && reg.includes("Confirm password") && reg.includes("Create my account"));
+  import_strict.default.equal((reg.match(/type="password"/g) || []).length, 2, "two password fields");
+  import_strict.default.ok(reg.includes("One account per email"));
+});
+test("LoginPage on /admin: account type locked to owner, no Create account tab, setup form only on the admin laptop", () => {
+  const owner = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  }, portal: "admin", lockPortal: true, status: { admin_exists: true, on_admin_laptop: true } })));
+  import_strict.default.ok(owner.includes("Owner sign-in") && !owner.includes("Create account") && !owner.includes("Platform owner?"));
+  const setup = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  }, portal: "admin", lockPortal: true, status: { admin_exists: false, on_admin_laptop: true } })));
+  import_strict.default.ok(setup.includes("Create the owner account") && setup.includes("Confirm password"));
+  const remote = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  }, portal: "admin", lockPortal: true, status: { admin_exists: false, on_admin_laptop: false } })));
+  import_strict.default.ok(remote.includes("only be created") && !remote.includes("Create owner account"));
 });
 test("NewAppWizard: step 1 lists every app type, grouped, with the files each one needs", () => {
   const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime15.jsx)(NewAppWizard, { servers: [{ id: "s", name: "lab", host: "1.2.3.4" }], useBackend: false, onCreate: async () => {

@@ -19,7 +19,9 @@ export default function CustomerGate() {
 
   if (checking) return <Loading />;
   if (!customer) {
-    return <LoginPage backendOk={backendOk} status={status}
+    // /?signup opens the Create account tab straight away (handy link for new customers).
+    const signup = typeof window !== 'undefined' && /(^|[?&])signup(=|&|$)/.test(window.location.search || '');
+    return <LoginPage backendOk={backendOk} status={status} initialMode={signup ? 'register' : 'login'}
       onLogin={(user, portal) => { if (portal === 'admin') window.location.assign('/admin'); else setCustomer(user); }} />;
   }
   return <CustomerPortal customer={customer} onLogout={async () => { await logout('customer'); setCustomer(null); }} />;

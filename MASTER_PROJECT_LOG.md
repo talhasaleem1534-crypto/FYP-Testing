@@ -417,5 +417,20 @@ curl -X POST http://localhost:8001/chat \
 - **Proof:** `tsc` clean, `npm test` 25/25, `vite build` OK, five headless-Chrome screenshots published: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
 - **Viva points:** customer login is mandatory (token-gated API = per-customer isolation); owner account creation is loopback-only; no password reset endpoint yet, UI says so honestly.
 
+## 9. Login Page Round 2 (Session 27)
+- **Date:** 10 October 2026. User feedback applied: login page shows **only the punch line** + form (details after sign-in), **Confirm password** on Create account and owner setup (live match hint, submit disabled on mismatch), **duplicate email** registration refused (backend 409 from `AuthService.createUser`, frontend shows the message + "Sign in instead"). `/?signup` opens the Create account tab.
+- **Files:** [LoginPage.tsx](file:///core-platform/frontend/src/LoginPage.tsx), [CustomerGate.tsx](file:///core-platform/frontend/src/CustomerGate.tsx), [index.css](file:///core-platform/frontend/src/index.css), [tests/render.tsx](file:///core-platform/frontend/tests/render.tsx).
+- **Proof:** `tsc` clean, `npm test` 27/27, `vite build` OK, screenshots: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
+- **Viva point:** one account per email is enforced on the server (case-insensitive, trimmed), not only in the UI, so it cannot be bypassed by a crafted request.
+
+## 10. Login Page Round 3 - Card Layout (Session 28)
+- **Date:** 10 October 2026. Login page rebuilt after the user's reference image: centred near-black card, icon-input form on the left (sign in / create account with confirm password / owner), punch-line panel on the right with prev/next arrows and generated SVG contour art. Account type is now a small "Platform owner?" link instead of a switch.
+- **Files:** [LoginPage.tsx](file:///core-platform/frontend/src/LoginPage.tsx), [index.css](file:///core-platform/frontend/src/index.css), [tests/render.tsx](file:///core-platform/frontend/tests/render.tsx).
+- **Proof:** `tsc` clean, `npm test` 27/27, `vite build` OK, screenshots: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
+
+## 11. Login Page Round 4 - Monochrome Scheme (Session 29)
+- **Date:** 10 October 2026. Login page recoloured to match the reference: black card (#0d0d0d) on grey (#2c2c2c), neutral white/grey text, single blue button (#2f5bea), monochrome logo (`mono` prop in Brand.tsx) and white contour art. Done by overriding the theme tokens inside `.auth` in [index.css](file:///core-platform/frontend/src/index.css), so only this page changes.
+- **Proof:** `tsc` clean, `npm test` 27/27, `vite build` OK, screenshots: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
+
 ---
 *Maintained by OmniDeploy (formerly DeployStack AI) Team | Master Academic Handover Document*

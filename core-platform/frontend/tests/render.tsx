@@ -108,14 +108,32 @@ test('DeployBanner: success is a big clickable link; failure offers diagnosis; b
   assert.equal(renderToString(<DeployBanner status="idle" appName="x" />), '');
 });
 
-test('LoginPage: sign-in form, offline hint only when the platform is down, demo button only when offered', () => {
+test('LoginPage: punch line + form only, offline hint only when the platform is down, demo button only when offered', () => {
   const off = text(renderToString(<LoginPage backendOk={false} onLogin={() => {}} />));
   assert.ok(off.includes('Sign in') && off.includes('Create account'));
   assert.ok(off.includes('type="password"') && off.includes('Platform offline'));
-  assert.ok(off.includes('Pick your app type'));
+  assert.ok(off.includes('No cloud bill'), 'punch line is shown');
+  assert.ok(!off.includes('Pick your app type'), 'the how-it-works details are behind the login now');
+  assert.ok(!off.includes('Confirm password'), 'sign-in form has no confirm field');
   assert.ok(!off.includes('Try the demo'), 'customer portal has no demo button');
   const on = text(renderToString(<LoginPage backendOk={true} onLogin={() => {}} onDemo={() => {}} />));
   assert.ok(!on.includes('Platform offline') && on.includes('Try the demo'));
+});
+
+test('LoginPage: create-account tab asks for name, password and confirm password', () => {
+  const reg = text(renderToString(<LoginPage backendOk={true} onLogin={() => {}} initialMode="register" />));
+  assert.ok(reg.includes('Your name') && reg.includes('Confirm password') && reg.includes('Create my account'));
+  assert.equal((reg.match(/type="password"/g) || []).length, 2, 'two password fields');
+  assert.ok(reg.includes('One account per email'));
+});
+
+test('LoginPage on /admin: account type locked to owner, no Create account tab, setup form only on the admin laptop', () => {
+  const owner = text(renderToString(<LoginPage backendOk={true} onLogin={() => {}} portal="admin" lockPortal status={{ admin_exists: true, on_admin_laptop: true }} />));
+  assert.ok(owner.includes('Owner sign-in') && !owner.includes('Create account') && !owner.includes('Platform owner?'));
+  const setup = text(renderToString(<LoginPage backendOk={true} onLogin={() => {}} portal="admin" lockPortal status={{ admin_exists: false, on_admin_laptop: true }} />));
+  assert.ok(setup.includes('Create the owner account') && setup.includes('Confirm password'));
+  const remote = text(renderToString(<LoginPage backendOk={true} onLogin={() => {}} portal="admin" lockPortal status={{ admin_exists: false, on_admin_laptop: false }} />));
+  assert.ok(remote.includes('only be created') && !remote.includes('Create owner account'));
 });
 
 test('NewAppWizard: step 1 lists every app type, grouped, with the files each one needs', () => {
