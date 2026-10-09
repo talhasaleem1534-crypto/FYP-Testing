@@ -56,7 +56,7 @@ customers, and customers can add their own. Step-by-step: [docs/MULTI_DEVICE_SET
 
 ## 🖥️ Two Sites, Separate Devices (Session 22, version 6)
 
-- **Customer portal** `http://<admin-laptop-IP>:5173/` - customers sign up on their own device, pick the app type, paste a GitHub link and deploy. They only ever see their own apps and logs.
+- **Front page + customer portal** `http://<admin-laptop-IP>:5173/` (what OmniDeploy is, with Create account / Sign in; the portal itself is `/login`) - customers sign up on their own device, pick the app type, paste a GitHub link and deploy. They only ever see their own apps and logs.
 - **Admin site** `http://localhost:5173/admin` - the platform owner sees every customer, every app (with its owner), servers, and **Data & Storage**: the exact files on the admin laptop that hold accounts (password hashes, never passwords), sessions, apps and the customers' cloned code.
 - Every backend route needs a login; the backend prints the customer link at start-up. Setup steps, Windows firewall and storage table: [docs/MULTI_DEVICE_SETUP.md](docs/MULTI_DEVICE_SETUP.md).
 

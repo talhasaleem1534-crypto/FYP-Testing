@@ -1,7 +1,7 @@
 /*
-  OmniDeploy theme - "engineering notebook"
-  Dark charcoal paper, warm cream ink, one signal-orange accent, a serif for headlines,
-  a monospace for labels and anything technical. Square corners and hairline rules
+  OmniDeploy theme
+  Black panels on a dark grey ground, neutral white/grey text, one blue accent, a serif for
+  headlines, a monospace for labels and anything technical. Square corners and hairline rules
   instead of glow and glass.
 
   The old variable names (--accent-cyan, --glass-*, ...) are kept as aliases so the
@@ -10,22 +10,24 @@
 :root {
   color-scheme: dark; /* dark native scrollbars, dropdowns and form controls */
 
-  /* surfaces */
-  --bg-primary: #101214;
-  --bg-secondary: #171a1d;
-  --bg-tertiary: #1f2327;
-  --line: #2c3137;
-  --line-strong: #3d434a;
+  /* surfaces: black card on a grey ground */
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #141414;
+  --bg-tertiary: #1c1c1c;
+  --bg-ground: #2c2c2c;
+  --line: #1f1f1f;
+  --line-strong: #2a2a2a;
 
-  /* ink */
-  --text-primary: #ece6d8;
-  --text-secondary: #a59e90;
-  --text-muted: #6f6a60;
+  /* ink: neutral */
+  --text-primary: #f2f2f2;
+  --text-secondary: #a8a8a8;
+  --text-muted: #6f6f6f;
 
-  /* accent + semantic */
-  --accent: #ff7a2f;
-  --accent-soft: rgba(255, 122, 47, 0.14);
-  --accent-ink: #1a0d05;
+  /* one blue accent + semantic colours */
+  --accent: #2f5bea;
+  --accent-hover: #3d69ff;
+  --accent-soft: rgba(47, 91, 234, 0.28);
+  --accent-ink: #ffffff;
   --ok: #7fbf7a;
   --warn: #e8b64a;
   --danger: #e4584f;
@@ -43,8 +45,8 @@
   --glass-bg: var(--bg-secondary);
   --glass-border: var(--line);
   --accent-cyan: var(--accent);
-  --accent-blue: #ff9a5c;
-  --accent-purple: #b9441c;
+  --accent-blue: #4f78ff;
+  --accent-purple: #2443b8;
   --accent-emerald: var(--ok);
   --accent-amber: var(--warn);
   --accent-rose: var(--danger);
@@ -110,21 +112,11 @@ a { color: var(--accent); }
    A single card centred on a grey ground: the form on the left, a dark visual panel with the
    punch line on the right (stacked on phones). */
 .auth {
-  /* The sign-in page is monochrome: black card on a grey ground, neutral text, one blue button.
-     These override the warm app tokens for this page only. */
-  --accent: #2f5bea;
-  --accent-soft: rgba(47, 91, 234, 0.28);
-  --accent-ink: #ffffff;
-  --text-primary: #f2f2f2;
-  --text-secondary: #a8a8a8;
-  --text-muted: #6f6f6f;
-  --bg-tertiary: #1c1c1c;
-  --line-strong: #2a2a2a;
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 24px 16px;
-  background: #2c2c2c;
+  background: var(--bg-ground);
 }
 .auth-card {
   width: 100%;
@@ -207,7 +199,7 @@ a { color: var(--accent); }
   text-transform: uppercase;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.btn-primary:hover { background: #3d69ff; }
+.btn-primary:hover { background: var(--accent-hover); }
 .btn-primary:active { transform: translateY(1px); }
 .btn-primary:disabled { opacity: 0.55; }
 .btn-outline {
@@ -314,13 +306,13 @@ a { color: var(--accent); }
 
 /* Terminal Log Box */
 .terminal-window {
-  background: #0b0d0f;
+  background: #000;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.6;
-  color: #d9c9a8;
+  color: #cfcfcf;
   padding: 16px;
   overflow-y: auto;
   max-height: 400px;
@@ -367,4 +359,129 @@ a { color: var(--accent); }
   background: rgba(165, 158, 144, 0.1);
   color: var(--text-secondary);
   border: 1px solid var(--line-strong);
+}
+
+/* ---------------- Landing page (/) ----------------
+   Sections stacked on the black ground: nav, hero with a mock dashboard, how it works,
+   why private servers, features, app types, footer. */
+.land { background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+.land .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.land a { color: inherit; text-decoration: none; }
+.land .eyebrow { text-align: center; margin-bottom: 10px; }
+
+.land-nav { position: sticky; top: 0; z-index: 10; background: rgba(13, 13, 13, 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.land-nav .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
+.land-nav .links { display: flex; gap: 22px; font-size: 14px; color: var(--text-secondary); }
+.land-nav .links a:hover { color: var(--text-primary); }
+.land-nav .spacer { flex: 1; }
+.land-nav .actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 4px; font-size: 14px; font-weight: 600; border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
+.btn.blue { background: var(--accent); color: var(--accent-ink); }
+.btn.blue:hover { background: var(--accent-hover); }
+.btn.ghost { background: transparent; color: var(--text-primary); border-color: var(--line-strong); }
+.btn.ghost:hover { border-color: var(--text-secondary); }
+.btn.sm { padding: 7px 12px; font-size: 13px; }
+.btn.lg { padding: 13px 22px; font-size: 15px; }
+
+.land .land-hero { text-align: center; padding-top: 84px; padding-bottom: 48px; }
+.land-hero .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 13px; color: var(--text-secondary); background: var(--bg-secondary); }
+.land-hero .pill i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); display: inline-block; }
+.land-hero h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(44px, 7vw, 84px); line-height: 1.02; letter-spacing: -0.03em; margin: 26px auto 22px; max-width: 14ch; text-wrap: balance; }
+.land-hero h1 em { font-style: italic; }
+.land-hero .sub { color: var(--text-secondary); font-size: 18px; line-height: 1.6; max-width: 62ch; margin: 0 auto 30px; }
+.land-hero .cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.land-hero .facts { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin-top: 26px; font-size: 14px; color: var(--text-secondary); }
+.land-hero .facts b { font-family: var(--font-mono); color: var(--text-primary); font-weight: 500; }
+
+/* the mock dashboard under the hero */
+.shot { margin: 48px auto 0; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--bg-secondary); overflow: hidden; display: grid; grid-template-columns: 200px 1fr; min-height: 420px; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9); text-align: left; font-size: 12px; }
+.shot .side { border-right: 1px solid var(--line); padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; }
+.shot .side .grp { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); padding: 12px 8px 4px; }
+.shot .side .it { padding: 7px 8px; border-radius: 3px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+.shot .side .it.on { background: var(--bg-tertiary); color: var(--text-primary); }
+.shot .main { padding: 18px 20px; min-width: 0; }
+.shot .main .head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.shot .main .head h3 { font-size: 16px; font-weight: 600; }
+.shot .main .head p { color: var(--text-muted); font-size: 11px; margin-top: 2px; }
+.shot table { width: 100%; border-collapse: collapse; }
+.shot th { text-align: left; font-weight: 500; color: var(--text-muted); font-size: 11px; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.shot td { padding: 10px 8px; border-bottom: 1px solid var(--line); color: var(--text-secondary); white-space: nowrap; }
+.shot td b { color: var(--text-primary); font-weight: 600; }
+.shot td.mono, .shot .mono { font-family: var(--font-mono); font-size: 11px; }
+.shot .log { margin-top: 14px; background: #000; border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; font-family: var(--font-mono); font-size: 11px; line-height: 1.7; color: var(--text-secondary); overflow: hidden; }
+.shot .log .ok { color: var(--ok); }
+.shot .log .dim { color: var(--text-muted); }
+.shot .log .url { color: var(--text-primary); text-decoration: underline; }
+.caption { text-align: center; color: var(--text-muted); font-size: 13px; margin: 14px 0 0; }
+.caption b { color: var(--text-secondary); font-weight: 600; }
+
+.land .land-section { padding-top: 96px; }
+.land-section h2 { text-align: center; font-size: clamp(28px, 3.6vw, 40px); font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+.land-section .lead { text-align: center; color: var(--text-secondary); font-size: 16px; margin: 10px auto 0; max-width: 60ch; }
+
+/* how it works: git push -> OmniDeploy -> private servers */
+.flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 0; margin: 48px auto 0; max-width: 900px; }
+.flow .box { background: var(--bg-secondary); border: 1px solid var(--line-strong); border-radius: 6px; padding: 18px 20px; text-align: center; }
+.flow .box .t { font-weight: 600; font-size: 16px; }
+.flow .box .s { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.04em; }
+.flow .box.core { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.flow .dash { height: 1px; border-top: 1px dashed var(--line-strong); width: 56px; }
+.flow .servers { display: grid; gap: 10px; }
+.flow .srv { background: var(--bg-secondary); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+.flow .srv i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+.flow .srv .bars { margin-left: auto; display: flex; gap: 2px; align-items: flex-end; height: 14px; }
+.flow .srv .bars b { width: 3px; background: var(--line-strong); display: block; }
+
+/* why private servers / features */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 40px; }
+.card { background: var(--bg-secondary); border: 1px solid var(--line); border-radius: 6px; padding: 22px; min-width: 0; }
+.card .ic { width: 34px; height: 34px; border: 1px solid var(--line-strong); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--text-primary); margin-bottom: 16px; background: var(--bg-primary); }
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.card p { color: var(--text-secondary); font-size: 14px; line-height: 1.55; }
+.card.wide { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; }
+.card.wide .ic { margin: 0; }
+.card.wide code { font-family: var(--font-mono); font-size: 12px; background: var(--bg-primary); border: 1px solid var(--line-strong); padding: 8px 12px; border-radius: 4px; color: var(--text-primary); white-space: nowrap; }
+.card.wide .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.tag { font-family: var(--font-mono); font-size: 11px; padding: 3px 8px; border: 1px solid var(--line-strong); border-radius: 3px; color: var(--text-secondary); }
+.tag.ok { color: var(--ok); border-color: rgba(127, 191, 122, 0.4); }
+.tag.warn { color: var(--warn); border-color: rgba(232, 182, 74, 0.4); }
+.tag.bad { color: var(--danger); border-color: rgba(228, 88, 79, 0.4); }
+
+/* app types strip */
+.types { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 30px; }
+.types span { padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 13px; color: var(--text-secondary); background: var(--bg-secondary); }
+
+/* final call */
+.land-cta { margin: 96px auto 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 64px 0; text-align: center; background: var(--bg-secondary); }
+.land-cta h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 4vw, 46px); letter-spacing: -0.02em; }
+.land-cta p { color: var(--text-secondary); margin: 10px 0 24px; }
+
+.land .land-foot { padding-top: 48px; padding-bottom: 40px; }
+.land-foot .cols { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; }
+.land-foot .tag-line { color: var(--text-secondary); font-size: 14px; margin-top: 14px; max-width: 36ch; }
+.land-foot h4 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
+.land-foot ul { list-style: none; display: grid; gap: 10px; font-size: 14px; color: var(--text-secondary); }
+.land-foot ul a:hover { color: var(--text-primary); }
+.land-foot .legal { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--text-muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .land .wrap { padding: 0 16px; }
+  .land-nav .links { display: none; }
+  .land-nav .wrap { gap: 12px; }
+  .land-nav .actions { gap: 6px; }
+  .land-nav .actions a:first-child { display: none; }
+  .land-nav .btn.sm { padding: 7px 10px; }
+}
+@media (max-width: 480px) {
+  .land-nav .actions a:nth-child(2) { display: none; }  /* the hero has Sign in right below */
+  .land .land-hero { padding-top: 48px; padding-bottom: 36px; }
+  .shot { grid-template-columns: 1fr; min-height: 0; }
+  .shot .side { display: none; }
+  .shot .main { overflow-x: auto; }
+  .flow { grid-template-columns: 1fr; justify-items: center; gap: 14px; }
+  .flow .dash { width: 1px; height: 28px; border-top: 0; border-left: 1px dashed var(--line-strong); }
+  .flow .servers { width: 100%; }
+  .card.wide { grid-template-columns: auto 1fr; }
+  .card.wide code { grid-column: 1 / -1; white-space: normal; }
+  .land-foot .cols { grid-template-columns: 1fr 1fr; }
 }

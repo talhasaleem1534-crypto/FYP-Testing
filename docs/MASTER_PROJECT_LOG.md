@@ -432,5 +432,11 @@ curl -X POST http://localhost:8001/chat \
 - **Date:** 10 October 2026. Login page recoloured to match the reference: black card (#0d0d0d) on grey (#2c2c2c), neutral white/grey text, single blue button (#2f5bea), monochrome logo (`mono` prop in Brand.tsx) and white contour art. Done by overriding the theme tokens inside `.auth` in [index.css](file:///core-platform/frontend/src/index.css), so only this page changes.
 - **Proof:** `tsc` clean, `npm test` 27/27, `vite build` OK, screenshots: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
 
+## 12. Global Theme + Front Page (Session 30)
+- **Date:** 10 October 2026. The black / grey / blue scheme is now the global theme (`:root` in [index.css](file:///core-platform/frontend/src/index.css)). New public front page [Landing.tsx](file:///core-platform/frontend/src/Landing.tsx) modelled on coolify.io: nav, hero with drawn Applications view, "How it works" flow to private servers, "Why your own machine" (replaces Coolify's sponsors), features (AI Ops Copilot, anomaly detection, 12 real features), app-type chips, final call, footer. Routing: `/` front page, `/login` customer portal, `/admin` admin site ([main.tsx](file:///core-platform/frontend/src/main.tsx)).
+- **Hurdles:** CSS specificity ate section padding (`.land .wrap` vs `.land-section`); phone nav overflow; orphan cards in a 4-column grid. All fixed, see PROGRESS_HANDOVER Session 30.
+- **Proof:** `tsc` clean, `npm test` 28/28, `vite build` OK, screenshots published.
+- **Viva point:** the facts line uses only numbers derived from the code and the evaluation script (10 app types, ~96% recall on injected faults); no invented customer counts.
+
 ---
 *Maintained by OmniDeploy (formerly DeployStack AI) Team | Master Academic Handover Document*

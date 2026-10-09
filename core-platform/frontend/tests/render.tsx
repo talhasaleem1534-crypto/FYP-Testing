@@ -11,6 +11,7 @@ import { Donut, HBars, LineChart, StackedBars } from '../src/components/Charts';
 import Dashboard from '../src/Dashboard';
 import { seriesFor, totalSeries, Sample } from '../src/lib/telemetry';
 import LoginPage from '../src/LoginPage';
+import Landing from '../src/Landing';
 import NewAppWizard from '../src/NewAppWizard';
 import { FALLBACK_APP_TYPES, usesStartCommand } from '../src/lib/appTypes';
 import CustomerPortal from '../src/CustomerPortal';
@@ -134,6 +135,15 @@ test('LoginPage on /admin: account type locked to owner, no Create account tab, 
   assert.ok(setup.includes('Create the owner account') && setup.includes('Confirm password'));
   const remote = text(renderToString(<LoginPage backendOk={true} onLogin={() => {}} portal="admin" lockPortal status={{ admin_exists: false, on_admin_laptop: false }} />));
   assert.ok(remote.includes('only be created') && !remote.includes('Create owner account'));
+});
+
+test('Landing: hero, how it works, features, app types and footer; no sponsors; links to /login and /admin', () => {
+  const html = text(renderToString(<Landing />));
+  for (const needle of ['Self-hosting for your', 'How it works', 'Why your own machine', 'Everything you need to ship', 'AI Ops Copilot', 'Catches trouble before the crash', 'Pick the type', 'href="/login?signup"', 'href="/login"', 'href="/admin"', 'Flask', 'I have my own Dockerfile', 'Inspired by']) {
+    assert.ok(html.includes(needle), `missing "${needle}"`);
+  }
+  assert.ok(!/sponsor/i.test(html), 'no sponsors section');
+  assert.ok(!/DeployStack/.test(html), 'old name must not appear');
 });
 
 test('NewAppWizard: step 1 lists every app type, grouped, with the files each one needs', () => {

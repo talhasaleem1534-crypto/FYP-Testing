@@ -99,7 +99,7 @@ export default function LoginPage({ onLogin, onDemo, backendOk, portal: initialP
       <div className="auth-card">
         {/* ── left: the form ── */}
         <section className="auth-form" aria-label={heading}>
-          <div className="brand"><Wordmark sub={lockPortal ? 'Admin site' : 'Customer portal'} size={32} mono /></div>
+          <a className="brand" href="/" aria-label="OmniDeploy front page" style={{ color: 'inherit', textDecoration: 'none' }}><Wordmark sub={lockPortal ? 'Admin site' : 'Customer portal'} size={32} mono /></a>
 
           <h1>{heading}</h1>
           <p className="lead">{lead}</p>
@@ -204,7 +204,7 @@ export default function LoginPage({ onLogin, onDemo, backendOk, portal: initialP
             {!lockPortal && (owner
               ? <button type="button" className="linkish" onClick={() => choosePortal('customer')}>Customer sign-in</button>
               : <button type="button" className="linkish" onClick={() => choosePortal('admin')}>Platform owner?</button>)}
-            {lockPortal && <a className="linkish" href="/">Customer portal</a>}
+            {lockPortal && <a className="linkish" href="/login">Customer portal</a>}
           </div>
         </section>
 

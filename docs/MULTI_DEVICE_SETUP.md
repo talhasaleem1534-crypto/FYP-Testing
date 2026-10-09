@@ -34,7 +34,7 @@ If the firewall is on (`sudo ufw status`): `sudo ufw allow OpenSSH && sudo ufw a
 
 1. Start Docker Desktop (only needed if you also deploy to the platform laptop itself).
 2. `cd core-platform/backend && npm run start:dev` (`.env` has `HOST=0.0.0.0`). The console prints the
-   customer portal link, e.g. `http://192.168.1.20:5173/`.
+   customer link, e.g. `http://192.168.1.20:5173/` (the front page; **Create account** leads to `/login?signup`).
 3. `cd core-platform/frontend && npm run dev`
 4. Open **http://localhost:5173/admin**, create the admin account (first time only).
 5. **Private Servers → Add a server**:
@@ -52,7 +52,7 @@ Windows firewall on the platform laptop: allow Node.js on **Private networks** (
 
 ## 3. Customer device
 
-1. Open the link from step 2, e.g. **http://192.168.1.20:5173/**.
+1. Open the link from step 2, e.g. **http://192.168.1.20:5173/**, and click **Create account** (or go straight to `/login`).
 2. Create account → **New application** → choose the type (e.g. Flask) → paste the GitHub link.
    "Deploy to server" already shows **linux-laptop** → **Create & deploy**.
 3. The live log says `Target: linux-laptop (ubuntu@192.168.1.30 over SSH)`. When it finishes,
