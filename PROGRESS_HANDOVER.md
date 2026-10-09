@@ -484,6 +484,19 @@ Invoke-RestMethod -Uri "http://localhost:8001/chat" -Method POST -ContentType "a
   | AI Health & Copilot | 8001 | http://localhost:8001/health | 200 OK (Active) |
 
 ---
+## 26. Session 25: Multi-Laptop Workflow via GitHub Remote Sync
+- **Date:** 9 October 2026 (Version 7)
+- **Objectives:** Establish seamless pair-programming synchronization between Laptop A (Windows host running Docker daemons, local platform, and live containers) and Laptop B (laptop running Claude for AI assistance).
+- **Actions Completed:**
+  1. Initialized Git repository in `versoin_7/versoin_7/versoin 2 antigravity`.
+  2. Verified `.gitignore` safety to prevent committing sensitive files (`.env`, `node_modules`, build artifacts).
+  3. Linked remote repository `https://github.com/talhasaleem1534-crypto/FYP-Testing.git` on branch `main`.
+  4. Successfully committed and pushed full codebase to GitHub (`origin/main`).
+- **Sync Protocol for Developer:**
+  - **On Laptop B (Claude):** Clone repo (`git clone https://github.com/talhasaleem1534-crypto/FYP-Testing.git`), use Claude to write/modify files, commit and push (`git push origin main`).
+  - **On Laptop A (Docker/Live Server):** Run `git pull origin main` to instantly receive updates into live auto-reloading Vite & NestJS dev servers.
+
+---
 *Maintained for DeployStack AI Project Handover | Updated October 2026*
 
 

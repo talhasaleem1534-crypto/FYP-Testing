@@ -399,4 +399,15 @@ curl -X POST http://localhost:8001/chat \
 ```
 
 ---
+ 
+## 7. Multi-Laptop Developer Sync (Session 25)
+- **Repository:** `https://github.com/talhasaleem1534-crypto/FYP-Testing.git`
+- **Topology:**
+  - **Laptop A (Platform & Docker Host):** Runs NestJS backend (`:3000`), React frontend (`:5173`), AI Engine (`:8001`), Docker Desktop, and live containers on `:4000-5000`.
+  - **Laptop B (Claude Pair-Programming Station):** Runs Claude for fast AI iteration, code edits, and refactoring.
+- **Workflow:**
+  1. Laptop B makes code changes with Claude, commits, and runs `git push origin main`.
+  2. Laptop A runs `git pull origin main`. Because Vite and NestJS watcher are active, changes hot-reload immediately without rebuilding or restarting Docker manually.
+
+---
 *Maintained by DeployStack AI Team | Master Academic Handover Document*
