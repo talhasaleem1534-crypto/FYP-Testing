@@ -1,0 +1,32 @@
+#!/bin/bash
+echo "docker $*" >> /tmp/shimstate/calls.log
+S=/tmp/shimstate
+case "$1" in
+  version) [ -f $S/docker_down ] && { echo "Cannot connect to the Docker daemon" >&2; exit 1; }; echo "27.0.0"; exit 0 ;;
+  images) for f in $S/img_*; do [ -e "$f" ] && echo "${f##*/img_}"; done; exit 0 ;;
+  rmi) rm -f "$S/img_${@: -1}"; exit 0 ;;
+  network) exit 0 ;;
+  build) echo "Step 1/5 : FROM node"; touch "$S/img_${@: 3:1}"; [ -f $S/fail_build ] && { echo "build boom" >&2; exit 1; }; exit 0 ;;
+  run)
+    name=""; for ((i=1;i<=$#;i++)); do [ "${!i}" = "--name" ] && j=$((i+1)) && name="${!j}"; done
+    [ -f $S/fail_run ] && { echo "run boom" >&2; exit 1; }
+    echo "running" > $S/c_$name; [ -f $S/crash_new ] && echo "exited" > $S/c_$name
+    echo "id_$name"; exit 0 ;;
+  inspect)
+    if [ "$2" = "--format" ] && [[ "$3" == *RestartCount* ]]; then for nm in "${@:4}"; do echo "/$nm|0|2026-09-01T00:00:00Z|"; done; exit 0; fi
+    name="${@: -1}"; [ -f $S/c_$name ] || exit 1
+    st=$(cat $S/c_$name)
+    if [ "$st" = running ]; then echo "running|true|false|0"; else echo "exited|false|false|1"; fi; exit 0 ;;
+  stop) name="${@: -1}"; [ -f $S/c_$name ] && echo "stopped" > $S/c_$name; exit 0 ;;
+  start) name="${@: -1}"; [ -f $S/c_$name ] && echo "running" > $S/c_$name; exit 0 ;;
+  rename) [ -f $S/c_$2 ] && mv $S/c_$2 $S/c_$3; exit 0 ;;
+  rm) name="${@: -1}"; rm -f $S/c_$name; exit 0 ;;
+  stats)
+    n=$(cat $S/stat_n 2>/dev/null || echo 0); n=$((n+1)); echo $n > $S/stat_n
+    for f in $S/c_*; do [ -e "$f" ] || continue; name="${f##*/c_}"; grep -q running "$f" || continue
+      echo "$name|$((8 + n % 5)).5%|$((30 + n % 4)).2%|$((n*180))kB / $((n*90))kB"; done
+    echo "traefik|0.4%|3.1%|$((n*5))kB / $((n*3))kB"; exit 0 ;;
+  logs) echo "app crashed: missing module" ; exit 0 ;;
+  ps) ls $S | grep '^c_' | sed 's/^c_//' ; exit 0 ;;
+esac
+exit 0

@@ -1,0 +1,88 @@
+# One-time setup (the network is shared with the app containers the platform deploys):
+#   docker network create paas-net
+# Then:   docker compose up -d --build        (copy .env.example to .env first)
+
+networks:
+  paas-net:
+    name: paas-net
+    external: true
+
+volumes:
+  paas-apps:      # git checkouts of deployed applications
+  paas-data:      # apps / servers / deployment history (survives restarts and rebuilds)
+  traefik-acme:   # Let's Encrypt certificates
+
+services:
+  core-platform-backend:
+    build:
+      context: ../core-platform/backend
+      dockerfile: Dockerfile
+    container_name: core-platform-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"      # loopback only: this API can build and run containers
+    environment:
+      - PORT=3000
+      - PAAS_DATA_DIR=/data/paas-data
+      - HOST=0.0.0.0               # inside the container; the port is only published on 127.0.0.1
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+      - GITHUB_WEBHOOK_SECRET=${GITHUB_WEBHOOK_SECRET:-}
+      - INTERNAL_API_TOKEN=${INTERNAL_API_TOKEN:-}   # lets the ai-engine container call the API
+      - TRAEFIK_ENABLE_TLS=${TRAEFIK_ENABLE_TLS:-false}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock   # deployments run docker on the host through this socket
+      - paas-apps:/data/paas-apps
+      - paas-data:/data/paas-data
+    networks:
+      - paas-net
+
+  ai-engine:
+    build:
+      context: ../ai-engine
+      dockerfile: Dockerfile
+    container_name: ai-engine
+    restart: unless-stopped
+    # Root + docker.sock so the Container Health monitor can run `docker stats`. The socket is
+    # root-equivalent access to the host; the engine only calls stats/inspect. Remove both lines
+    # (the /containers/anomaly scan then reports "Docker not available") if you don't want that.
+    user: "0:0"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      - CORE_PLATFORM_URL=http://core-platform-backend:3000
+      - INTERNAL_API_TOKEN=${INTERNAL_API_TOKEN:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:5173,http://127.0.0.1:5173}
+    networks:
+      - paas-net
+    depends_on:
+      - core-platform-backend
+
+  traefik:
+    # >= 3.6.1 is required with Docker Engine 29+, which rejects the old API version older Traefik uses.
+    image: traefik:v3.6
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:8080:8080"      # dashboard (unauthenticated) - keep it on loopback
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - traefik-acme:/acme
+    networks:
+      - paas-net
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - paas-net

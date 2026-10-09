@@ -1,0 +1,15 @@
+#!/bin/bash
+echo "git $*" >> /tmp/shimstate/calls.log
+case "$1" in
+  ls-remote)
+    if [[ "$*" == *"--symref"* ]]; then printf 'ref: refs/heads/main\tHEAD\nabc123\tHEAD\n'; exit 0; fi
+    if [[ "$*" == *"refs/heads/develop"* ]]; then printf 'abc123\trefs/heads/develop\n'; exit 0; fi
+    if [[ "$*" == *"refs/heads/main"* ]]; then printf 'abc123\trefs/heads/main\n'; exit 0; fi
+    exit 0 ;;
+  clone) mkdir -p .git
+    # A test can put the files the "repository" should contain in /tmp/shimstate/repo.
+    if [ -d /tmp/shimstate/repo ]; then cp -r /tmp/shimstate/repo/. .; else echo '{"name":"x","scripts":{"start":"node s.js"}}' > package.json; fi
+    echo "Cloning into '.'..."; exit 0 ;;
+  rev-parse) echo "abc1234"; exit 0 ;;
+  *) exit 0 ;;
+esac

@@ -1,0 +1,23 @@
+{
+  "threshold": -0.6452922497626673,
+  "degrading_threshold": -0.5848799110712957,
+  "target_fpr": 0.01,
+  "degrading_fpr": 0.05,
+  "center": {
+    "cpu_percent": 12.034195173703546,
+    "mem_percent": 23.697258557870757,
+    "restart_count": 0.02875,
+    "net_in_kb": 96.59268262483958,
+    "net_out_kb": 52.951293355835304
+  },
+  "scale": {
+    "cpu_percent": 10.209525833214725,
+    "mem_percent": 12.367325069006915,
+    "restart_count": 0.16712048376850697,
+    "net_in_kb": 133.49901816699622,
+    "net_out_kb": 73.94713792681262
+  },
+  "train_rows": 4800,
+  "validation_rows": 1600,
+  "seed": 42
+}

@@ -1,0 +1,13 @@
+# Version ranges (not exact pins) so the same file installs on Python 3.11-3.14.
+# The model artifact is retrained during the Docker build, so it always matches
+# whatever scikit-learn version gets installed.
+fastapi>=0.111,<1
+uvicorn[standard]>=0.30,<1
+anthropic>=0.40,<2
+httpx>=0.27,<1
+pydantic>=2.8,<3
+scikit-learn>=1.5,<2
+pandas>=2.2,<4
+numpy>=1.26,<3
+joblib>=1.4,<2
+prometheus-client>=0.20,<1
