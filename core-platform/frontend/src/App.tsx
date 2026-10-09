@@ -1,3 +1,4 @@
+import { Brand } from './components/Brand';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import {
@@ -619,13 +620,7 @@ export default function App({ customer, onLogout, startInDemo = false }: {
 
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '0 10px 20px', borderBottom: '1px solid var(--glass-border)' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-glow)' }}>
-            <Zap size={20} color="#fff" />
-          </div>
-          <div>
-            <div style={{ fontWeight: 700, fontSize: 16 }}>DeployStack</div>
-            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Admin site · Coolify + AI Ops</div>
-          </div>
+          <Brand subtitle="Admin site" />
         </div>
 
         {/* Demo Mode Toggle */}
@@ -799,7 +794,7 @@ export default function App({ customer, onLogout, startInDemo = false }: {
           <div className="animate-slide-up">
             <Header
               title="Private Servers"
-              subtitle="Linux machines where apps run. DeployStack logs in over SSH with its own key and runs git and Docker there."
+              subtitle="Linux machines where apps run. OmniDeploy logs in over SSH with its own key and runs git and Docker there."
               action={
                 <button onClick={() => setSrvModal(true)}
                   style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))', color: '#fff', border: 'none', borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>

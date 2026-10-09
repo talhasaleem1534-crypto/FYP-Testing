@@ -90,9 +90,9 @@ export default function ServerOnboarding({ asAdmin, demo, onDone, onCancel }: {
       </div>
 
       <div style={{ marginBottom: 16 }}>
-        <div style={stepTitle}>2. Let DeployStack log in</div>
+        <div style={stepTitle}>2. Let OmniDeploy log in</div>
         <div style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
-          On the server, logged in as the user DeployStack should use, run this. It adds the platform's <em>public</em> key; no password is shared.
+          On the server, logged in as the user OmniDeploy should use, run this. It adds the platform's <em>public</em> key; no password is shared.
         </div>
         {key ? <CommandBox cmd={key.trust_command} /> : <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 6 }}>Loading the key…</div>}
       </div>

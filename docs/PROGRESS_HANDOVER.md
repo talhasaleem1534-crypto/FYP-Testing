@@ -484,11 +484,40 @@ Invoke-RestMethod -Uri "http://localhost:8001/chat" -Method POST -ContentType "a
   | AI Health & Copilot | 8001 | http://localhost:8001/health | 200 OK (Active) |
 
 ---
-*Maintained for DeployStack AI Project Handover | Updated October 2026*
+## 26. Session 25: Multi-Laptop Workflow via GitHub Remote Sync
+- **Date:** 9 October 2026 (Version 7)
+- **Objectives:** Establish seamless pair-programming synchronization between Laptop A (Windows host running Docker daemons, local platform, and live containers) and Laptop B (laptop running Claude for AI assistance).
+- **Actions Completed:**
+  1. Initialized Git repository in `versoin_7/versoin_7/versoin 2 antigravity`.
+  2. Verified `.gitignore` safety to prevent committing sensitive files (`.env`, `node_modules`, build artifacts).
+  3. Linked remote repository `https://github.com/talhasaleem1534-crypto/FYP-Testing.git` on branch `main`.
+  4. Successfully committed and pushed full codebase to GitHub (`origin/main`).
+- **Sync Protocol for Developer:**
+  - **On Laptop B (Claude):** Clone repo (`git clone https://github.com/talhasaleem1534-crypto/FYP-Testing.git`), use Claude to write/modify files, commit and push (`git push origin main`).
+  - **On Laptop A (Docker/Live Server):** Run `git pull origin main` to instantly receive updates into live auto-reloading Vite & NestJS dev servers.
 
+## 27. Session 26: Rename to OmniDeploy, New Sign-In Page & Theme Foundation (Step 1 of the UI redesign)
+- **Date:** 9 October 2026 (Version 7)
+- **Objectives:** (1) Rename the product from DeployStack AI to **OmniDeploy**. (2) Rebuild the sign-in page as one proper login page for customers *and* the platform owner. (3) Start a new, non-generic visual theme (the old cyan/purple "glass" look). The user asked for small steps they can check one at a time, so only the login page and the global theme tokens changed; dashboard screens are restyled in later sessions.
+- **Changes Made:**
+  1. [core-platform/frontend/src/index.css](file:///core-platform/frontend/src/index.css) - new theme tokens ("engineering notebook": charcoal `#101214`, warm cream text, one signal-orange accent `#ff7a2f`, Fraunces serif for headlines, IBM Plex Sans body, IBM Plex Mono for labels, 3-4 px corners, hairline rules, no glow). The old variable names (`--accent-cyan`, `--glass-border`, ...) are kept as **aliases** so every dashboard screen still compiles and picks up the new colours. New CSS classes for the sign-in page (`.auth*`, `.seg`, `.tabs`, `.field`, `.input`, `.btn-primary`, `.note`, ...).
+  2. [core-platform/frontend/src/LoginPage.tsx](file:///core-platform/frontend/src/LoginPage.tsx) - rewritten. One page shared by `/` and `/admin`: **Account type** switch (Customer / Platform owner), Sign in / Create account tabs, e-mail + password with show/hide, **Keep me signed in**, **Forgot password?** hint (no backend reset exists yet, so it explains what to do), platform online/offline indicator, first-time owner setup form (only on the admin laptop), "Try the demo" only where `onDemo` is passed (admin site).
+  3. [core-platform/frontend/src/components/Brand.tsx](file:///core-platform/frontend/src/components/Brand.tsx) (new) - `OmniMark` SVG logo, `Wordmark`, and a `Brand` alias used by the dashboard headers. [core-platform/frontend/public/favicon.svg](file:///core-platform/frontend/public/favicon.svg) (new).
+  4. [core-platform/frontend/src/lib/auth.ts](file:///core-platform/frontend/src/lib/auth.ts) - `remember` flag: token goes to `localStorage` (keep me signed in) or `sessionStorage` (cleared when the tab closes); token key renamed to `omnideploy.token.*` (existing browsers simply have to sign in again once).
+  5. [core-platform/frontend/src/CustomerGate.tsx](file:///core-platform/frontend/src/CustomerGate.tsx) - fetches `/auth/status`; if the owner signs in from the customer portal, the browser is sent to `/admin`. [core-platform/frontend/src/AdminGate.tsx](file:///core-platform/frontend/src/AdminGate.tsx) - uses the shared `LoginPage` with the account type locked to owner (the old separate `AdminLogin` form is gone).
+  6. [core-platform/frontend/index.html](file:///core-platform/frontend/index.html) - title "OmniDeploy", Google Fonts (Fraunces, IBM Plex Sans, IBM Plex Mono), new favicon.
+  7. Brand strings renamed in [App.tsx](file:///core-platform/frontend/src/App.tsx), [CustomerPortal.tsx](file:///core-platform/frontend/src/CustomerPortal.tsx), [ServerOnboarding.tsx](file:///core-platform/frontend/src/components/ServerOnboarding.tsx) and [README.md](file:///README.md). Backend identifiers (`Dockerfile.deploystack`, SSH key comment `deploystack-platform`) were left unchanged on purpose: renaming them would break existing deployments and servers that already trust the key.
+- **Hurdles & Fixes:**
+  - **Two AI sessions edited the same files at the same time** (another Claude session was also working on the login page). Symptom: `tsc` error `Module './components/Brand' has no exported member 'Brand'` because App.tsx/CustomerPortal.tsx imported a `Brand` component from the other session's version of Brand.tsx. Fix: the sessions agreed over a cross-session message that this session owns the step; a `Brand` alias export was added to Brand.tsx so both call sites compile. Lesson: run one AI session per feature.
+  - **`npm test` failed** in the `CustomerPortal` render test (`AssertionError: false == true`). Root cause: the header subtitle had been changed to lowercase "customer portal" while the test asserts the exact string `Customer portal`. Fix: subtitle set to "Customer portal" / "Admin site" (the CSS uppercases it visually anyway).
+  - **`EADDRINUSE 127.0.0.1:3000`** when starting a stand-in backend for screenshots: port 3000 on the build machine was already used by an unrelated Next.js project. Fix: the preview build was pointed at `VITE_BACKEND_URL=http://127.0.0.1:3999` and the stand-in listened on 3999; the real build was rebuilt afterwards without the override.
+  - **Headless Chrome hung** on one screenshot (`--virtual-time-budget` never expired while the page polled `/health` every 8 s). Fix: wrapped each capture in `timeout 45`.
+- **Design decisions (for the viva):** customer login *is* required (every backend route needs a Bearer token; it is what isolates one customer's apps and logs from another's). The single owner account can only be created on the admin laptop (loopback check in `AuthController.setupAdmin`), so the customer-facing page only explains that and never offers owner sign-up. There is **no password-reset endpoint**; the "Forgot password?" link tells the user to ask the owner to remove and re-create the account rather than pretending.
+- **Verification & Proof:**
+  - `npx tsc --noEmit` -> clean. `npm test` -> **25/25** frontend tests pass (incl. the LoginPage SSR test: Sign in / Create account / Platform offline / Pick your app type / demo button only when offered). `npm run build` -> `✓ built in 3.20s` (dist 360 kB JS, 8.8 kB CSS).
+  - Headless-Chrome screenshots of the built page at 1440x900 and 390x1000 for: customer sign-in, owner sign-in (/admin), first-run owner setup, backend offline, phone. Published for the student as a preview page: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
+- **Service Health (build machine, not the platform laptop):** Backend 3000 - not run here (port used by another project); Frontend - built and previewed on 4173; AI Engine 8001 - not run.
+- **Next steps (agreed step-by-step plan):** 2) customer portal screens in the new theme, 3) admin dashboard sidebar + pages, 4) remove the remaining inline cyan/purple gradients, 5) optional real password reset (needs a backend route).
 
-
-
-
-
-
+---
+*Maintained for OmniDeploy (formerly DeployStack AI) Project Handover | Updated October 2026*

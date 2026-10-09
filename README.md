@@ -1,4 +1,6 @@
-# DeployStack AI — Private-Server Deployment Platform ("Coolify + AI Ops")
+# OmniDeploy - Private-Server Deployment Platform ("Coolify + AI Ops")
+
+> Formerly "OmniDeploy". Older session logs still use that name.
 
 A self-hosted PaaS platform exclusively designed for **private servers** (bare-metal hosts, home labs, on-prem VMs, and local Docker daemons) using SSH orchestration and Docker. It automates Git-to-deploy pipelines with dynamic Traefik reverse-proxy discovery, an AI Ops Copilot, and an unsupervised **Container Health Anomaly Detection model (Isolation Forest)**.
 
@@ -20,7 +22,7 @@ We realized we could combine our two ideas into one solid project:
 - **Salman's Part (DevOps):** Built a self-hosted platform inspired by Coolify that uses SSH, Docker, and Traefik to automatically deploy apps from GitHub.
 - **Talha's Part (AI & ML):** Added a **2-layer AI Copilot** that instantly explains deployment errors in simple words, plus an **Isolation Forest Anomaly Detector** that watches live Docker stats (CPU %, memory %, restart count, network I/O) to warn us if a container starts behaving abnormally *before* it crashes.
 
-The result is **DeployStack AI**: a beginner-friendly, self-hosted deployment platform that makes hosting apps easy and uses AI to help you catch errors and fix container problems.
+The result is **OmniDeploy**: a beginner-friendly, self-hosted deployment platform that makes hosting apps easy and uses AI to help you catch errors and fix container problems.
 
 ---
 
@@ -46,7 +48,7 @@ The result is **DeployStack AI**: a beginner-friendly, self-hosted deployment pl
 
 ## 🐧 Apps Run on Your Linux Server over SSH (Session 23, version 7)
 
-Three devices: **platform laptop** (DeployStack + admin), **Linux laptop** (the server), **customer device** (browser).
+Three devices: **platform laptop** (OmniDeploy + admin), **Linux laptop** (the server), **customer device** (browser).
 **Add a server** shows the commands to prepare the Linux machine and one command that trusts the platform's own SSH key;
 **Connect & check** verifies SSH, Docker, git, the apps folder and the Docker network. Deployments then clone, build and run
 **on the Linux server over SSH**, and "Open App" links to `http://<server-IP>:<port>`. The admin can share servers with

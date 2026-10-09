@@ -1,3 +1,4 @@
+import { Brand } from './components/Brand';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { ExternalLink, GitBranch, Globe, Layers, Loader2, LogOut, Play, Plus, ScrollText, Server as ServerIcon, Trash2, Zap } from 'lucide-react';
@@ -140,7 +141,7 @@ export default function CustomerPortal({ customer, onLogout }: { customer: Custo
     catch (e: any) { setError(e.message); } finally { setSrvBusy(null); }
   };
   const removeServer = async (srv: ServerRecord) => {
-    if (!window.confirm(`Remove '${srv.name}' from DeployStack? Nothing on the server itself is deleted.`)) return;
+    if (!window.confirm(`Remove '${srv.name}' from OmniDeploy? Nothing on the server itself is deleted.`)) return;
     setSrvBusy(srv.id);
     try { await tryBackend(`/servers/${srv.id}`, 'DELETE'); setServers(p => p.filter(x => x.id !== srv.id)); }
     catch (e: any) { setError(e.message); } finally { setSrvBusy(null); }
@@ -154,12 +155,8 @@ export default function CustomerPortal({ customer, onLogout }: { customer: Custo
     <div style={{ minHeight: '100vh' }}>
       {/* Top bar */}
       <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 24px', borderBottom: '1px solid var(--glass-border)', background: 'var(--bg-secondary)', flexWrap: 'wrap' }}>
-        <div style={{ width: 34, height: 34, borderRadius: 9, background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Zap size={18} color="#fff" />
-        </div>
         <div style={{ flex: 1, minWidth: 140 }}>
-          <div style={{ fontWeight: 700 }}>DeployStack</div>
-          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Customer portal</div>
+          <Brand subtitle="Customer portal" size={34} />
         </div>
         <div style={{ textAlign: 'right', minWidth: 0 }}>
           <div style={{ fontSize: 13, fontWeight: 600 }}>{customer.name}</div>
@@ -269,7 +266,7 @@ export default function CustomerPortal({ customer, onLogout }: { customer: Custo
                 const mine = srv.owner_id === customer.id;
                 return (
                   <ServerCard key={srv.id} server={srv} busy={srvBusy === srv.id} canManage={mine} canShare={false}
-                    note={mine ? 'Your own server' : 'Provided by DeployStack'}
+                    note={mine ? 'Your own server' : 'Provided by OmniDeploy'}
                     onVerify={() => verifyServer(srv)} onDelete={() => removeServer(srv)} />
                 );
               })}

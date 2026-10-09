@@ -399,4 +399,23 @@ curl -X POST http://localhost:8001/chat \
 ```
 
 ---
-*Maintained by DeployStack AI Team | Master Academic Handover Document*
+ 
+## 7. Multi-Laptop Developer Sync (Session 25)
+- **Repository:** `https://github.com/talhasaleem1534-crypto/FYP-Testing.git`
+- **Topology:**
+  - **Laptop A (Platform & Docker Host):** Runs NestJS backend (`:3000`), React frontend (`:5173`), AI Engine (`:8001`), Docker Desktop, and live containers on `:4000-5000`.
+  - **Laptop B (Claude Pair-Programming Station):** Runs Claude for fast AI iteration, code edits, and refactoring.
+- **Workflow:**
+  1. Laptop B makes code changes with Claude, commits, and runs `git push origin main`.
+  2. Laptop A runs `git pull origin main`. Because Vite and NestJS watcher are active, changes hot-reload immediately without rebuilding or restarting Docker manually.
+
+## 8. Rename to OmniDeploy & New Sign-In Page (Session 26)
+- **Date:** 9 October 2026. Product renamed **DeployStack AI -> OmniDeploy** (UI strings, README, favicon, page title; backend identifiers unchanged on purpose).
+- **One sign-in page for both roles** ([LoginPage.tsx](file:///core-platform/frontend/src/LoginPage.tsx)): Account type switch (Customer / Platform owner), Sign in / Create account tabs, show/hide password, keep-me-signed-in (localStorage vs sessionStorage in [lib/auth.ts](file:///core-platform/frontend/src/lib/auth.ts)), forgot-password hint, live platform status, first-run owner setup (admin laptop only), demo button only on `/admin`. Owner signing in from `/` is redirected to `/admin`.
+- **Theme foundation** ([index.css](file:///core-platform/frontend/src/index.css)): charcoal / warm cream / single orange accent, Fraunces + IBM Plex Sans + IBM Plex Mono, square corners, hairline rules. Old CSS variable names kept as aliases so the dashboard keeps working until it is restyled (next sessions).
+- **Hurdles:** two AI sessions editing the same files (`Brand` import error, fixed with an alias export + ownership agreement); render test expected `Customer portal` exactly; `EADDRINUSE :3000` on the build machine (unrelated Next.js app) solved with `VITE_BACKEND_URL` on port 3999 for the preview only; headless Chrome hang solved with `timeout`.
+- **Proof:** `tsc` clean, `npm test` 25/25, `vite build` OK, five headless-Chrome screenshots published: https://claude.ai/artifact/3RGwCGWAK2uo92vcCbUZry
+- **Viva points:** customer login is mandatory (token-gated API = per-customer isolation); owner account creation is loopback-only; no password reset endpoint yet, UI says so honestly.
+
+---
+*Maintained by OmniDeploy (formerly DeployStack AI) Team | Master Academic Handover Document*
