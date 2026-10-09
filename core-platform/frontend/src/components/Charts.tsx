@@ -4,7 +4,17 @@ export interface Point { t: number; v: number }
 export interface Series { name: string; color: string; points: Point[]; dashed?: boolean }
 export interface Threshold { value: number; label: string; color: string }
 
-export const PALETTE = ['#00f2fe', '#a78bfa', '#f472b6', '#fbbf24', '#34d399', '#60a5fa', '#fb7185', '#2dd4bf'];
+/*
+ * Chart series palette: the theme's own values (one blue, then neutral-ish greens/ambers/reds,
+ * grey and white). Everything else on a chart (axes, grid, text) uses CSS tokens.
+ */
+export const CHART_BLUE = '#4f78ff';
+export const CHART_GREEN = '#9fd49a';
+export const CHART_AMBER = '#e8b64a';
+export const CHART_RED = '#e4584f';
+export const CHART_GREY = '#a8a8a8';
+export const CHART_WHITE = '#f2f2f2';
+export const PALETTE = [CHART_BLUE, CHART_GREEN, CHART_AMBER, CHART_RED, CHART_GREY, CHART_WHITE];
 
 const fmtTime = (t: number, withSeconds: boolean) =>
   new Date(t).toLocaleTimeString([], withSeconds ? { hour: '2-digit', minute: '2-digit', second: '2-digit' } : { hour: '2-digit', minute: '2-digit' });
@@ -16,15 +26,16 @@ export const niceMax = (v: number) => {
   return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p;
 };
 
+/** A panel with a title, a one-line hint saying what the chart means, and the chart itself. */
 export function ChartCard({ title, subtitle, right, children, minHeight }: {
   title: string; subtitle?: string; right?: React.ReactNode; children: React.ReactNode; minHeight?: number;
 }) {
   return (
-    <div className="glass-panel" style={{ padding: '18px 20px', minHeight, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10, gap: 10 }}>
+    <div className="panel" style={{ minHeight, display: 'flex', flexDirection: 'column' }}>
+      <div className="panel-head">
         <div>
-          <div style={{ fontWeight: 600, fontSize: 14 }}>{title}</div>
-          {subtitle && <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{subtitle}</div>}
+          <h3>{title}</h3>
+          {subtitle && <div className="hint">{subtitle}</div>}
         </div>
         {right}
       </div>
@@ -35,7 +46,7 @@ export function ChartCard({ title, subtitle, right, children, minHeight }: {
 
 export function NoData({ children, height = 180 }: { children: React.ReactNode; height?: number }) {
   return (
-    <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'var(--text-muted)', fontSize: 12, lineHeight: 1.6, padding: '0 18px' }}>
+    <div style={{ height, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'var(--text-muted)', fontSize: 13, lineHeight: 1.6, padding: '0 18px' }}>
       <div>{children}</div>
     </div>
   );
@@ -109,12 +120,12 @@ export function LineChart({ series, height = 200, unit = '', yMax, yMin = 0, thr
         onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
         {yTicks.map((v, i) => (
           <g key={i}>
-            <line x1={padL} x2={W - padR} y1={y(v)} y2={y(v)} stroke="rgba(255,255,255,0.07)" />
-            <text x={padL - 6} y={y(v) + 3} fontSize={10} fill="#64748b" textAnchor="end">{fmt(v)}</text>
+            <line x1={padL} x2={W - padR} y1={y(v)} y2={y(v)} stroke="var(--line)" />
+            <text x={padL - 6} y={y(v) + 3} fontSize={10} fill="var(--text-muted)" textAnchor="end">{fmt(v)}</text>
           </g>
         ))}
         {xTicks.map((t, i) => (
-          <text key={i} x={x(t)} y={height - 7} fontSize={10} fill="#64748b" textAnchor={i === 0 ? 'start' : i === xTicks.length - 1 ? 'end' : 'middle'}>{fmtTime(t, withSeconds)}</text>
+          <text key={i} x={x(t)} y={height - 7} fontSize={10} fill="var(--text-muted)" textAnchor={i === 0 ? 'start' : i === xTicks.length - 1 ? 'end' : 'middle'}>{fmtTime(t, withSeconds)}</text>
         ))}
         {thresholds.map(th => (
           <g key={th.label}>
@@ -135,14 +146,14 @@ export function LineChart({ series, height = 200, unit = '', yMax, yMin = 0, thr
             </g>
           );
         })}
-        {hover != null && <line x1={x(hover)} x2={x(hover)} y1={padT} y2={height - padB} stroke="rgba(255,255,255,0.25)" />}
-        {hoverVals.map(({ s, p }) => <circle key={s.name} cx={x(p!.t)} cy={y(p!.v)} r={3.5} fill={s.color} stroke="#0a0d14" strokeWidth={1.5} />)}
+        {hover != null && <line x1={x(hover)} x2={x(hover)} y1={padT} y2={height - padB} stroke="var(--text-muted)" opacity={0.6} />}
+        {hoverVals.map(({ s, p }) => <circle key={s.name} cx={x(p!.t)} cy={y(p!.v)} r={3.5} fill={s.color} stroke="var(--bg-secondary)" strokeWidth={1.5} />)}
       </svg>
 
       {hover != null && hoverVals.length > 0 && (
         <div style={{
-          position: 'absolute', top: 6, pointerEvents: 'none', fontSize: 11, padding: '7px 10px', borderRadius: 8,
-          background: 'rgba(10,13,20,0.95)', border: '1px solid var(--glass-border)', zIndex: 5, minWidth: 130,
+          position: 'absolute', top: 6, pointerEvents: 'none', fontSize: 11, padding: '7px 10px', borderRadius: 3,
+          background: 'var(--bg-primary)', border: '1px solid var(--line-strong)', zIndex: 5, minWidth: 130,
           left: `${Math.min(Math.max(((x(hover) / W) * 100), 12), 68)}%`,
         }}>
           <div style={{ color: 'var(--text-muted)', marginBottom: 4 }}>{fmtTime(hover, true)}</div>
@@ -150,7 +161,7 @@ export function LineChart({ series, height = 200, unit = '', yMax, yMin = 0, thr
             <div key={s.name} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
               <span style={{ width: 8, height: 8, borderRadius: 2, background: s.color }} />
               <span style={{ flex: 1, color: 'var(--text-secondary)' }}>{s.name}</span>
-              <strong>{p!.v.toFixed(decimals)}{unit}</strong>
+              <strong style={{ color: 'var(--text-primary)' }}>{p!.v.toFixed(decimals)}{unit}</strong>
             </div>
           ))}
         </div>
@@ -159,9 +170,9 @@ export function LineChart({ series, height = 200, unit = '', yMax, yMin = 0, thr
       {series.length > 1 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginTop: 6 }}>
           {series.map(s => (
-            <button key={s.name} onClick={() => setHidden(h => ({ ...h, [s.name]: !h[s.name] }))} title="Click to show/hide"
-              style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: hidden[s.name] ? '#475569' : 'var(--text-secondary)', textDecoration: hidden[s.name] ? 'line-through' : 'none', background: 'none', cursor: 'pointer' }}>
-              <span style={{ width: 9, height: 9, borderRadius: 2, background: hidden[s.name] ? '#334155' : s.color }} />{s.name}
+            <button key={s.name} onClick={() => setHidden(h => ({ ...h, [s.name]: !h[s.name] }))} title="Click to show or hide this line" aria-pressed={!hidden[s.name]}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: hidden[s.name] ? 'var(--text-muted)' : 'var(--text-secondary)', textDecoration: hidden[s.name] ? 'line-through' : 'none', background: 'none', cursor: 'pointer' }}>
+              <span style={{ width: 9, height: 9, borderRadius: 2, background: hidden[s.name] ? 'var(--line-strong)' : s.color }} />{s.name}
             </button>
           ))}
         </div>
@@ -183,7 +194,7 @@ export function StackedBars({ data, colors, height = 180, emptyText }: {
   const top = niceMax(max);
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height, paddingTop: 8, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height, paddingTop: 8, borderBottom: '1px solid var(--line-strong)' }}>
         {data.map((d, i) => (
           <div key={i} title={`${d.label}: ${keys.map(k => `${k} ${d.values[k] || 0}`).join(', ')}`}
             style={{ flex: 1, display: 'flex', flexDirection: 'column-reverse', height: '100%', justifyContent: 'flex-start', minWidth: 6 }}>
@@ -217,8 +228,8 @@ export function HBars({ rows, unit = '', emptyText }: { rows: { label: string; v
       {rows.map((r, i) => (
         <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11 }}>
           <div style={{ width: 150, color: 'var(--text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={r.label}>{r.label}</div>
-          <div style={{ flex: 1, height: 10, background: 'rgba(255,255,255,0.06)', borderRadius: 5, overflow: 'hidden' }}>
-            <div style={{ width: `${(r.value / max) * 100}%`, height: '100%', background: r.color || 'var(--accent-cyan)', borderRadius: 5 }} />
+          <div style={{ flex: 1, height: 10, background: 'var(--bg-tertiary)', borderRadius: 2, overflow: 'hidden' }}>
+            <div style={{ width: `${(r.value / max) * 100}%`, height: '100%', background: r.color || CHART_BLUE, borderRadius: 2 }} />
           </div>
           <div style={{ width: 70, textAlign: 'right', color: 'var(--text-primary)' }}>{r.note ?? `${r.value.toFixed(1)}${unit}`}</div>
         </div>
@@ -235,7 +246,7 @@ export function Donut({ parts, size = 130, center }: { parts: { label: string; v
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={14} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--line-strong)" strokeWidth={14} />
         {parts.filter(p => p.value > 0).map(p => {
           const len = (p.value / total) * c;
           const el = <circle key={p.label} cx={size / 2} cy={size / 2} r={r} fill="none" stroke={p.color} strokeWidth={14}
@@ -243,7 +254,7 @@ export function Donut({ parts, size = 130, center }: { parts: { label: string; v
           offset += len;
           return el;
         })}
-        {center && <text x="50%" y="50%" textAnchor="middle" dominantBaseline="central" fontSize={20} fontWeight={700} fill="#f8fafc">{center}</text>}
+        {center && <text x="50%" y="50%" textAnchor="middle" dominantBaseline="central" fontSize={20} fontWeight={700} fill="var(--text-primary)">{center}</text>}
       </svg>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
         {parts.map(p => (
@@ -257,21 +268,20 @@ export function Donut({ parts, size = 130, center }: { parts: { label: string; v
   );
 }
 
-export function Sparkline({ values, color = '#00f2fe', width = 90, height = 24 }: { values: number[]; color?: string; width?: number; height?: number }) {
+export function Sparkline({ values, color = CHART_BLUE, width = 90, height = 24 }: { values: number[]; color?: string; width?: number; height?: number }) {
   if (values.length < 2) return <span style={{ color: 'var(--text-muted)', fontSize: 11 }}>–</span>;
   const max = Math.max(...values, 1), min = Math.min(...values, 0);
   const pts = values.map((v, i) => `${((i / (values.length - 1)) * width).toFixed(1)},${(height - 2 - ((v - min) / (max - min || 1)) * (height - 4)).toFixed(1)}`).join(' ');
   return <svg width={width} height={height}><polyline points={pts} fill="none" stroke={color} strokeWidth={1.6} strokeLinejoin="round" /></svg>;
 }
 
+/** One key number: big value, short label, optional one-line note. */
 export function Kpi({ label, value, sub, color = 'var(--text-primary)', icon }: { label: string; value: React.ReactNode; sub?: React.ReactNode; color?: string; icon?: React.ReactNode }) {
   return (
-    <div className="glass-panel" style={{ padding: '16px 18px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--text-muted)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-        <span>{label}</span>{icon}
-      </div>
-      <div style={{ fontSize: 28, fontWeight: 700, marginTop: 6, color }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 2 }}>{sub}</div>}
+    <div className="stat">
+      <div className="v" style={{ color }}>{value}</div>
+      <div className="l" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{icon}{label}</div>
+      {sub && <div className="hint">{sub}</div>}
     </div>
   );
 }

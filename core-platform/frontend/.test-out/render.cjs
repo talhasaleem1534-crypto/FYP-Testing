@@ -184,7 +184,7 @@ var require_react_production_min = __commonJS({
     var U = { current: null };
     var V = { transition: null };
     var W = { ReactCurrentDispatcher: U, ReactCurrentBatchConfig: V, ReactCurrentOwner: K };
-    function X2() {
+    function X3() {
       throw Error("act(...) is not supported in production builds of React.");
     }
     exports2.Children = { map: S, forEach: function(a, b, e) {
@@ -212,7 +212,7 @@ var require_react_production_min = __commonJS({
     exports2.StrictMode = q;
     exports2.Suspense = w;
     exports2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W;
-    exports2.act = X2;
+    exports2.act = X3;
     exports2.cloneElement = function(a, b, e) {
       if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
       var d = C({}, a.props), c = a.key, k = a.ref, h = a._owner;
@@ -264,7 +264,7 @@ var require_react_production_min = __commonJS({
         V.transition = b;
       }
     };
-    exports2.unstable_act = X2;
+    exports2.unstable_act = X3;
     exports2.useCallback = function(a, b) {
       return U.current.useCallback(a, b);
     };
@@ -1373,7 +1373,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context);
         }
-        function useState13(initialState) {
+        function useState14(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -2176,7 +2176,7 @@ var require_react_development = __commonJS({
         exports2.useMemo = useMemo4;
         exports2.useReducer = useReducer;
         exports2.useRef = useRef5;
-        exports2.useState = useState13;
+        exports2.useState = useState14;
         exports2.useSyncExternalStore = useSyncExternalStore;
         exports2.useTransition = useTransition;
         exports2.version = ReactVersion;
@@ -3276,7 +3276,7 @@ var require_react_dom_server_legacy_node_production_min = __commonJS({
               b.blockedBoundary = h;
               b.blockedSegment = m;
               try {
-                if (Jb(a, b, d), a.responseState.generateStaticMarkup || m.lastPushedText && m.textEmbedded && m.chunks.push("<!-- -->"), m.status = 1, X2(h, m), 0 === h.pendingTasks) break a;
+                if (Jb(a, b, d), a.responseState.generateStaticMarkup || m.lastPushedText && m.textEmbedded && m.chunks.push("<!-- -->"), m.status = 1, X3(h, m), 0 === h.pendingTasks) break a;
               } catch (l) {
                 m.status = 4, h.forceClientRender = true, h.errorDigest = U(a, l);
               } finally {
@@ -3421,12 +3421,12 @@ var require_react_dom_server_legacy_node_production_min = __commonJS({
         return Nb(a2, b, c);
       }), d.fallbackAbortableTasks.clear(), b.allPendingTasks--, 0 === b.allPendingTasks && (a = b.onAllReady, a()));
     }
-    function X2(a, b) {
+    function X3(a, b) {
       if (0 === b.chunks.length && 1 === b.children.length && null === b.children[0].boundary) {
         var c = b.children[0];
         c.id = b.id;
         c.parentFlushed = true;
-        1 === c.status && X2(a, c);
+        1 === c.status && X3(a, c);
       } else a.completedSegments.push(b);
     }
     function Mb(a, b, c) {
@@ -3437,7 +3437,7 @@ var require_react_dom_server_legacy_node_production_min = __commonJS({
         }
         a.pendingRootTasks--;
         0 === a.pendingRootTasks && (a.onShellError = S, b = a.onShellReady, b());
-      } else b.pendingTasks--, b.forceClientRender || (0 === b.pendingTasks ? (c.parentFlushed && 1 === c.status && X2(b, c), b.parentFlushed && a.completedBoundaries.push(b), b.fallbackAbortableTasks.forEach(Lb, a), b.fallbackAbortableTasks.clear()) : c.parentFlushed && 1 === c.status && (X2(b, c), 1 === b.completedSegments.length && b.parentFlushed && a.partialBoundaries.push(b)));
+      } else b.pendingTasks--, b.forceClientRender || (0 === b.pendingTasks ? (c.parentFlushed && 1 === c.status && X3(b, c), b.parentFlushed && a.completedBoundaries.push(b), b.fallbackAbortableTasks.forEach(Lb, a), b.fallbackAbortableTasks.clear()) : c.parentFlushed && 1 === c.status && (X3(b, c), 1 === b.completedSegments.length && b.parentFlushed && a.partialBoundaries.push(b)));
       a.allPendingTasks--;
       0 === a.allPendingTasks && (a = a.onAllReady, a());
     }
@@ -4790,7 +4790,7 @@ var require_react_dom_server_node_production_min = __commonJS({
       console.error(a);
       return null;
     }
-    function X2() {
+    function X3() {
     }
     function Pc(a, b) {
       var c = a.pingedTasks;
@@ -5103,7 +5103,7 @@ var require_react_dom_server_node_production_min = __commonJS({
           a.completedRootSegment = c;
         }
         a.pendingRootTasks--;
-        0 === a.pendingRootTasks && (a.onShellError = X2, b = a.onShellReady, b());
+        0 === a.pendingRootTasks && (a.onShellError = X3, b = a.onShellReady, b());
       } else b.pendingTasks--, b.forceClientRender || (0 === b.pendingTasks ? (c.parentFlushed && 1 === c.status && Zc(b, c), b.parentFlushed && a.completedBoundaries.push(b), b.fallbackAbortableTasks.forEach(ad, a), b.fallbackAbortableTasks.clear()) : c.parentFlushed && 1 === c.status && (Zc(b, c), 1 === b.completedSegments.length && b.parentFlushed && a.partialBoundaries.push(b)));
       a.allPendingTasks--;
       0 === a.allPendingTasks && (a = a.onAllReady, a());
@@ -5409,10 +5409,10 @@ var require_react_dom_server_node_production_min = __commonJS({
         completedBoundaries: [],
         partialBoundaries: [],
         onError: void 0 === d ? Oc : d,
-        onAllReady: void 0 === h ? X2 : h,
-        onShellReady: void 0 === m ? X2 : m,
-        onShellError: void 0 === n ? X2 : n,
-        onFatalError: X2
+        onAllReady: void 0 === h ? X3 : h,
+        onShellReady: void 0 === m ? X3 : m,
+        onShellError: void 0 === n ? X3 : n,
+        onFatalError: X3
       };
       e = Sc(g, 0, null, e, false, false);
       e.parentFlushed = true;
@@ -9338,7 +9338,7 @@ var require_react_dom_server_legacy_node_development = __commonJS({
         function basicStateReducer(state, action) {
           return typeof action === "function" ? action(state) : action;
         }
-        function useState13(initialState) {
+        function useState14(initialState) {
           {
             currentHookNameInDev = "useState";
           }
@@ -9520,7 +9520,7 @@ var require_react_dom_server_legacy_node_development = __commonJS({
           useMemo: useMemo4,
           useReducer,
           useRef: useRef5,
-          useState: useState13,
+          useState: useState14,
           useInsertionEffect: noop,
           useLayoutEffect,
           useCallback: useCallback3,
@@ -14776,7 +14776,7 @@ var require_react_dom_server_node_development = __commonJS({
         function basicStateReducer(state, action) {
           return typeof action === "function" ? action(state) : action;
         }
-        function useState13(initialState) {
+        function useState14(initialState) {
           {
             currentHookNameInDev = "useState";
           }
@@ -14958,7 +14958,7 @@ var require_react_dom_server_node_development = __commonJS({
           useMemo: useMemo4,
           useReducer,
           useRef: useRef5,
-          useState: useState13,
+          useState: useState14,
           useInsertionEffect: noop,
           useLayoutEffect,
           useCallback: useCallback3,
@@ -17855,7 +17855,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M3 14v1", key: "vnatye" }],
       ["path", { d: "M21 14v1", key: "169vum" }]
     ]);
-    var Box = createLucideIcon("Box", [
+    var Box2 = createLucideIcon("Box", [
       [
         "path",
         {
@@ -18552,7 +18552,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M18 6 7 17l-5-5", key: "116fxf" }],
       ["path", { d: "m22 10-7.5 7.5L13 16", key: "ke71qq" }]
     ]);
-    var Check4 = createLucideIcon("Check", [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]]);
+    var Check5 = createLucideIcon("Check", [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]]);
     var ChefHat = createLucideIcon("ChefHat", [
       [
         "path",
@@ -21379,7 +21379,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M18 15v6", key: "9wciyi" }],
       ["path", { d: "M21 18h-6", key: "139f0c" }]
     ]);
-    var GitBranch3 = createLucideIcon("GitBranch", [
+    var GitBranch4 = createLucideIcon("GitBranch", [
       ["line", { x1: "6", x2: "6", y1: "3", y2: "15", key: "17qcm7" }],
       ["circle", { cx: "18", cy: "6", r: "3", key: "1h7g24" }],
       ["circle", { cx: "6", cy: "18", r: "3", key: "fqmcym" }],
@@ -21517,7 +21517,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M20 6V4a2 2 0 1 0-4 0v2", key: "1of5e8" }],
       ["rect", { width: "8", height: "5", x: "14", y: "6", rx: "1", key: "1fmf51" }]
     ]);
-    var Globe3 = createLucideIcon("Globe", [
+    var Globe4 = createLucideIcon("Globe", [
       ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
       ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
       ["path", { d: "M2 12h20", key: "9i4pu4" }]
@@ -21800,7 +21800,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M4 15v-3a6 6 0 0 1 6-6", key: "9ciidu" }],
       ["path", { d: "M14 6a6 6 0 0 1 6 6v3", key: "1hnv84" }]
     ]);
-    var Hash = createLucideIcon("Hash", [
+    var Hash3 = createLucideIcon("Hash", [
       ["line", { x1: "4", x2: "20", y1: "9", y2: "9", key: "4lhtct" }],
       ["line", { x1: "4", x2: "20", y1: "15", y2: "15", key: "vyu0kd" }],
       ["line", { x1: "10", x2: "8", y1: "3", y2: "21", key: "1ggp8o" }],
@@ -22264,7 +22264,7 @@ var require_lucide_react = __commonJS({
         }
       ]
     ]);
-    var Info = createLucideIcon("Info", [
+    var Info3 = createLucideIcon("Info", [
       ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
       ["path", { d: "M12 16v-4", key: "1dtifu" }],
       ["path", { d: "M12 8h.01", key: "e9boi3" }]
@@ -22316,7 +22316,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M12 5v6", key: "14ar3b" }],
       ["path", { d: "M18 5v14", key: "7ji314" }]
     ]);
-    var KeyRound2 = createLucideIcon("KeyRound", [
+    var KeyRound = createLucideIcon("KeyRound", [
       ["path", { d: "M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z", key: "167ctg" }],
       ["circle", { cx: "16.5", cy: "7.5", r: ".5", fill: "currentColor", key: "w0ekpg" }]
     ]);
@@ -22654,7 +22654,7 @@ var require_lucide_react = __commonJS({
       ["line", { x1: "8", x2: "12", y1: "12", y2: "12", key: "rvw6j4" }],
       ["line", { x1: "2", x2: "22", y1: "2", y2: "22", key: "a6p6uj" }]
     ]);
-    var Link2 = createLucideIcon("Link2", [
+    var Link22 = createLucideIcon("Link2", [
       ["path", { d: "M9 17H7A5 5 0 0 1 7 7h2", key: "8i5ue5" }],
       ["path", { d: "M15 7h2a5 5 0 1 1 0 10h-2", key: "1b9ql8" }],
       ["line", { x1: "8", x2: "16", y1: "12", y2: "12", key: "1jonct" }]
@@ -22989,7 +22989,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M14.9 9.25a3 3 0 0 0-2.15-2.16", key: "1hwwmx" }],
       ["line", { x1: "2", x2: "22", y1: "2", y2: "22", key: "a6p6uj" }]
     ]);
-    var MapPin = createLucideIcon("MapPin", [
+    var MapPin2 = createLucideIcon("MapPin", [
       ["path", { d: "M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z", key: "2oe9fu" }],
       ["circle", { cx: "12", cy: "10", r: "3", key: "ilqhr7" }]
     ]);
@@ -23545,7 +23545,7 @@ var require_lucide_react = __commonJS({
     var Navigation = createLucideIcon("Navigation", [
       ["polygon", { points: "3 11 22 2 13 21 11 13 3 11", key: "1ltx0t" }]
     ]);
-    var Network2 = createLucideIcon("Network", [
+    var Network3 = createLucideIcon("Network", [
       ["rect", { x: "16", y: "16", width: "6", height: "6", rx: "1", key: "4q2zg0" }],
       ["rect", { x: "2", y: "16", width: "6", height: "6", rx: "1", key: "8cvhb9" }],
       ["rect", { x: "9", y: "2", width: "6", height: "6", rx: "1", key: "1egb70" }],
@@ -26707,7 +26707,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M12 17h10", key: "ls21zv" }],
       ["path", { d: "m3.46 10.54 7.08-7.08", key: "1rehiu" }]
     ]);
-    var Tag = createLucideIcon("Tag", [
+    var Tag3 = createLucideIcon("Tag", [
       [
         "path",
         {
@@ -26798,7 +26798,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "M15.5 21 12 15l-3.5 6", key: "1ddtfw" }],
       ["path", { d: "M2 21h20", key: "1nyx9w" }]
     ]);
-    var Terminal = createLucideIcon("Terminal", [
+    var Terminal2 = createLucideIcon("Terminal", [
       ["polyline", { points: "4 17 10 11 4 5", key: "akl6gq" }],
       ["line", { x1: "12", x2: "20", y1: "19", y2: "19", key: "q2wloq" }]
     ]);
@@ -27476,7 +27476,7 @@ var require_lucide_react = __commonJS({
       ["path", { d: "m17 17 5 5", key: "p7ous7" }],
       ["path", { d: "m22 17-5 5", key: "gqnmv0" }]
     ]);
-    var UserRound2 = createLucideIcon("UserRound", [
+    var UserRound3 = createLucideIcon("UserRound", [
       ["circle", { cx: "12", cy: "8", r: "5", key: "1hypcn" }],
       ["path", { d: "M20 21a8 8 0 0 0-16 0", key: "rfgkzh" }]
     ]);
@@ -27971,7 +27971,7 @@ var require_lucide_react = __commonJS({
         }
       ]
     ]);
-    var X2 = createLucideIcon("X", [
+    var X3 = createLucideIcon("X", [
       ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
       ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
     ]);
@@ -27997,7 +27997,7 @@ var require_lucide_react = __commonJS({
       ],
       ["path", { d: "m2 2 20 20", key: "1ooewy" }]
     ]);
-    var Zap3 = createLucideIcon("Zap", [
+    var Zap2 = createLucideIcon("Zap", [
       [
         "path",
         {
@@ -28236,7 +28236,7 @@ var require_lucide_react = __commonJS({
       Bot: Bot3,
       BotMessageSquare,
       BotOff,
-      Box,
+      Box: Box2,
       BoxSelect,
       Boxes: Boxes3,
       Braces,
@@ -28301,7 +28301,7 @@ var require_lucide_react = __commonJS({
       Castle,
       Cat,
       Cctv,
-      Check: Check4,
+      Check: Check5,
       CheckCheck,
       ChefHat,
       Cherry,
@@ -28668,7 +28668,7 @@ var require_lucide_react = __commonJS({
       Gem,
       Ghost,
       Gift,
-      GitBranch: GitBranch3,
+      GitBranch: GitBranch4,
       GitBranchPlus,
       GitCommitHorizontal,
       GitCommitVertical,
@@ -28687,7 +28687,7 @@ var require_lucide_react = __commonJS({
       Gitlab,
       GlassWater,
       Glasses,
-      Globe: Globe3,
+      Globe: Globe4,
       GlobeLock,
       Goal,
       Grab,
@@ -28715,7 +28715,7 @@ var require_lucide_react = __commonJS({
       HardDriveDownload,
       HardDriveUpload,
       HardHat,
-      Hash,
+      Hash: Hash3,
       Haze,
       HdmiPort,
       Heading,
@@ -28758,7 +28758,7 @@ var require_lucide_react = __commonJS({
       IndentIncrease,
       IndianRupee,
       Infinity: Infinity2,
-      Info,
+      Info: Info3,
       InspectionPanel,
       Instagram,
       Italic,
@@ -28768,7 +28768,7 @@ var require_lucide_react = __commonJS({
       Joystick,
       Kanban,
       Key,
-      KeyRound: KeyRound2,
+      KeyRound,
       KeySquare,
       Keyboard,
       KeyboardMusic,
@@ -28807,7 +28807,7 @@ var require_lucide_react = __commonJS({
       LightbulbOff,
       LineChart: LineChart2,
       Link,
-      Link2,
+      Link2: Link22,
       Link2Off,
       Linkedin,
       List,
@@ -28852,7 +28852,7 @@ var require_lucide_react = __commonJS({
       Mailbox,
       Mails,
       Map: Map2,
-      MapPin,
+      MapPin: MapPin2,
       MapPinOff,
       MapPinned,
       Martini,
@@ -28947,7 +28947,7 @@ var require_lucide_react = __commonJS({
       Navigation2,
       Navigation2Off,
       NavigationOff,
-      Network: Network2,
+      Network: Network3,
       Newspaper,
       Nfc,
       Notebook,
@@ -29331,7 +29331,7 @@ var require_lucide_react = __commonJS({
       Tablet,
       TabletSmartphone,
       Tablets,
-      Tag,
+      Tag: Tag3,
       Tags,
       Tally1,
       Tally2,
@@ -29343,7 +29343,7 @@ var require_lucide_react = __commonJS({
       Telescope,
       Tent,
       TentTree,
-      Terminal,
+      Terminal: Terminal2,
       TestTube,
       TestTubeDiagonal,
       TestTubes,
@@ -29424,7 +29424,7 @@ var require_lucide_react = __commonJS({
       UserCog,
       UserMinus,
       UserPlus: UserPlus2,
-      UserRound: UserRound2,
+      UserRound: UserRound3,
       UserRoundCheck,
       UserRoundCog,
       UserRoundMinus,
@@ -29481,9 +29481,9 @@ var require_lucide_react = __commonJS({
       Worm,
       WrapText: WrapText2,
       Wrench,
-      X: X2,
+      X: X3,
       Youtube,
-      Zap: Zap3,
+      Zap: Zap2,
       ZapOff,
       ZoomIn,
       ZoomOut
@@ -29994,8 +29994,8 @@ var require_lucide_react = __commonJS({
     exports2.BotMessageSquareIcon = BotMessageSquare;
     exports2.BotOff = BotOff;
     exports2.BotOffIcon = BotOff;
-    exports2.Box = Box;
-    exports2.BoxIcon = Box;
+    exports2.Box = Box2;
+    exports2.BoxIcon = Box2;
     exports2.BoxSelect = BoxSelect;
     exports2.BoxSelectIcon = BoxSelect;
     exports2.Boxes = Boxes3;
@@ -30124,14 +30124,14 @@ var require_lucide_react = __commonJS({
     exports2.CatIcon = Cat;
     exports2.Cctv = Cctv;
     exports2.CctvIcon = Cctv;
-    exports2.Check = Check4;
+    exports2.Check = Check5;
     exports2.CheckCheck = CheckCheck;
     exports2.CheckCheckIcon = CheckCheck;
     exports2.CheckCircle = CircleCheckBig;
     exports2.CheckCircle2 = CircleCheck;
     exports2.CheckCircle2Icon = CircleCheck;
     exports2.CheckCircleIcon = CircleCheckBig;
-    exports2.CheckIcon = Check4;
+    exports2.CheckIcon = Check5;
     exports2.CheckSquare = SquareCheckBig;
     exports2.CheckSquare2 = SquareCheck;
     exports2.CheckSquare2Icon = SquareCheck;
@@ -30934,8 +30934,8 @@ var require_lucide_react = __commonJS({
     exports2.GhostIcon = Ghost;
     exports2.Gift = Gift;
     exports2.GiftIcon = Gift;
-    exports2.GitBranch = GitBranch3;
-    exports2.GitBranchIcon = GitBranch3;
+    exports2.GitBranch = GitBranch4;
+    exports2.GitBranchIcon = GitBranch4;
     exports2.GitBranchPlus = GitBranchPlus;
     exports2.GitBranchPlusIcon = GitBranchPlus;
     exports2.GitCommit = GitCommitHorizontal;
@@ -30974,10 +30974,10 @@ var require_lucide_react = __commonJS({
     exports2.GlassWaterIcon = GlassWater;
     exports2.Glasses = Glasses;
     exports2.GlassesIcon = Glasses;
-    exports2.Globe = Globe3;
+    exports2.Globe = Globe4;
     exports2.Globe2 = Earth;
     exports2.Globe2Icon = Earth;
-    exports2.GlobeIcon = Globe3;
+    exports2.GlobeIcon = Globe4;
     exports2.GlobeLock = GlobeLock;
     exports2.GlobeLockIcon = GlobeLock;
     exports2.Goal = Goal;
@@ -31038,8 +31038,8 @@ var require_lucide_react = __commonJS({
     exports2.HardDriveUploadIcon = HardDriveUpload;
     exports2.HardHat = HardHat;
     exports2.HardHatIcon = HardHat;
-    exports2.Hash = Hash;
-    exports2.HashIcon = Hash;
+    exports2.Hash = Hash3;
+    exports2.HashIcon = Hash3;
     exports2.Haze = Haze;
     exports2.HazeIcon = Haze;
     exports2.HdmiPort = HdmiPort;
@@ -31135,8 +31135,8 @@ var require_lucide_react = __commonJS({
     exports2.IndianRupeeIcon = IndianRupee;
     exports2.Infinity = Infinity2;
     exports2.InfinityIcon = Infinity2;
-    exports2.Info = Info;
-    exports2.InfoIcon = Info;
+    exports2.Info = Info3;
+    exports2.InfoIcon = Info3;
     exports2.Inspect = SquareMousePointer;
     exports2.InspectIcon = SquareMousePointer;
     exports2.InspectionPanel = InspectionPanel;
@@ -31161,8 +31161,8 @@ var require_lucide_react = __commonJS({
     exports2.KanbanSquareIcon = SquareKanban;
     exports2.Key = Key;
     exports2.KeyIcon = Key;
-    exports2.KeyRound = KeyRound2;
-    exports2.KeyRoundIcon = KeyRound2;
+    exports2.KeyRound = KeyRound;
+    exports2.KeyRoundIcon = KeyRound;
     exports2.KeySquare = KeySquare;
     exports2.KeySquareIcon = KeySquare;
     exports2.Keyboard = Keyboard;
@@ -31244,8 +31244,8 @@ var require_lucide_react = __commonJS({
     exports2.LineChart = LineChart2;
     exports2.LineChartIcon = LineChart2;
     exports2.Link = Link;
-    exports2.Link2 = Link2;
-    exports2.Link2Icon = Link2;
+    exports2.Link2 = Link22;
+    exports2.Link2Icon = Link22;
     exports2.Link2Off = Link2Off;
     exports2.Link2OffIcon = Link2Off;
     exports2.LinkIcon = Link;
@@ -31562,7 +31562,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideBot = Bot3;
     exports2.LucideBotMessageSquare = BotMessageSquare;
     exports2.LucideBotOff = BotOff;
-    exports2.LucideBox = Box;
+    exports2.LucideBox = Box2;
     exports2.LucideBoxSelect = BoxSelect;
     exports2.LucideBoxes = Boxes3;
     exports2.LucideBraces = Braces;
@@ -31627,7 +31627,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideCastle = Castle;
     exports2.LucideCat = Cat;
     exports2.LucideCctv = Cctv;
-    exports2.LucideCheck = Check4;
+    exports2.LucideCheck = Check5;
     exports2.LucideCheckCheck = CheckCheck;
     exports2.LucideCheckCircle = CircleCheckBig;
     exports2.LucideCheckCircle2 = CircleCheck;
@@ -32032,7 +32032,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideGem = Gem;
     exports2.LucideGhost = Ghost;
     exports2.LucideGift = Gift;
-    exports2.LucideGitBranch = GitBranch3;
+    exports2.LucideGitBranch = GitBranch4;
     exports2.LucideGitBranchPlus = GitBranchPlus;
     exports2.LucideGitCommit = GitCommitHorizontal;
     exports2.LucideGitCommitHorizontal = GitCommitHorizontal;
@@ -32052,7 +32052,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideGitlab = Gitlab;
     exports2.LucideGlassWater = GlassWater;
     exports2.LucideGlasses = Glasses;
-    exports2.LucideGlobe = Globe3;
+    exports2.LucideGlobe = Globe4;
     exports2.LucideGlobe2 = Earth;
     exports2.LucideGlobeLock = GlobeLock;
     exports2.LucideGoal = Goal;
@@ -32084,7 +32084,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideHardDriveDownload = HardDriveDownload;
     exports2.LucideHardDriveUpload = HardDriveUpload;
     exports2.LucideHardHat = HardHat;
-    exports2.LucideHash = Hash;
+    exports2.LucideHash = Hash3;
     exports2.LucideHaze = Haze;
     exports2.LucideHdmiPort = HdmiPort;
     exports2.LucideHeading = Heading;
@@ -32132,7 +32132,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideIndentIncrease = IndentIncrease;
     exports2.LucideIndianRupee = IndianRupee;
     exports2.LucideInfinity = Infinity2;
-    exports2.LucideInfo = Info;
+    exports2.LucideInfo = Info3;
     exports2.LucideInspect = SquareMousePointer;
     exports2.LucideInspectionPanel = InspectionPanel;
     exports2.LucideInstagram = Instagram;
@@ -32145,7 +32145,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideKanbanSquare = SquareKanban;
     exports2.LucideKanbanSquareDashed = SquareDashedKanban;
     exports2.LucideKey = Key;
-    exports2.LucideKeyRound = KeyRound2;
+    exports2.LucideKeyRound = KeyRound;
     exports2.LucideKeySquare = KeySquare;
     exports2.LucideKeyboard = Keyboard;
     exports2.LucideKeyboardMusic = KeyboardMusic;
@@ -32187,7 +32187,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideLightbulbOff = LightbulbOff;
     exports2.LucideLineChart = LineChart2;
     exports2.LucideLink = Link;
-    exports2.LucideLink2 = Link2;
+    exports2.LucideLink2 = Link22;
     exports2.LucideLink2Off = Link2Off;
     exports2.LucideLinkedin = Linkedin;
     exports2.LucideList = List;
@@ -32234,7 +32234,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideMailbox = Mailbox;
     exports2.LucideMails = Mails;
     exports2.LucideMap = Map2;
-    exports2.LucideMapPin = MapPin;
+    exports2.LucideMapPin = MapPin2;
     exports2.LucideMapPinOff = MapPinOff;
     exports2.LucideMapPinned = MapPinned;
     exports2.LucideMartini = Martini;
@@ -32337,7 +32337,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideNavigation2 = Navigation2;
     exports2.LucideNavigation2Off = Navigation2Off;
     exports2.LucideNavigationOff = NavigationOff;
-    exports2.LucideNetwork = Network2;
+    exports2.LucideNetwork = Network3;
     exports2.LucideNewspaper = Newspaper;
     exports2.LucideNfc = Nfc;
     exports2.LucideNotebook = Notebook;
@@ -32770,7 +32770,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideTablet = Tablet;
     exports2.LucideTabletSmartphone = TabletSmartphone;
     exports2.LucideTablets = Tablets;
-    exports2.LucideTag = Tag;
+    exports2.LucideTag = Tag3;
     exports2.LucideTags = Tags;
     exports2.LucideTally1 = Tally1;
     exports2.LucideTally2 = Tally2;
@@ -32782,7 +32782,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideTelescope = Telescope;
     exports2.LucideTent = Tent;
     exports2.LucideTentTree = TentTree;
-    exports2.LucideTerminal = Terminal;
+    exports2.LucideTerminal = Terminal2;
     exports2.LucideTerminalSquare = SquareTerminal;
     exports2.LucideTestTube = TestTube;
     exports2.LucideTestTube2 = TestTubeDiagonal;
@@ -32867,7 +32867,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideUploadCloud = CloudUpload;
     exports2.LucideUsb = Usb;
     exports2.LucideUser = User;
-    exports2.LucideUser2 = UserRound2;
+    exports2.LucideUser2 = UserRound3;
     exports2.LucideUserCheck = UserCheck;
     exports2.LucideUserCheck2 = UserRoundCheck;
     exports2.LucideUserCircle = CircleUser;
@@ -32878,7 +32878,7 @@ var require_lucide_react = __commonJS({
     exports2.LucideUserMinus2 = UserRoundMinus;
     exports2.LucideUserPlus = UserPlus2;
     exports2.LucideUserPlus2 = UserRoundPlus;
-    exports2.LucideUserRound = UserRound2;
+    exports2.LucideUserRound = UserRound3;
     exports2.LucideUserRoundCheck = UserRoundCheck;
     exports2.LucideUserRoundCog = UserRoundCog;
     exports2.LucideUserRoundMinus = UserRoundMinus;
@@ -32942,12 +32942,12 @@ var require_lucide_react = __commonJS({
     exports2.LucideWorm = Worm;
     exports2.LucideWrapText = WrapText2;
     exports2.LucideWrench = Wrench;
-    exports2.LucideX = X2;
+    exports2.LucideX = X3;
     exports2.LucideXCircle = CircleX;
     exports2.LucideXOctagon = OctagonX;
     exports2.LucideXSquare = SquareX;
     exports2.LucideYoutube = Youtube;
-    exports2.LucideZap = Zap3;
+    exports2.LucideZap = Zap2;
     exports2.LucideZapOff = ZapOff;
     exports2.LucideZoomIn = ZoomIn;
     exports2.LucideZoomOut = ZoomOut;
@@ -32981,8 +32981,8 @@ var require_lucide_react = __commonJS({
     exports2.MailsIcon = Mails;
     exports2.Map = Map2;
     exports2.MapIcon = Map2;
-    exports2.MapPin = MapPin;
-    exports2.MapPinIcon = MapPin;
+    exports2.MapPin = MapPin2;
+    exports2.MapPinIcon = MapPin2;
     exports2.MapPinOff = MapPinOff;
     exports2.MapPinOffIcon = MapPinOff;
     exports2.MapPinned = MapPinned;
@@ -33187,8 +33187,8 @@ var require_lucide_react = __commonJS({
     exports2.NavigationIcon = Navigation;
     exports2.NavigationOff = NavigationOff;
     exports2.NavigationOffIcon = NavigationOff;
-    exports2.Network = Network2;
-    exports2.NetworkIcon = Network2;
+    exports2.Network = Network3;
+    exports2.NetworkIcon = Network3;
     exports2.Newspaper = Newspaper;
     exports2.NewspaperIcon = Newspaper;
     exports2.Nfc = Nfc;
@@ -34053,8 +34053,8 @@ var require_lucide_react = __commonJS({
     exports2.TabletSmartphoneIcon = TabletSmartphone;
     exports2.Tablets = Tablets;
     exports2.TabletsIcon = Tablets;
-    exports2.Tag = Tag;
-    exports2.TagIcon = Tag;
+    exports2.Tag = Tag3;
+    exports2.TagIcon = Tag3;
     exports2.Tags = Tags;
     exports2.TagsIcon = Tags;
     exports2.Tally1 = Tally1;
@@ -34077,8 +34077,8 @@ var require_lucide_react = __commonJS({
     exports2.TentIcon = Tent;
     exports2.TentTree = TentTree;
     exports2.TentTreeIcon = TentTree;
-    exports2.Terminal = Terminal;
-    exports2.TerminalIcon = Terminal;
+    exports2.Terminal = Terminal2;
+    exports2.TerminalIcon = Terminal2;
     exports2.TerminalSquare = SquareTerminal;
     exports2.TerminalSquareIcon = SquareTerminal;
     exports2.TestTube = TestTube;
@@ -34246,8 +34246,8 @@ var require_lucide_react = __commonJS({
     exports2.Usb = Usb;
     exports2.UsbIcon = Usb;
     exports2.User = User;
-    exports2.User2 = UserRound2;
-    exports2.User2Icon = UserRound2;
+    exports2.User2 = UserRound3;
+    exports2.User2Icon = UserRound3;
     exports2.UserCheck = UserCheck;
     exports2.UserCheck2 = UserRoundCheck;
     exports2.UserCheck2Icon = UserRoundCheck;
@@ -34269,12 +34269,12 @@ var require_lucide_react = __commonJS({
     exports2.UserPlus2 = UserRoundPlus;
     exports2.UserPlus2Icon = UserRoundPlus;
     exports2.UserPlusIcon = UserPlus2;
-    exports2.UserRound = UserRound2;
+    exports2.UserRound = UserRound3;
     exports2.UserRoundCheck = UserRoundCheck;
     exports2.UserRoundCheckIcon = UserRoundCheck;
     exports2.UserRoundCog = UserRoundCog;
     exports2.UserRoundCogIcon = UserRoundCog;
-    exports2.UserRoundIcon = UserRound2;
+    exports2.UserRoundIcon = UserRound3;
     exports2.UserRoundMinus = UserRoundMinus;
     exports2.UserRoundMinusIcon = UserRoundMinus;
     exports2.UserRoundPlus = UserRoundPlus;
@@ -34397,18 +34397,18 @@ var require_lucide_react = __commonJS({
     exports2.WrapTextIcon = WrapText2;
     exports2.Wrench = Wrench;
     exports2.WrenchIcon = Wrench;
-    exports2.X = X2;
+    exports2.X = X3;
     exports2.XCircle = CircleX;
     exports2.XCircleIcon = CircleX;
-    exports2.XIcon = X2;
+    exports2.XIcon = X3;
     exports2.XOctagon = OctagonX;
     exports2.XOctagonIcon = OctagonX;
     exports2.XSquare = SquareX;
     exports2.XSquareIcon = SquareX;
     exports2.Youtube = Youtube;
     exports2.YoutubeIcon = Youtube;
-    exports2.Zap = Zap3;
-    exports2.ZapIcon = Zap3;
+    exports2.Zap = Zap2;
+    exports2.ZapIcon = Zap2;
     exports2.ZapOff = ZapOff;
     exports2.ZapOffIcon = ZapOff;
     exports2.ZoomIn = ZoomIn;
@@ -35330,11 +35330,11 @@ var require_react_jsx_runtime_development = __commonJS({
             return jsxWithValidation(type, props2, key, false);
           }
         }
-        var jsx17 = jsxWithValidationDynamic;
-        var jsxs16 = jsxWithValidationStatic;
+        var jsx18 = jsxWithValidationDynamic;
+        var jsxs17 = jsxWithValidationStatic;
         exports2.Fragment = REACT_FRAGMENT_TYPE;
-        exports2.jsx = jsx17;
-        exports2.jsxs = jsxs16;
+        exports2.jsx = jsx18;
+        exports2.jsxs = jsxs17;
       })();
     }
   }
@@ -40197,81 +40197,72 @@ function DeployBanner(p) {
     }
   };
   if (p.status === "building" || p.status === "deploying") {
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", borderRadius: 12, background: "rgba(0,242,254,0.07)", border: "1px solid rgba(0,242,254,0.3)", color: "#00f2fe" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Loader2, { size: 20, style: { animation: "spin 1s linear infinite" } }),
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "panel", style: { display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Loader2, { size: 20, style: { animation: "spin 1s linear infinite", flexShrink: 0 } }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { fontWeight: 700 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { fontWeight: 600 }, children: [
           "Deploying ",
           p.appName,
-          "\u2026"
+          "\u2026 this takes one to three minutes"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 12, opacity: 0.8 }, children: "The app link appears here as soon as the deployment succeeds." })
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hint", children: "We are fetching your code, building it and starting it. The link to your app appears here as soon as it is online. You can watch the log below while you wait." })
       ] })
     ] });
   }
   if (p.status === "success" && p.url) {
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "18px 20px", borderRadius: 14, background: "linear-gradient(135deg, rgba(16,185,129,0.20), rgba(0,242,254,0.08))", border: "1px solid rgba(52,211,153,0.55)", boxShadow: "0 0 28px rgba(16,185,129,0.12)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 9, color: "#34d399", fontWeight: 700, fontSize: 15, marginBottom: 10 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.CheckCircle2, { size: 20 }),
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "panel ok", style: { marginBottom: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 9, fontWeight: 600, fontSize: 15, marginBottom: 10, flexWrap: "wrap" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.CheckCircle2, { size: 20, style: { color: "var(--ok)", flexShrink: 0 } }),
         " ",
         p.appName,
-        " deployed successfully",
-        p.simulated && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 11, fontWeight: 600, background: "rgba(245,158,11,0.2)", color: "#fbbf24", padding: "2px 8px", borderRadius: 10 }, children: "simulated" })
+        " is online",
+        p.simulated && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "badge badge-pending", children: "simulated" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-          "a",
-          {
-            href: p.url,
-            target: "_blank",
-            rel: "noreferrer",
-            style: { flex: "1 1 260px", minWidth: 0, fontSize: 20, fontWeight: 700, color: "#fff", textDecoration: "none", wordBreak: "break-all" },
-            children: p.url
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
-          "a",
-          {
-            href: p.url,
-            target: "_blank",
-            rel: "noreferrer",
-            style: { display: "flex", alignItems: "center", gap: 8, padding: "11px 22px", borderRadius: 10, background: "#10b981", color: "#04120c", fontWeight: 800, fontSize: 14, textDecoration: "none", boxShadow: "0 4px 16px rgba(16,185,129,0.4)" },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.ExternalLink, { size: 16 }),
-              " Open App"
-            ]
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { onClick: () => copy(p.url), style: { display: "flex", alignItems: "center", gap: 6, padding: "11px 14px", borderRadius: 10, background: "rgba(255,255,255,0.08)", color: "#e2e8f0", fontWeight: 600, fontSize: 13, border: "1px solid rgba(255,255,255,0.15)", cursor: "pointer" }, children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hint", style: { marginBottom: 10 }, children: "Your app is running. Open it in a new tab with the button, or copy the link to share it with someone on the same network." }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", { className: "url-box", href: p.url, target: "_blank", rel: "noreferrer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Globe, { size: 14 }),
+        " ",
+        p.url
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", { className: "btn blue lg", href: p.url, target: "_blank", rel: "noreferrer", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.ExternalLink, { size: 16 }),
+          " Open App"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { type: "button", className: "btn ghost", onClick: () => copy(p.url), children: copied ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Check, { size: 14 }),
           " Copied"
         ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Copy, { size: 14 }),
-          " Copy"
+          " Copy link"
         ] }) })
       ] }),
-      p.domainUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 10, fontSize: 12, color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: [
+      p.domainUrl && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "hint", style: { marginTop: 10, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Globe, { size: 13 }),
-        " Also routed by Traefik at",
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: p.domainUrl, target: "_blank", rel: "noreferrer", style: { color: "#00f2fe" }, children: p.domainUrl }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { opacity: 0.7 }, children: "(needs DNS or a hosts-file entry pointing the domain at this machine)" })
+        " Also reachable by its domain name at",
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", { href: p.domainUrl, target: "_blank", rel: "noreferrer", style: { color: "var(--text-primary)" }, children: p.domainUrl }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "(only after you point that name at this machine, in DNS or in your hosts file)" })
       ] })
     ] });
   }
   if (p.status === "failed") {
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: "16px 20px", borderRadius: 14, background: "rgba(244,63,94,0.10)", border: "1px solid rgba(244,63,94,0.5)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 9, color: "#fb7185", fontWeight: 700, fontSize: 15 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.AlertCircle, { size: 20 }),
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "panel bad", style: { marginBottom: 12 }, role: "alert", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 9, color: "var(--danger)", fontWeight: 600, fontSize: 15 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.AlertCircle, { size: 20, style: { flexShrink: 0 } }),
         " ",
         p.appName ? `${p.appName}: deployment failed` : "Deployment failed"
       ] }),
-      p.errorText && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { margin: "8px 0 12px", fontFamily: "var(--font-mono)", fontSize: 12.5, color: "#fecdd3", wordBreak: "break-word" }, children: p.errorText }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
-        p.onJumpToError && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: p.onJumpToError, style: btn("#fb7185"), children: [
+      p.errorText && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "note note-error", style: { margin: "10px 0 0" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { display: "block", fontSize: 11, color: "var(--text-muted)", marginBottom: 2 }, children: "The first error in the log" }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("code", { style: { wordBreak: "break-word", whiteSpace: "pre-wrap" }, children: p.errorText })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "hint", style: { margin: "10px 0 12px" }, children: "What to do: read the first red line in the log below; it usually names the missing file or package. Fix it in your repository, push, and press Deploy now again. The copilot can explain the error in plain words." }),
+      (p.onJumpToError || p.onDiagnose) && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
+        p.onJumpToError && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: p.onJumpToError, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.ArrowDownToLine, { size: 14 }),
           " Show only errors"
         ] }),
-        p.onDiagnose && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { onClick: p.onDiagnose, style: btn("#a78bfa"), children: [
+        p.onDiagnose && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { type: "button", className: "btn blue sm", onClick: p.onDiagnose, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_lucide_react.Bot, { size: 14 }),
           " Diagnose with Copilot"
         ] })
@@ -40280,19 +40271,6 @@ function DeployBanner(p) {
   }
   return null;
 }
-var btn = (c) => ({
-  display: "flex",
-  alignItems: "center",
-  gap: 6,
-  padding: "8px 14px",
-  borderRadius: 8,
-  fontWeight: 600,
-  fontSize: 12.5,
-  cursor: "pointer",
-  background: `${c}22`,
-  color: c,
-  border: `1px solid ${c}66`
-});
 
 // src/components/LogViewer.tsx
 init_define_import_meta_env();
@@ -40417,12 +40395,12 @@ function firstError(lines) {
 // src/components/LogViewer.tsx
 var import_jsx_runtime2 = __toESM(require_jsx_runtime(), 1);
 var LEVEL_STYLE = {
-  error: { color: "#fb7185", bg: "rgba(244,63,94,0.10)", label: "ERR" },
-  warn: { color: "#fbbf24", bg: "rgba(245,158,11,0.08)", label: "WRN" },
-  success: { color: "#34d399", label: "OK" },
-  step: { color: "#00f2fe", label: "STEP" },
-  info: { color: "#e2e8f0", label: "INF" },
-  dim: { color: "#7d8aa1", label: "" }
+  error: { color: "var(--danger)", label: "ERR" },
+  warn: { color: "var(--warn)", label: "WRN" },
+  success: { color: "var(--ok)", label: "OK" },
+  step: { color: "var(--text-primary)", label: "STEP" },
+  info: { color: "var(--text-secondary)", label: "INF" },
+  dim: { color: "var(--text-muted)", label: "" }
 };
 var browserUrl = (u) => {
   try {
@@ -40438,7 +40416,7 @@ function Text({ text: text2, query }) {
   let last = 0, k = 0;
   const re2 = new RegExp(URL_RE.source, "g");
   let m;
-  const plain = (s) => splitHighlight(s, query).map((p) => p.hit ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("mark", { style: { background: "#fbbf24", color: "#0a0d14", borderRadius: 2, padding: "0 1px" }, children: p.text }, k++) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.default.Fragment, { children: p.text }, k++));
+  const plain = (s) => splitHighlight(s, query).map((p) => p.hit ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("mark", { style: { background: "var(--warn)", color: "var(--bg-primary)", borderRadius: 2, padding: "0 1px" }, children: p.text }, k++) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react2.default.Fragment, { children: p.text }, k++));
   while (m = re2.exec(text2)) {
     if (m.index > last) nodes.push(...plain(text2.slice(last, m.index)));
     const url2 = m[0].replace(/[.,;]+$/, "");
@@ -40449,7 +40427,7 @@ function Text({ text: text2, query }) {
           href: browserUrl(url2),
           target: "_blank",
           rel: "noreferrer",
-          style: { color: "#00f2fe", textDecoration: "underline", textUnderlineOffset: 2, wordBreak: "break-all" },
+          style: { color: "var(--text-primary)", textDecoration: "underline", textUnderlineOffset: 2, wordBreak: "break-all" },
           children: url2
         },
         k++
@@ -40465,52 +40443,33 @@ function Row({ l, query, wrap, showNums }) {
   const st = LEVEL_STYLE[l.level];
   if (l.isAppUrl) {
     const url2 = browserUrl(l.urls[0]);
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: {
-      display: "flex",
-      alignItems: "center",
-      gap: 12,
-      margin: "8px 0",
-      padding: "10px 14px",
-      borderRadius: 10,
-      background: "linear-gradient(90deg, rgba(52,211,153,0.18), rgba(0,242,254,0.10))",
-      border: "1px solid rgba(52,211,153,0.5)"
-    }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { fontSize: 12, color: "#34d399", fontWeight: 700, letterSpacing: "0.5px" }, children: "APP URL" }),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("a", { href: url2, target: "_blank", rel: "noreferrer", style: { color: "#fff", fontWeight: 700, fontSize: 15, textDecoration: "none", flex: 1, wordBreak: "break-all" }, children: l.urls[0] }),
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
-        "a",
-        {
-          href: url2,
-          target: "_blank",
-          rel: "noreferrer",
-          style: { display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 8, background: "#10b981", color: "#04120c", fontWeight: 700, fontSize: 12, textDecoration: "none" },
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.ExternalLink, { size: 13 }),
-            " Open"
-          ]
-        }
-      )
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "url-box", style: { margin: "8px 0", fontFamily: "var(--font-sans)" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "chip", style: { color: "inherit", borderColor: "currentColor" }, children: "APP URL" }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("a", { href: url2, target: "_blank", rel: "noreferrer", style: { color: "var(--text-primary)", fontWeight: 600, fontSize: 15, textDecoration: "none", flex: 1, wordBreak: "break-all" }, children: l.urls[0] }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("a", { href: url2, target: "_blank", rel: "noreferrer", className: "btn ok sm", style: { textDecoration: "none" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.ExternalLink, { size: 13 }),
+        " Open"
+      ] })
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", gap: 10, padding: "1px 8px", background: st.bg, borderLeft: `2px solid ${l.level === "error" || l.level === "warn" ? st.color : "transparent"}`, alignItems: "baseline" }, children: [
-    showNums && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { width: 30, textAlign: "right", color: "#3b475c", userSelect: "none", flexShrink: 0 }, children: l.n }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { width: 74, color: "#4b5870", flexShrink: 0, userSelect: "none", fontSize: 11 }, children: l.time.replace(/ (AM|PM)$/, "") }),
+  const marked = l.level === "error" || l.level === "warn";
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", gap: 10, padding: "1px 8px", borderLeft: `2px solid ${marked ? st.color : "transparent"}`, alignItems: "baseline" }, children: [
+    showNums && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { width: 30, textAlign: "right", color: "var(--text-muted)", userSelect: "none", flexShrink: 0 }, children: l.n }),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { width: 74, color: "var(--text-muted)", flexShrink: 0, userSelect: "none", fontSize: 11 }, children: l.time.replace(/ (AM|PM)$/, "") }),
     /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { color: st.color, whiteSpace: wrap ? "pre-wrap" : "pre", wordBreak: wrap ? "break-word" : void 0, fontWeight: l.level === "step" ? 700 : 400, flex: 1, minWidth: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Text, { text: l.text, query }) })
   ] });
 }
+var STAGE_BADGE = { done: "badge-success", active: "badge-building", failed: "badge-failed", pending: "badge-idle" };
 function StageBar({ stages }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, children: stages.map((s, i) => {
-    const c = s.state === "done" ? "#34d399" : s.state === "active" ? "#00f2fe" : s.state === "failed" ? "#fb7185" : "#4b5870";
-    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_react2.default.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, padding: "5px 11px", borderRadius: 20, fontSize: 12, fontWeight: 600, color: c, background: `${c}18`, border: `1px solid ${c}55` }, children: [
-        s.state === "done" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Check, { size: 13 }) : s.state === "active" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }) : s.state === "failed" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.XCircle, { size: 13 }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Circle, { size: 11 }),
-        i + 1,
-        ". ",
-        s.label
-      ] }),
-      i < stages.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { width: 14, height: 1, background: "#334155" } })
-    ] }, s.label);
-  }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }, "aria-label": "Pipeline steps", children: stages.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_react2.default.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: `badge ${STAGE_BADGE[s.state] || "badge-idle"}`, title: s.state, style: { textTransform: "none", fontSize: 12 }, children: [
+      s.state === "done" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Check, { size: 13 }) : s.state === "active" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }) : s.state === "failed" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.XCircle, { size: 13 }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Circle, { size: 11 }),
+      i + 1,
+      ". ",
+      s.label
+    ] }),
+    i < stages.length - 1 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { width: 14, height: 1, background: "var(--line-strong)" } })
+  ] }, s.label)) });
 }
 function LogViewer({ lines, status, title, onClear, minHeight = 460, filterRequest }) {
   const [filter, setFilter] = (0, import_react2.useState)("all");
@@ -40565,51 +40524,43 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
     URL.revokeObjectURL(a.href);
   };
   const toggleAll = (open) => setCollapsed(Object.fromEntries(groups.map((g) => [g.id, !open])));
-  const pill = (id, label, n, color) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => setFilter(id), style: {
-    padding: "5px 11px",
-    borderRadius: 20,
-    fontSize: 12,
-    fontWeight: 600,
-    cursor: "pointer",
-    background: filter === id ? `${color}28` : "rgba(255,255,255,0.04)",
-    color: filter === id ? color : "var(--text-secondary)",
-    border: `1px solid ${filter === id ? color : "var(--glass-border)"}`
-  }, children: [
-    label,
-    n !== null && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { marginLeft: 6, opacity: 0.85 }, children: n })
-  ] }, id);
-  const tool = (onClick, icon, label, active = false) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick, title: label, style: {
-    display: "flex",
-    alignItems: "center",
-    gap: 5,
-    padding: "6px 10px",
-    borderRadius: 8,
-    fontSize: 12,
-    cursor: "pointer",
-    background: active ? "rgba(0,242,254,0.14)" : "rgba(255,255,255,0.05)",
-    color: active ? "#00f2fe" : "var(--text-secondary)",
-    border: `1px solid ${active ? "rgba(0,242,254,0.4)" : "var(--glass-border)"}`
-  }, children: [
+  const pill = (id, label, n, color) => {
+    const on2 = filter === id;
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", className: "chip", "aria-pressed": on2, onClick: () => setFilter(id), style: {
+      cursor: "pointer",
+      padding: "5px 10px",
+      fontSize: 12,
+      background: on2 ? "var(--bg-tertiary)" : "transparent",
+      color: on2 ? color : "var(--text-secondary)",
+      borderColor: on2 ? color : "var(--line-strong)"
+    }, children: [
+      label,
+      n !== null && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { marginLeft: 6, opacity: 0.85 }, children: n })
+    ] }, id);
+  };
+  const tool = (onClick, icon, label, active) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", className: `btn sm ${active ? "ghost" : "subtle"}`, onClick, title: label, "aria-pressed": active, style: { gap: 5, fontSize: 12 }, children: [
     icon,
     label
   ] });
-  const groupIcon = (g) => g.status === "failed" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.AlertCircle, { size: 14, color: "#fb7185" }) : g.status === "running" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Loader2, { size: 14, color: "#00f2fe", style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.CheckCircle2, { size: 14, color: "#34d399" });
+  const groupIcon = (g) => g.status === "failed" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.AlertCircle, { size: 14, color: "var(--danger)" }) : g.status === "running" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Loader2, { size: 14, color: "var(--text-secondary)", style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.CheckCircle2, { size: 14, color: "var(--ok)" });
   return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: 10 }, children: [
     showStages && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(StageBar, { stages }),
-    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }, children: [
-      pill("all", "All", parsed.filter((l) => !l.divider).length, "#94a3b8"),
-      pill("error", "Errors", counts.error, "#fb7185"),
-      pill("warn", "Warnings", counts.warn, "#fbbf24"),
-      pill("step", "Key events", null, "#00f2fe"),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }, role: "toolbar", "aria-label": "Log tools", children: [
+      pill("all", "All", parsed.filter((l) => !l.divider).length, "var(--text-primary)"),
+      pill("error", "Errors", counts.error, "var(--danger)"),
+      pill("warn", "Warnings", counts.warn, "var(--warn)"),
+      pill("step", "Key events", null, "var(--text-primary)"),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { position: "relative", flex: "1 1 180px", minWidth: 160 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Search, { size: 13, style: { position: "absolute", left: 10, top: 9, color: "var(--text-muted)" } }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Search, { size: 13, style: { position: "absolute", left: 10, top: 9, color: "var(--text-muted)", pointerEvents: "none" } }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
           "input",
           {
+            className: "input",
             value: query,
             onChange: (e) => setQuery(e.target.value),
             placeholder: "Search logs\u2026",
-            style: { width: "100%", padding: "7px 10px 7px 29px", background: "rgba(0,0,0,0.35)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "#fff", fontSize: 12 }
+            "aria-label": "Search logs",
+            style: { padding: "6px 10px 6px 30px", fontSize: 13 }
           }
         )
       ] }),
@@ -40623,6 +40574,13 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
       tool(download, /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Download, { size: 13 }), "Download"),
       onClear && tool(onClear, /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Trash2, { size: 13 }), "Clear")
     ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "hint", style: { display: "flex", alignItems: "center", gap: 6, marginTop: 0 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Info, { size: 13, style: { flexShrink: 0 } }),
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("strong", { style: { color: "var(--text-secondary)" }, children: "How to read this:" }),
+        " the four steps are fetch, build, start, check. The first red line is usually the cause."
+      ] })
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { position: "relative" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
         "div",
@@ -40630,11 +40588,13 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
           ref: box,
           onScroll,
           className: "terminal-window",
-          style: { minHeight, maxHeight: "calc(100vh - 330px)", overflowY: "auto", fontFamily: "var(--font-mono)", fontSize: 12.5, lineHeight: 1.65, padding: "12px 6px" },
+          role: "log",
+          "aria-live": "polite",
+          style: { minHeight, maxHeight: "calc(100vh - 330px)", overflowY: "auto", fontSize: 12.5, lineHeight: 1.65, padding: "12px 6px" },
           children: [
-            parsed.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { color: "#4b5870", padding: 20 }, children: "No log output yet. Deploy an application to see its pipeline here." }),
+            parsed.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { style: { color: "var(--text-muted)", padding: 20 }, children: "No log output yet. Deploy an application to see its pipeline here." }),
             flat ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { color: "#64748b", padding: "0 8px 8px", fontSize: 11 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { color: "var(--text-muted)", padding: "0 8px 8px", fontSize: 11 }, children: [
                 flatLines.length,
                 " matching line",
                 flatLines.length === 1 ? "" : "s"
@@ -40645,7 +40605,7 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
               const errs = g.lines.filter((l) => l.level === "error").length;
               const bodyLines = g.title === "Setup" ? g.lines : g.lines.slice(1);
               return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { marginBottom: 6 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => setCollapsed((c) => ({ ...c, [g.id]: open })), style: {
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { type: "button", "aria-expanded": open, onClick: () => setCollapsed((c) => ({ ...c, [g.id]: open })), style: {
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
@@ -40654,9 +40614,10 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
                   cursor: "pointer",
                   padding: "6px 8px",
                   margin: "4px 0 2px",
-                  background: "rgba(255,255,255,0.035)",
-                  borderRadius: 6,
-                  color: "#e2e8f0",
+                  background: "var(--bg-secondary)",
+                  border: "1px solid var(--line)",
+                  borderRadius: 3,
+                  color: "var(--text-primary)",
                   fontFamily: "var(--font-sans)",
                   fontSize: 13,
                   fontWeight: 600
@@ -40664,12 +40625,12 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
                   open ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.ChevronDown, { size: 14 }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.ChevronRight, { size: 14 }),
                   groupIcon(g),
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { style: { flex: 1 }, children: g.title }),
-                  errs > 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { style: { color: "#fb7185", fontSize: 11 }, children: [
+                  errs > 0 && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { style: { color: "var(--danger)", fontSize: 11 }, children: [
                     errs,
                     " error",
                     errs > 1 ? "s" : ""
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { style: { color: "#64748b", fontSize: 11, fontWeight: 400 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { style: { color: "var(--text-muted)", fontSize: 11, fontWeight: 400 }, children: [
                     g.lines.length,
                     " lines"
                   ] })
@@ -40677,7 +40638,7 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
                 open && bodyLines.map((l) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Row, { l, query, wrap, showNums }, l.n))
               ] }, g.id);
             }),
-            status === "building" || status === "deploying" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, color: "#00f2fe", padding: "6px 10px", fontSize: 12 }, children: [
+            status === "building" || status === "deploying" ? /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, color: "var(--text-secondary)", padding: "6px 10px", fontSize: 12 }, children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }),
               " Running\u2026"
             ] }) : null
@@ -40687,11 +40648,13 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
       !follow && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
         "button",
         {
+          type: "button",
+          className: "btn blue sm",
           onClick: () => {
             setFollow(true);
             box.current && (box.current.scrollTop = box.current.scrollHeight);
           },
-          style: { position: "absolute", right: 16, bottom: 14, display: "flex", alignItems: "center", gap: 6, padding: "7px 12px", borderRadius: 20, background: "#00f2fe", color: "#04121a", fontWeight: 700, fontSize: 12, cursor: "pointer", boxShadow: "0 4px 14px rgba(0,242,254,0.35)" },
+          style: { position: "absolute", right: 16, bottom: 14 },
           children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_lucide_react2.ArrowDown, { size: 13 }),
             " Jump to latest"
@@ -40706,7 +40669,13 @@ function LogViewer({ lines, status, title, onClear, minHeight = 460, filterReque
 init_define_import_meta_env();
 var import_react3 = __toESM(require_react(), 1);
 var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
-var PALETTE = ["#00f2fe", "#a78bfa", "#f472b6", "#fbbf24", "#34d399", "#60a5fa", "#fb7185", "#2dd4bf"];
+var CHART_BLUE = "#4f78ff";
+var CHART_GREEN = "#9fd49a";
+var CHART_AMBER = "#e8b64a";
+var CHART_RED = "#e4584f";
+var CHART_GREY = "#a8a8a8";
+var CHART_WHITE = "#f2f2f2";
+var PALETTE = [CHART_BLUE, CHART_GREEN, CHART_AMBER, CHART_RED, CHART_GREY, CHART_WHITE];
 var fmtTime = (t, withSeconds) => new Date(t).toLocaleTimeString([], withSeconds ? { hour: "2-digit", minute: "2-digit", second: "2-digit" } : { hour: "2-digit", minute: "2-digit" });
 var niceMax = (v) => {
   if (!isFinite(v) || v <= 0) return 1;
@@ -40715,11 +40684,11 @@ var niceMax = (v) => {
   return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p;
 };
 function ChartCard({ title, subtitle, right, children, minHeight }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "glass-panel", style: { padding: "18px 20px", minHeight, display: "flex", flexDirection: "column" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10, gap: 10 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "panel", style: { minHeight, display: "flex", flexDirection: "column" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "panel-head", children: [
       /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontWeight: 600, fontSize: 14 }, children: title }),
-        subtitle && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: subtitle })
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("h3", { children: title }),
+        subtitle && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "hint", children: subtitle })
       ] }),
       right
     ] }),
@@ -40727,7 +40696,7 @@ function ChartCard({ title, subtitle, right, children, minHeight }) {
   ] });
 }
 function NoData({ children, height = 180 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { height, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", color: "var(--text-muted)", fontSize: 12, lineHeight: 1.6, padding: "0 18px" }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { children }) });
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { height, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", color: "var(--text-muted)", fontSize: 13, lineHeight: 1.6, padding: "0 18px" }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { children }) });
 }
 function LineChart({ series, height = 200, unit = "", yMax, yMin = 0, thresholds = [], area = false, windowMs, decimals = 1, emptyText }) {
   const padL = 44, padR = 12, padT = 10, padB = 24;
@@ -40800,10 +40769,10 @@ function LineChart({ series, height = 200, unit = "", yMax, yMin = 0, thresholds
         onMouseLeave: () => setHover(null),
         children: [
           yTicks.map((v, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("g", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: padL, x2: W - padR, y1: y(v), y2: y(v), stroke: "rgba(255,255,255,0.07)" }),
-            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: padL - 6, y: y(v) + 3, fontSize: 10, fill: "#64748b", textAnchor: "end", children: fmt(v) })
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: padL, x2: W - padR, y1: y(v), y2: y(v), stroke: "var(--line)" }),
+            /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: padL - 6, y: y(v) + 3, fontSize: 10, fill: "var(--text-muted)", textAnchor: "end", children: fmt(v) })
           ] }, i)),
-          xTicks.map((t, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: x(t), y: height - 7, fontSize: 10, fill: "#64748b", textAnchor: i === 0 ? "start" : i === xTicks.length - 1 ? "end" : "middle", children: fmtTime(t, withSeconds) }, i)),
+          xTicks.map((t, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: x(t), y: height - 7, fontSize: 10, fill: "var(--text-muted)", textAnchor: i === 0 ? "start" : i === xTicks.length - 1 ? "end" : "middle", children: fmtTime(t, withSeconds) }, i)),
           thresholds.map((th) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("g", { children: [
             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: padL, x2: W - padR, y1: y(th.value), y2: y(th.value), stroke: th.color, strokeDasharray: "5 4", opacity: 0.8 }),
             /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: W - padR - 2, y: y(th.value) - 4, fontSize: 10, fill: th.color, textAnchor: "end", children: th.label })
@@ -40817,8 +40786,8 @@ function LineChart({ series, height = 200, unit = "", yMax, yMin = 0, thresholds
               /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("path", { d, fill: "none", stroke: s.color, strokeWidth: 1.8, strokeLinejoin: "round", strokeDasharray: s.dashed ? "4 3" : void 0 })
             ] }, s.name);
           }),
-          hover != null && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: x(hover), x2: x(hover), y1: padT, y2: height - padB, stroke: "rgba(255,255,255,0.25)" }),
-          hoverVals.map(({ s, p }) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("circle", { cx: x(p.t), cy: y(p.v), r: 3.5, fill: s.color, stroke: "#0a0d14", strokeWidth: 1.5 }, s.name))
+          hover != null && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("line", { x1: x(hover), x2: x(hover), y1: padT, y2: height - padB, stroke: "var(--text-muted)", opacity: 0.6 }),
+          hoverVals.map(({ s, p }) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("circle", { cx: x(p.t), cy: y(p.v), r: 3.5, fill: s.color, stroke: "var(--bg-secondary)", strokeWidth: 1.5 }, s.name))
         ]
       }
     ),
@@ -40828,9 +40797,9 @@ function LineChart({ series, height = 200, unit = "", yMax, yMin = 0, thresholds
       pointerEvents: "none",
       fontSize: 11,
       padding: "7px 10px",
-      borderRadius: 8,
-      background: "rgba(10,13,20,0.95)",
-      border: "1px solid var(--glass-border)",
+      borderRadius: 3,
+      background: "var(--bg-primary)",
+      border: "1px solid var(--line-strong)",
       zIndex: 5,
       minWidth: 130,
       left: `${Math.min(Math.max(x(hover) / W * 100, 12), 68)}%`
@@ -40839,7 +40808,7 @@ function LineChart({ series, height = 200, unit = "", yMax, yMin = 0, thresholds
       hoverVals.map(({ s, p }) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", gap: 8, alignItems: "center" }, children: [
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { width: 8, height: 8, borderRadius: 2, background: s.color } }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { flex: 1, color: "var(--text-secondary)" }, children: s.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("strong", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("strong", { style: { color: "var(--text-primary)" }, children: [
           p.v.toFixed(decimals),
           unit
         ] })
@@ -40849,10 +40818,11 @@ function LineChart({ series, height = 200, unit = "", yMax, yMin = 0, thresholds
       "button",
       {
         onClick: () => setHidden((h) => ({ ...h, [s.name]: !h[s.name] })),
-        title: "Click to show/hide",
-        style: { display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: hidden[s.name] ? "#475569" : "var(--text-secondary)", textDecoration: hidden[s.name] ? "line-through" : "none", background: "none", cursor: "pointer" },
+        title: "Click to show or hide this line",
+        "aria-pressed": !hidden[s.name],
+        style: { display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: hidden[s.name] ? "var(--text-muted)" : "var(--text-secondary)", textDecoration: hidden[s.name] ? "line-through" : "none", background: "none", cursor: "pointer" },
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { width: 9, height: 9, borderRadius: 2, background: hidden[s.name] ? "#334155" : s.color } }),
+          /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { width: 9, height: 9, borderRadius: 2, background: hidden[s.name] ? "var(--line-strong)" : s.color } }),
           s.name
         ]
       },
@@ -40867,7 +40837,7 @@ function StackedBars({ data, colors, height = 180, emptyText }) {
   if (!data.length || max === 0) return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(NoData, { height, children: emptyText || "No data yet" });
   const top = niceMax(max);
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, height, paddingTop: 8, borderBottom: "1px solid rgba(255,255,255,0.1)" }, children: data.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "flex", alignItems: "flex-end", gap: 6, height, paddingTop: 8, borderBottom: "1px solid var(--line-strong)" }, children: data.map((d, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
       "div",
       {
         title: `${d.label}: ${keys.map((k) => `${k} ${d.values[k] || 0}`).join(", ")}`,
@@ -40888,7 +40858,7 @@ function HBars({ rows, unit = "", emptyText }) {
   const max = Math.max(...rows.map((r) => r.value), 1);
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 7 }, children: rows.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 11 }, children: [
     /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { width: 150, color: "var(--text-secondary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, title: r.label, children: r.label }),
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { flex: 1, height: 10, background: "rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { width: `${r.value / max * 100}%`, height: "100%", background: r.color || "var(--accent-cyan)", borderRadius: 5 } }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { flex: 1, height: 10, background: "var(--bg-tertiary)", borderRadius: 2, overflow: "hidden" }, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { width: `${r.value / max * 100}%`, height: "100%", background: r.color || CHART_BLUE, borderRadius: 2 } }) }),
     /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { width: 70, textAlign: "right", color: "var(--text-primary)" }, children: r.note ?? `${r.value.toFixed(1)}${unit}` })
   ] }, i)) });
 }
@@ -40899,7 +40869,7 @@ function Donut({ parts: parts2, size: size2 = 130, center }) {
   let offset = 0;
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 18 }, children: [
     /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("svg", { width: size2, height: size2, viewBox: `0 0 ${size2} ${size2}`, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("circle", { cx: size2 / 2, cy: size2 / 2, r, fill: "none", stroke: "rgba(255,255,255,0.06)", strokeWidth: 14 }),
+      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("circle", { cx: size2 / 2, cy: size2 / 2, r, fill: "none", stroke: "var(--line-strong)", strokeWidth: 14 }),
       parts2.filter((p) => p.value > 0).map((p) => {
         const len = p.value / total * c;
         const el = /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
@@ -40920,7 +40890,7 @@ function Donut({ parts: parts2, size: size2 = 130, center }) {
         offset += len;
         return el;
       }),
-      center && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: "50%", y: "50%", textAnchor: "middle", dominantBaseline: "central", fontSize: 20, fontWeight: 700, fill: "#f8fafc", children: center })
+      center && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("text", { x: "50%", y: "50%", textAnchor: "middle", dominantBaseline: "central", fontSize: 20, fontWeight: 700, fill: "var(--text-primary)", children: center })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: 5 }, children: parts2.map((p) => /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: "var(--text-secondary)" }, children: [
       /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { width: 9, height: 9, borderRadius: 2, background: p.color } }),
@@ -40929,31 +40899,111 @@ function Donut({ parts: parts2, size: size2 = 130, center }) {
     ] }, p.label)) })
   ] });
 }
-function Sparkline({ values, color = "#00f2fe", width = 90, height = 24 }) {
+function Sparkline({ values, color = CHART_BLUE, width = 90, height = 24 }) {
   if (values.length < 2) return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 11 }, children: "\u2013" });
   const max = Math.max(...values, 1), min = Math.min(...values, 0);
   const pts = values.map((v, i) => `${(i / (values.length - 1) * width).toFixed(1)},${(height - 2 - (v - min) / (max - min || 1) * (height - 4)).toFixed(1)}`).join(" ");
   return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("svg", { width, height, children: /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("polyline", { points: pts, fill: "none", stroke: color, strokeWidth: 1.6, strokeLinejoin: "round" }) });
 }
 function Kpi({ label, value: value2, sub, color = "var(--text-primary)", icon }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "glass-panel", style: { padding: "16px 18px" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", color: "var(--text-muted)", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.5px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("span", { children: label }),
-      icon
+  return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "stat", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "v", style: { color }, children: value2 }),
+    /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("div", { className: "l", style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+      icon,
+      label
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: 28, fontWeight: 700, marginTop: 6, color }, children: value2 }),
-    sub && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginTop: 2 }, children: sub })
+    sub && /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("div", { className: "hint", children: sub })
   ] });
 }
 
 // src/Dashboard.tsx
 init_define_import_meta_env();
-var import_react5 = __toESM(require_react(), 1);
+var import_react6 = __toESM(require_react(), 1);
+var import_lucide_react4 = __toESM(require_lucide_react(), 1);
+
+// src/components/ui.tsx
+init_define_import_meta_env();
+var import_react4 = __toESM(require_react(), 1);
 var import_lucide_react3 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+function PageHead({ title, text: text2, actions, small = false }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "page-head", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
+      small ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { children: title }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h1", { children: title }),
+      text2 && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: text2 })
+    ] }),
+    actions && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "actions", children: actions })
+  ] });
+}
+function Help({ id, title = "What is this?", children, need, steps, next }) {
+  const key = `omnideploy.help.${id}`;
+  const [hidden, setHidden] = (0, import_react4.useState)(() => {
+    try {
+      return localStorage.getItem(key) === "hidden";
+    } catch {
+      return false;
+    }
+  });
+  const toggle = (h) => {
+    setHidden(h);
+    try {
+      h ? localStorage.setItem(key, "hidden") : localStorage.removeItem(key);
+    } catch {
+    }
+  };
+  if (hidden) {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { type: "button", className: "help-show", onClick: () => toggle(false), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Info, { size: 13 }),
+      " Show the explanation for this page"
+    ] });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("section", { className: "help", "aria-label": title, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "help-head", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Info, { size: 15 }),
+      " ",
+      title,
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("button", { type: "button", className: "linkish", onClick: () => toggle(true), "aria-label": "Hide this explanation", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.X, { size: 11, style: { verticalAlign: -1 } }),
+        " Hide"
+      ] })
+    ] }),
+    children && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children }),
+    need && need.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { children: "You will need" }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("ul", { children: need.map((n, i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.CheckCircle2, { size: 14 }),
+        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: n })
+      ] }, i)) })
+    ] }),
+    steps && steps.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h5", { children: "What happens" }),
+      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("ol", { children: steps.map((s, i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { children: s }) }, i)) })
+    ] }),
+    next && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("p", { children: next })
+  ] });
+}
+function StatusLegend({ items }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "legend", children: items.map((i) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { className: `badge ${i.cls}`, children: i.label }),
+    " ",
+    i.meaning
+  ] }, i.label)) });
+}
+var APP_STATUS_LEGEND = [
+  { cls: "badge-running", label: "running", meaning: "your app is online" },
+  { cls: "badge-building", label: "building", meaning: "being built and started right now" },
+  { cls: "badge-idle", label: "idle", meaning: "created, not deployed yet" },
+  { cls: "badge-failed", label: "failed", meaning: "the last deploy did not work; open the log" }
+];
+var SERVER_STATUS_LEGEND = [
+  { cls: "badge-verified", label: "verified", meaning: "OmniDeploy can log in and Docker works" },
+  { cls: "badge-building", label: "pending", meaning: "not checked yet" },
+  { cls: "badge-failed", label: "not ready", meaning: "something is missing; open the checklist" }
+];
 
 // src/lib/telemetry.ts
 init_define_import_meta_env();
-var import_react4 = __toESM(require_react(), 1);
+var import_react5 = __toESM(require_react(), 1);
 function seriesFor(history2, pick2, windowMs, maxSeries = 8) {
   const cut = Date.now() - windowMs;
   const names = /* @__PURE__ */ new Map();
@@ -40976,19 +41026,20 @@ var fmtDuration = (ms) => {
 };
 
 // src/Dashboard.tsx
-var import_jsx_runtime4 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
 var WINDOWS = [{ label: "5 min", ms: 5 * 6e4 }, { label: "15 min", ms: 15 * 6e4 }, { label: "1 hour", ms: 60 * 6e4 }];
-var STATUS_COLOR = { HEALTHY: "#34d399", DEGRADING: "#fbbf24", ANOMALOUS: "#fb7185" };
+var STATUS_BADGE = { HEALTHY: "badge-success", DEGRADING: "badge-pending", ANOMALOUS: "badge-failed" };
+var STATUS_COLOR = { HEALTHY: CHART_GREEN, DEGRADING: CHART_AMBER, ANOMALOUS: CHART_RED };
 function Dashboard(p) {
   const { apps, deployments: deployments2, history: history2, windowMs } = p;
-  const [showAllDays, setShowAllDays] = (0, import_react5.useState)(false);
+  const [showAllDays, setShowAllDays] = (0, import_react6.useState)(false);
   const latest = history2[history2.length - 1];
   const containers = latest ? Object.entries(latest.c) : [];
   const counts = { HEALTHY: 0, DEGRADING: 0, ANOMALOUS: 0 };
   containers.forEach(([, c]) => {
     counts[c.status] = (counts[c.status] || 0) + 1;
   });
-  const dep = (0, import_react5.useMemo)(() => {
+  const dep = (0, import_react6.useMemo)(() => {
     const done = deployments2.filter((d) => d.status === "success" || d.status === "failed");
     const ok2 = done.filter((d) => d.status === "success");
     const durations = ok2.filter((d) => d.finished_at).map((d) => ({ d, ms: new Date(d.finished_at).getTime() - new Date(d.created_at).getTime() }));
@@ -41017,107 +41068,131 @@ function Dashboard(p) {
       recent: durations.slice(0, 8).map((x) => ({ label: `${x.d.app_name} ${x.d.commit_sha ? "\xB7 " + x.d.commit_sha.slice(0, 7) : ""}`, value: x.ms / 1e3, note: fmtDuration(x.ms) }))
     };
   }, [deployments2, showAllDays]);
-  const cpu = (0, import_react5.useMemo)(() => seriesFor(history2, (c) => c.cpu, windowMs), [history2, windowMs]);
-  const mem = (0, import_react5.useMemo)(() => seriesFor(history2, (c) => c.mem, windowMs), [history2, windowMs]);
-  const score = (0, import_react5.useMemo)(() => seriesFor(history2, (c) => c.score, windowMs), [history2, windowMs]);
-  const net = (0, import_react5.useMemo)(() => [
-    totalSeries(history2, "Inbound", "#00f2fe", (c) => c.netIn, windowMs),
-    totalSeries(history2, "Outbound", "#a78bfa", (c) => c.netOut, windowMs)
+  const cpu = (0, import_react6.useMemo)(() => seriesFor(history2, (c) => c.cpu, windowMs), [history2, windowMs]);
+  const mem = (0, import_react6.useMemo)(() => seriesFor(history2, (c) => c.mem, windowMs), [history2, windowMs]);
+  const score = (0, import_react6.useMemo)(() => seriesFor(history2, (c) => c.score, windowMs), [history2, windowMs]);
+  const net = (0, import_react6.useMemo)(() => [
+    totalSeries(history2, "Inbound", CHART_BLUE, (c) => c.netIn, windowMs),
+    totalSeries(history2, "Outbound", CHART_GREY, (c) => c.netOut, windowMs)
   ], [history2, windowMs]);
   const reqNow = p.traffic.length ? p.traffic.reduce((a, s) => a + (s.points[s.points.length - 1]?.v || 0), 0) : null;
   const running = apps.filter((a) => a.status === "running").length;
   const replicas = apps.filter((a) => a.status === "running").reduce((a, x) => a + x.replicas, 0);
   const noContainers = !latest || containers.length === 0;
-  const waiting = p.telemetryError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
+  const waiting = p.telemetryError ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
     p.telemetryError,
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("br", {}),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("br", {}),
     "Start the AI engine and Docker, or turn on Demo Mode."
   ] }) : p.telemetryLoading ? "Collecting the first samples\u2026 (the first scan takes a few seconds)" : "No running containers found.";
-  const hdr = /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
-    WINDOWS.map((w) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => p.onWindow(w.ms), style: {
-      padding: "6px 12px",
-      borderRadius: 8,
-      fontSize: 12,
-      fontWeight: 600,
-      cursor: "pointer",
-      background: windowMs === w.ms ? "rgba(0,242,254,0.15)" : "rgba(255,255,255,0.05)",
-      color: windowMs === w.ms ? "#00f2fe" : "var(--text-secondary)",
-      border: `1px solid ${windowMs === w.ms ? "rgba(0,242,254,0.4)" : "var(--glass-border)"}`
-    }, children: w.label }, w.ms)),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-      "button",
-      {
-        onClick: () => p.onPause(!p.paused),
-        title: p.paused ? "Resume live updates" : "Pause live updates",
-        style: { display: "flex", alignItems: "center", gap: 6, padding: "6px 12px", borderRadius: 8, fontSize: 12, cursor: "pointer", background: "rgba(255,255,255,0.05)", color: "var(--text-secondary)", border: "1px solid var(--glass-border)" },
-        children: p.paused ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Play, { size: 12 }),
-          " Resume"
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(import_jsx_runtime4.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Pause, { size: 12 }),
-          " Pause"
-        ] })
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-      "button",
-      {
-        onClick: p.onClearHistory,
-        title: "Clear collected samples",
-        style: { display: "flex", alignItems: "center", gap: 6, padding: "6px 10px", borderRadius: 8, fontSize: 12, cursor: "pointer", background: "rgba(255,255,255,0.05)", color: "var(--text-secondary)", border: "1px solid var(--glass-border)" },
-        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Trash2, { size: 12 })
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: p.paused ? "#fbbf24" : "#34d399" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("span", { style: { width: 7, height: 7, borderRadius: "50%", background: "currentColor", animation: p.paused ? void 0 : "pulse 2s infinite" } }),
+  const hdr = /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+    WINDOWS.map((w) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: `btn sm ${windowMs === w.ms ? "blue" : "ghost"}`, "aria-pressed": windowMs === w.ms, onClick: () => p.onWindow(w.ms), children: w.label }, w.ms)),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: "btn ghost sm", onClick: () => p.onPause(!p.paused), title: p.paused ? "Resume live updates" : "Pause live updates", children: p.paused ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Play, { size: 13 }),
+      " Resume"
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Pause, { size: 13 }),
+      " Pause"
+    ] }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: "btn subtle sm icon", onClick: p.onClearHistory, title: "Clear collected samples", "aria-label": "Clear collected samples", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Trash2, { size: 13 }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { className: "hint", style: { display: "inline-flex", alignItems: "center", marginTop: 0, alignSelf: "center" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: `status-dot ${p.paused ? "" : "on"}` }),
       p.paused ? "Paused" : "Live"
     ] })
   ] });
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "animate-slide-up", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("h2", { style: { fontSize: 24, fontWeight: 700 }, children: "Dashboard" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("p", { style: { color: "var(--text-secondary)", fontSize: 14, marginTop: 5 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "animate-slide-up", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+      PageHead,
+      {
+        title: "Dashboard",
+        actions: hdr,
+        text: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
           "Live traffic, resource usage, anomaly scores and deployment history",
           p.demo ? " \u2014 simulated data (Demo Mode)" : "",
           "."
         ] })
-      ] }),
-      hdr
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 14, marginBottom: 18 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Kpi, { label: "Applications", icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Layers, { size: 15 }), value: `${running}/${apps.length}`, sub: `running \xB7 ${replicas} replica${replicas === 1 ? "" : "s"}`, color: "#34d399" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Kpi, { label: "Deployments", icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Rocket, { size: 15 }), value: dep.total, sub: dep.rate === null ? "none finished yet" : `${dep.rate}% succeeded \xB7 ${dep.failed} failed` }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Kpi, { label: "Avg deploy time", icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Timer, { size: 15 }), value: fmtDuration(dep.avg), sub: "successful deployments" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+      Help,
+      {
+        id: "admin-dashboard",
+        title: "What am I looking at?",
+        steps: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+            "The ",
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "AI engine" }),
+            " reads every running container every 5 seconds and sends the CPU, memory, network and anomaly numbers here."
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+            "Requests per second come from ",
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "Prometheus" }),
+            ", which counts what the Traefik router sees. Without that stack the request chart stays empty."
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+            "In ",
+            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "Demo Mode" }),
+            " every number is simulated so you can explore the page without servers."
+          ] })
+        ],
+        next: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+          "When a container turns ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "DEGRADING" }),
+          ", keep an eye on it: its numbers are drifting away from normal. When it turns ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "ANOMALOUS" }),
+          ", open its log in Applications, ask the Copilot, and restart or redeploy the app if it stays red."
+        ] }),
+        children: [
+          "Each chart is about the apps running on your servers. ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "HTTP requests / second" }),
+          " is how many visits the router sees for each app.",
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "CPU" }),
+          " and ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "Memory" }),
+          " show how hard each container is working, as a percent.",
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "Network in / out" }),
+          " is the data the containers receive and send.",
+          " ",
+          "The ",
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("strong", { children: "anomaly score" }),
+          " is the AI engine's opinion of how normal a container looks: lower is more unusual, and the dashed line is the limit."
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "grid", style: { gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", marginBottom: 16 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Kpi, { label: "Applications", icon: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Layers, { size: 13 }), value: `${running}/${apps.length}`, sub: `running \xB7 ${replicas} replica${replicas === 1 ? "" : "s"}` }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Kpi, { label: "Deployments", icon: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Rocket, { size: 13 }), value: dep.total, sub: dep.rate === null ? "none finished yet" : `${dep.rate}% succeeded \xB7 ${dep.failed} failed` }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Kpi, { label: "Avg deploy time", icon: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Timer, { size: 13 }), value: fmtDuration(dep.avg), sub: "successful deployments" }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
         Kpi,
         {
           label: "Containers",
-          icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Boxes, { size: 15 }),
+          icon: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Boxes, { size: 13 }),
           value: containers.length,
           sub: `${counts.HEALTHY} healthy \xB7 ${counts.DEGRADING} degrading \xB7 ${counts.ANOMALOUS} anomalous`,
-          color: counts.ANOMALOUS ? "#fb7185" : counts.DEGRADING ? "#fbbf24" : "#f8fafc"
+          color: counts.ANOMALOUS ? "var(--danger)" : counts.DEGRADING ? "var(--warn)" : "var(--text-primary)"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Kpi, { label: "Requests / sec", icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Network, { size: 15 }), value: reqNow === null ? "\u2013" : reqNow.toFixed(1), sub: p.trafficError ? "Prometheus not reachable" : "via Traefik" }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Kpi, { label: "Anomaly alerts", icon: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Gauge, { size: 15 }), value: counts.ANOMALOUS, sub: "right now", color: counts.ANOMALOUS ? "#fb7185" : "#34d399" })
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Kpi, { label: "Requests / sec", icon: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Network, { size: 13 }), value: reqNow === null ? "\u2013" : reqNow.toFixed(1), sub: p.trafficError ? "Prometheus not reachable" : "via Traefik" }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Kpi, { label: "Anomaly alerts", icon: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Gauge, { size: 13 }), value: counts.ANOMALOUS, sub: "right now", color: counts.ANOMALOUS ? "var(--danger)" : "var(--ok)" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", gap: 16, marginBottom: 16 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "HTTP requests / second", subtitle: "Per application, measured by Traefik (needs the Traefik + Prometheus stack)", children: p.trafficError ? /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(NoData, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "grid two", style: { gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", marginBottom: 14 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "HTTP requests / second", subtitle: "Higher is busier. One line per app, counted by the Traefik router (needs the Traefik + Prometheus stack).", children: p.trafficError ? /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(NoData, { children: [
         "Could not read request rates from Prometheus at ",
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("code", { children: p.promUrl }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("code", { children: p.promUrl }),
         ".",
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("br", {}),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("br", {}),
         "Start the stack with ",
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("code", { children: "cd devops && docker compose up -d" }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("code", { children: "cd devops && docker compose up -d" }),
         " and open a deployed app a few times.",
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("br", {}),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { opacity: 0.7 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("br", {}),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { style: { opacity: 0.7 }, children: [
           "(",
           p.trafficError,
           ")"
         ] })
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
         LineChart,
         {
           series: p.traffic,
@@ -41127,22 +41202,22 @@ function Dashboard(p) {
           emptyText: "No requests seen yet \u2014 open one of your deployed apps through its domain."
         }
       ) }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "Network throughput", subtitle: "KB/s, summed over all running containers", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(LineChart, { series: net, unit: " KB/s", area: true, windowMs }) })
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "Network in / out", subtitle: "KB per second, all running containers added together. Inbound = received, outbound = sent.", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(LineChart, { series: net, unit: " KB/s", area: true, windowMs }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", gap: 16, marginBottom: 16 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "CPU usage", subtitle: "% of one core, per container \xB7 dashed line = hard alert limit", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(LineChart, { series: cpu, unit: "%", yMax: 100, windowMs, thresholds: [{ value: 85, label: "alert 85%", color: "#fb7185" }] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "Memory usage", subtitle: "% of the memory limit, per container", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(LineChart, { series: mem, unit: "%", yMax: 100, windowMs, thresholds: [{ value: 82, label: "alert 82%", color: "#fb7185" }] }) })
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "grid two", style: { gridTemplateColumns: "repeat(auto-fit, minmax(420px, 1fr))", marginBottom: 14 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "CPU usage", subtitle: "Higher is busier. % of one core, per container. Dashed line = alert limit.", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(LineChart, { series: cpu, unit: "%", yMax: 100, windowMs, thresholds: [{ value: 85, label: "alert 85%", color: "var(--danger)" }] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "Memory usage", subtitle: "Higher is fuller. % of the memory limit, per container. Dashed line = alert limit.", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(LineChart, { series: mem, unit: "%", yMax: 100, windowMs, thresholds: [{ value: 82, label: "alert 82%", color: "var(--danger)" }] }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
       ChartCard,
       {
-        title: "Anomaly score (Isolation Forest)",
-        subtitle: "Lower = more unusual. Below the red line a container is flagged ANOMALOUS; between the lines it is DEGRADING.",
-        right: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "var(--text-muted)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(import_lucide_react3.Activity, { size: 13 }),
-          "ML"
+        title: "Anomaly score",
+        subtitle: "Lower is more unusual; below the dashed line = anomaly. Between the two lines = degrading.",
+        right: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("span", { className: "chip", style: { display: "inline-flex", alignItems: "center", gap: 5 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(import_lucide_react4.Activity, { size: 12 }),
+          " AI engine"
         ] }),
-        children: noContainers || score.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+        children: noContainers || score.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(NoData, { children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
           LineChart,
           {
             series: score,
@@ -41152,49 +41227,47 @@ function Dashboard(p) {
             decimals: 3,
             windowMs,
             thresholds: [
-              ...latest?.threshold != null ? [{ value: latest.threshold, label: "anomalous", color: "#fb7185" }] : [],
-              ...latest?.degrading != null ? [{ value: latest.degrading, label: "degrading", color: "#fbbf24" }] : []
+              ...latest?.threshold != null ? [{ value: latest.threshold, label: "anomalous", color: "var(--danger)" }] : [],
+              ...latest?.degrading != null ? [{ value: latest.degrading, label: "degrading", color: "var(--warn)" }] : []
             ]
           }
         )
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16, margin: "16px 0" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: "grid", style: { gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", margin: "14px 0" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
         ChartCard,
         {
           title: `Deployments per day (last ${showAllDays ? 30 : 14})`,
-          right: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("button", { onClick: () => setShowAllDays((v) => !v), style: { fontSize: 11, color: "var(--accent-cyan)", background: "none", cursor: "pointer" }, children: showAllDays ? "show 14 days" : "show 30 days" }),
-          children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(StackedBars, { data: dep.buckets, colors: { success: "#34d399", failed: "#fb7185" }, emptyText: "No deployments yet \u2014 deploy an app to see history here." })
+          subtitle: "Green = succeeded, red = failed. Taller is more deploys that day.",
+          right: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("button", { type: "button", className: "linkish", style: { fontSize: 12, whiteSpace: "nowrap" }, onClick: () => setShowAllDays((v) => !v), children: showAllDays ? "show 14 days" : "show 30 days" }),
+          children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(StackedBars, { data: dep.buckets, colors: { success: CHART_GREEN, failed: CHART_RED }, emptyText: "No deployments yet \u2014 deploy an app to see history here." })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "Outcomes", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Donut, { parts: [{ label: "Succeeded", value: dep.ok, color: "#34d399" }, { label: "Failed", value: dep.failed, color: "#fb7185" }], center: dep.rate === null ? "\u2013" : `${dep.rate}%` }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "Recent deploy durations", subtitle: "Newest first", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(HBars, { rows: dep.recent, emptyText: "No successful deployments yet" }) })
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "Outcomes", subtitle: "Share of finished deployments that succeeded.", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Donut, { parts: [{ label: "Succeeded", value: dep.ok, color: CHART_GREEN }, { label: "Failed", value: dep.failed, color: CHART_RED }], center: dep.rate === null ? "\u2013" : `${dep.rate}%` }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "Recent deploy durations", subtitle: "Newest first. Time from start until the app was online.", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(HBars, { rows: dep.recent, emptyText: "No successful deployments yet" }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ChartCard, { title: "Containers right now", subtitle: "Latest sample with a short CPU trend", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(NoData, { height: 100, children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { style: { overflowX: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", fontSize: 12 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("tr", { style: { color: "var(--text-muted)", textAlign: "left" }, children: ["Container", "Status", "CPU", "Memory", "Net in / out (KB/s)", "Restarts", "Score", "CPU trend"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("th", { style: { padding: "6px 10px", fontWeight: 500, borderBottom: "1px solid var(--glass-border)" }, children: h }, h)) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("tbody", { children: containers.sort(([a], [b]) => a.localeCompare(b)).map(([name, c]) => /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("tr", { style: { borderBottom: "1px solid rgba(255,255,255,0.04)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { style: { padding: "7px 10px", fontWeight: 600 }, children: name }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { style: { padding: "7px 10px" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("span", { style: { color: STATUS_COLOR[c.status] || "#94a3b8", fontWeight: 700 }, children: [
-          "\u25CF ",
-          c.status
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("td", { style: { padding: "7px 10px" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ChartCard, { title: "Containers right now", subtitle: "The latest sample from every running container, with a short CPU trend.", children: noContainers ? /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(NoData, { height: 100, children: waiting }) : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("table", { className: "table", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("tr", { children: ["Container", "Status", "CPU", "Memory", "Net in / out (KB/s)", "Restarts", "Score", "CPU trend"].map((h) => /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("th", { children: h }, h)) }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("tbody", { children: containers.sort(([a], [b]) => a.localeCompare(b)).map(([name, c]) => /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("b", { children: name }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: `badge ${STATUS_BADGE[c.status] || "badge-idle"}`, children: c.status }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("td", { children: [
           c.cpu.toFixed(1),
           "%"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("td", { style: { padding: "7px 10px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("td", { children: [
           c.mem.toFixed(1),
           "%"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("td", { style: { padding: "7px 10px" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("td", { children: [
           c.netIn.toFixed(0),
           " / ",
           c.netOut.toFixed(0)
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { style: { padding: "7px 10px" }, children: c.restarts }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { style: { padding: "7px 10px", fontFamily: "var(--font-mono)" }, children: c.score != null ? c.score.toFixed(4) : "n/a" }),
-        /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("td", { style: { padding: "7px 10px" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Sparkline, { values: history2.slice(-30).map((s) => s.c[name]?.cpu).filter((v) => v !== void 0), color: STATUS_COLOR[c.status] }) })
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("td", { children: c.restarts }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("td", { style: { fontFamily: "var(--font-mono)" }, children: c.score != null ? c.score.toFixed(4) : "n/a" }),
+        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Sparkline, { values: history2.slice(-30).map((s) => s.c[name]?.cpu).filter((v) => v !== void 0), color: STATUS_COLOR[c.status] }) })
       ] }, name)) })
     ] }) }) })
   ] });
@@ -41202,35 +41275,35 @@ function Dashboard(p) {
 
 // src/LoginPage.tsx
 init_define_import_meta_env();
-var import_react6 = __toESM(require_react(), 1);
-var import_lucide_react4 = __toESM(require_lucide_react(), 1);
+var import_react7 = __toESM(require_react(), 1);
+var import_lucide_react5 = __toESM(require_lucide_react(), 1);
 
 // src/components/Brand.tsx
 init_define_import_meta_env();
-var import_jsx_runtime5 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
 function OmniMark({ size: size2 = 36, mono = false }) {
   const accent = mono ? "currentColor" : "var(--accent)";
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("svg", { width: size2, height: size2, viewBox: "0 0 32 32", "aria-hidden": "true", style: { flexShrink: 0, display: "block" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("rect", { width: "32", height: "32", rx: "5", fill: mono ? "transparent" : "var(--bg-primary)", stroke: mono ? "currentColor" : "var(--line-strong)", strokeOpacity: mono ? 0.25 : 1 }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("circle", { cx: "16", cy: "16", r: "9.5", fill: "none", stroke: "currentColor", strokeWidth: "2.2" }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("circle", { cx: "16", cy: "16", r: "3.4", fill: accent }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("path", { d: "M16 2.5v6M16 23.5v6", stroke: accent, strokeWidth: "2.2", strokeLinecap: "round" })
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("svg", { width: size2, height: size2, viewBox: "0 0 32 32", "aria-hidden": "true", style: { flexShrink: 0, display: "block" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("rect", { width: "32", height: "32", rx: "5", fill: mono ? "transparent" : "var(--bg-primary)", stroke: mono ? "currentColor" : "var(--line-strong)", strokeOpacity: mono ? 0.25 : 1 }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "16", cy: "16", r: "9.5", fill: "none", stroke: "currentColor", strokeWidth: "2.2" }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "16", cy: "16", r: "3.4", fill: accent }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("path", { d: "M16 2.5v6M16 23.5v6", stroke: accent, strokeWidth: "2.2", strokeLinecap: "round" })
   ] });
 }
 function Wordmark({ sub, size: size2 = 36, mono = false }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 11, color: "var(--text-primary)" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(OmniMark, { size: size2, mono }),
-    /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { lineHeight: 1.15 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { style: { fontFamily: "var(--font-display)", fontWeight: 600, fontSize: size2 * 0.5, letterSpacing: "-0.01em" }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 11, color: "var(--text-primary)" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(OmniMark, { size: size2, mono }),
+    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { lineHeight: 1.15 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { style: { fontFamily: "var(--font-display)", fontWeight: 600, fontSize: size2 * 0.5, letterSpacing: "-0.01em" }, children: [
         "Omni",
-        /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { style: { color: mono ? "inherit" : "var(--accent)" }, children: "Deploy" })
+        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { style: { color: mono ? "inherit" : "var(--accent)" }, children: "Deploy" })
       ] }),
-      sub && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: "eyebrow", style: { marginTop: 2 }, children: sub })
+      sub && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "eyebrow", style: { marginTop: 2 }, children: sub })
     ] })
   ] });
 }
 function Brand({ subtitle, size: size2 = 38 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(Wordmark, { sub: subtitle, size: size2 });
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Wordmark, { sub: subtitle, size: size2 });
 }
 
 // src/lib/auth.ts
@@ -41306,36 +41379,36 @@ async function setupAdmin(name, email, password, remember = true) {
 }
 
 // src/LoginPage.tsx
-var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
 var LINES = [
-  { h: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+  { h: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
     "Your server. Your apps. ",
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "No cloud bill." })
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("em", { children: "No cloud bill." })
   ] }), p: "OmniDeploy runs your apps on a machine you already own." },
-  { h: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+  { h: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
     "Push to GitHub. ",
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "It is live" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("em", { children: "It is live" }),
     " on your own hardware."
   ] }), p: "Clone, build, run and route. Nothing to configure by hand." },
-  { h: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+  { h: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
     "When something breaks, ",
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("em", { children: "it tells you why." })
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("em", { children: "it tells you why." })
   ] }), p: "Live build logs and an AI copilot that reads them for you." }
 ];
 function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "customer", lockPortal = false, status = null, initialMode = "login" }) {
-  const [portal, setPortal] = (0, import_react6.useState)(initialPortal);
-  const [mode, setMode] = (0, import_react6.useState)(initialMode);
-  const [name, setName] = (0, import_react6.useState)("");
-  const [email, setEmail] = (0, import_react6.useState)("");
-  const [password, setPassword] = (0, import_react6.useState)("");
-  const [confirm, setConfirm] = (0, import_react6.useState)("");
-  const [showPw, setShowPw] = (0, import_react6.useState)(false);
-  const [remember, setRemember] = (0, import_react6.useState)(true);
-  const [forgot, setForgot] = (0, import_react6.useState)(false);
-  const [busy, setBusy] = (0, import_react6.useState)(false);
-  const [err, setErr] = (0, import_react6.useState)("");
-  const [emailTaken, setEmailTaken] = (0, import_react6.useState)(false);
-  const [slide, setSlide] = (0, import_react6.useState)(0);
+  const [portal, setPortal] = (0, import_react7.useState)(initialPortal);
+  const [mode, setMode] = (0, import_react7.useState)(initialMode);
+  const [name, setName] = (0, import_react7.useState)("");
+  const [email, setEmail] = (0, import_react7.useState)("");
+  const [password, setPassword] = (0, import_react7.useState)("");
+  const [confirm, setConfirm] = (0, import_react7.useState)("");
+  const [showPw, setShowPw] = (0, import_react7.useState)(false);
+  const [remember, setRemember] = (0, import_react7.useState)(true);
+  const [forgot, setForgot] = (0, import_react7.useState)(false);
+  const [busy, setBusy] = (0, import_react7.useState)(false);
+  const [err, setErr] = (0, import_react7.useState)("");
+  const [emailTaken, setEmailTaken] = (0, import_react7.useState)(false);
+  const [slide, setSlide] = (0, import_react7.useState)(0);
   const owner = portal === "admin";
   const setup = owner && status !== null && !status.admin_exists;
   const canSetup = setup && lockPortal && status.on_admin_laptop;
@@ -41393,37 +41466,37 @@ function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "custom
   };
   const heading = canSetup ? "Create the owner account" : owner ? "Owner sign-in" : mode === "register" ? "Create account" : "Sign in";
   const lead = canSetup ? "Done once, on this laptop. Customers sign up on the customer portal instead." : owner ? "The single owner account for every customer, app and server." : mode === "register" ? "One account per email. Sign in from any device afterwards." : "Your apps, servers and deployment logs.";
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "auth", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-card", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("section", { className: "auth-form", "aria-label": heading, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { className: "brand", href: "/", "aria-label": "OmniDeploy front page", style: { color: "inherit", textDecoration: "none" }, children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Wordmark, { sub: lockPortal ? "Admin site" : "Customer portal", size: 32, mono: true }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { children: heading }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { className: "lead", children: lead }),
-      owner && status === null && !backendOk && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note note-warn", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "auth", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "auth-card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("section", { className: "auth-form", "aria-label": heading, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { className: "brand", href: "/", "aria-label": "OmniDeploy front page", style: { color: "inherit", textDecoration: "none" }, children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Wordmark, { sub: lockPortal ? "Admin site" : "Customer portal", size: 32, mono: true }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h1", { children: heading }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "lead", children: lead }),
+      owner && status === null && !backendOk && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "note note-warn", children: [
         "The backend is not reachable, so the owner account cannot be checked yet.",
-        lockPortal && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+        lockPortal && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
           " Start it on this laptop: ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "cd core-platform/backend && npm run start:dev" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: "cd core-platform/backend && npm run start:dev" })
         ] })
       ] }),
-      setup && !canSetup ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note", children: [
+      setup && !canSetup ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "note", children: [
         "No owner account exists yet. For safety it can only be created ",
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("strong", { children: "on the admin laptop" }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("strong", { children: "on the admin laptop" }),
         ": open ",
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "http://localhost:5173/admin" }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: "http://localhost:5173/admin" }),
         " there."
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("form", { onSubmit: submit, children: [
-        creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "lbl", children: "Your name" }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.UserRound, { size: 15 }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { className: "input", value: name, onChange: (e) => setName(e.target.value), required: true, autoComplete: "name", placeholder: "Enter your name" })
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("form", { onSubmit: submit, children: [
+        creating && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "lbl", children: "Your name" }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.UserRound, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { className: "input", value: name, onChange: (e) => setName(e.target.value), required: true, autoComplete: "name", placeholder: "Enter your name" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "lbl", children: "Email" }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Mail, { size: 15 }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "lbl", children: "Email" }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Mail, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               "input",
               {
                 className: `input${emailTaken ? " bad" : ""}`,
@@ -41441,14 +41514,14 @@ function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "custom
             )
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "lbl", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "lbl", children: [
             "Password",
-            creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `hint${tooShort ? " bad" : ""}`, children: tooShort ? `${8 - password.length} more character${8 - password.length === 1 ? "" : "s"}` : "at least 8 characters" })
+            creating && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: `hint${tooShort ? " bad" : ""}`, children: tooShort ? `${8 - password.length} more character${8 - password.length === 1 ? "" : "s"}` : "at least 8 characters" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap eye", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Lock, { size: 15 }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "input-wrap eye", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Lock, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               "input",
               {
                 className: "input",
@@ -41461,17 +41534,17 @@ function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "custom
                 placeholder: "Enter your password"
               }
             ),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "input-eye", onClick: () => setShowPw((v) => !v), "aria-label": showPw ? "Hide password" : "Show password", title: showPw ? "Hide password" : "Show password", children: showPw ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.EyeOff, { size: 15 }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Eye, { size: 15 }) })
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "input-eye", onClick: () => setShowPw((v) => !v), "aria-label": showPw ? "Hide password" : "Show password", title: showPw ? "Hide password" : "Show password", children: showPw ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.EyeOff, { size: 15 }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Eye, { size: 15 }) })
           ] })
         ] }),
-        creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "field", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "lbl", children: [
+        creating && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "lbl", children: [
             "Confirm password",
-            confirm.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `hint ${mismatch ? "bad" : "good"}`, children: mismatch ? "does not match" : "matches" })
+            confirm.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: `hint ${mismatch ? "bad" : "good"}`, children: mismatch ? "does not match" : "matches" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "input-wrap", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Lock, { size: 15 }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Lock, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
               "input",
               {
                 className: `input${mismatch ? " bad" : ""}`,
@@ -41486,60 +41559,60 @@ function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "custom
             )
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "auth-row", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("label", { className: "check", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("input", { type: "checkbox", checked: remember, onChange: (e) => setRemember(e.target.checked) }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "auth-row", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("label", { className: "check", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("input", { type: "checkbox", checked: remember, onChange: (e) => setRemember(e.target.checked) }),
             "Keep me signed in"
           ] }),
-          !creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => setForgot((v) => !v), "aria-expanded": forgot, children: "Forgot password?" })
+          !creating && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "linkish", onClick: () => setForgot((v) => !v), "aria-expanded": forgot, children: "Forgot password?" })
         ] }),
-        forgot && !creating && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "note", children: owner ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(import_jsx_runtime6.Fragment, { children: [
+        forgot && !creating && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "note", children: owner ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
           "There is no e-mail reset. On the admin laptop, stop the backend, delete your account line from ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "~/.paas-data/users.json" }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: "~/.paas-data/users.json" }),
           " and open ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("code", { children: "/admin" }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: "/admin" }),
           " to create the owner account again."
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_jsx_runtime6.Fragment, { children: "Passwords are never stored, so nobody can look yours up. Ask the platform owner to remove your account from the admin site, then create it again here." }) }),
-        err && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "note note-error", role: "alert", children: [
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_jsx_runtime7.Fragment, { children: "Passwords are never stored, so nobody can look yours up. Ask the platform owner to remove your account from the admin site, then create it again here." }) }),
+        err && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "note note-error", role: "alert", children: [
           err,
-          emailTaken && !owner && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("login"), children: "Sign in instead" })
+          emailTaken && !owner && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("login"), children: "Sign in instead" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "submit", className: "btn-primary", disabled: busy || mismatch, children: [
-          busy && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.Loader2, { size: 15, style: { animation: "spin 1s linear infinite" } }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { type: "submit", className: "btn-primary", disabled: busy || mismatch, children: [
+          busy && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Loader2, { size: 15, style: { animation: "spin 1s linear infinite" } }),
           canSetup ? "Create owner account" : creating ? "Create my account" : "Sign in"
         ] })
       ] }),
-      onDemo && /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("button", { type: "button", className: "btn-outline", onClick: onDemo, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.FlaskConical, { size: 14, color: "var(--warn)" }),
+      onDemo && /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("button", { type: "button", className: "btn-outline", onClick: onDemo, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.FlaskConical, { size: 14, color: "var(--warn)" }),
         " Try the demo (sample data, no account)"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "bottom", children: [
-        !owner && (mode === "login" ? /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "bottom", children: [
+        !owner && (mode === "login" ? /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
           "Don't have an account? ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("register"), children: "Create account" })
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("register"), children: "Create account" })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
           "Already have an account? ",
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("login"), children: "Sign in" })
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "linkish accent", onClick: () => chooseMode("login"), children: "Sign in" })
         ] })),
-        !lockPortal && (owner ? /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => choosePortal("customer"), children: "Customer sign-in" }) : /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", className: "linkish", onClick: () => choosePortal("admin"), children: "Platform owner?" })),
-        lockPortal && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("a", { className: "linkish", href: "/login", children: "Customer portal" })
+        !lockPortal && (owner ? /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "linkish", onClick: () => choosePortal("customer"), children: "Customer sign-in" }) : /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", className: "linkish", onClick: () => choosePortal("admin"), children: "Platform owner?" })),
+        lockPortal && /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { className: "linkish", href: "/login", children: "Customer portal" })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("aside", { className: "auth-visual", "aria-label": "About OmniDeploy", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Art, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("span", { className: "status", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: `status-dot ${backendOk ? "on" : "off"}` }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("aside", { className: "auth-visual", "aria-label": "About OmniDeploy", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Art, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "status", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: `status-dot ${backendOk ? "on" : "off"}` }),
         backendOk ? "Platform online" : "Platform offline"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "line", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h2", { children: LINES[slide].h }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("p", { children: LINES[slide].p })
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "line", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: LINES[slide].h }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: LINES[slide].p })
       ] }, slide),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "nav", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { className: "dots", "aria-hidden": "true", children: LINES.map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("i", { className: i === slide ? "on" : "" }, i)) }),
-        /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: "arrows", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", "aria-label": "Previous", onClick: () => setSlide((s) => (s + LINES.length - 1) % LINES.length), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.ChevronLeft, { size: 16 }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("button", { type: "button", "aria-label": "Next", onClick: () => setSlide((s) => (s + 1) % LINES.length), children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(import_lucide_react4.ChevronRight, { size: 16 }) })
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "nav", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "dots", "aria-hidden": "true", children: LINES.map((_, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", { className: i === slide ? "on" : "" }, i)) }),
+        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "arrows", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", "aria-label": "Previous", onClick: () => setSlide((s) => (s + LINES.length - 1) % LINES.length), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.ChevronLeft, { size: 16 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("button", { type: "button", "aria-label": "Next", onClick: () => setSlide((s) => (s + 1) % LINES.length), children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.ChevronRight, { size: 16 }) })
         ] })
       ] })
     ] })
@@ -41547,22 +41620,22 @@ function LoginPage({ onLogin, onDemo, backendOk, portal: initialPortal = "custom
 }
 function Art() {
   const rings = Array.from({ length: 16 }, (_, i) => 60 + i * 42);
-  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("svg", { className: "art", viewBox: "0 0 640 640", preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("defs", { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("radialGradient", { id: "auth-glow", cx: "78%", cy: "72%", r: "60%", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("stop", { offset: "0%", stopColor: "#262626" }),
-      /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("stop", { offset: "100%", stopColor: "#0a0a0a" })
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("svg", { className: "art", viewBox: "0 0 640 640", preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("defs", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("radialGradient", { id: "auth-glow", cx: "78%", cy: "72%", r: "60%", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("stop", { offset: "0%", stopColor: "#262626" }),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("stop", { offset: "100%", stopColor: "#0a0a0a" })
     ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("rect", { width: "640", height: "640", fill: "url(#auth-glow)" }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("g", { fill: "none", stroke: "#ffffff", strokeWidth: "1", children: rings.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r, strokeOpacity: 0.04 + (i % 4 === 0 ? 0.06 : 0) }, r)) }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r: "312", fill: "none", stroke: "#ffffff", strokeOpacity: "0.22", strokeWidth: "1.5", strokeDasharray: "4 10" }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r: "18", fill: "none", stroke: "#ffffff", strokeOpacity: "0.8", strokeWidth: "2" }),
-    /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("circle", { cx: "500", cy: "470", r: "4", fill: "#ffffff" })
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("rect", { width: "640", height: "640", fill: "url(#auth-glow)" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("g", { fill: "none", stroke: "#ffffff", strokeWidth: "1", children: rings.map((r, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("circle", { cx: "500", cy: "470", r, strokeOpacity: 0.04 + (i % 4 === 0 ? 0.06 : 0) }, r)) }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("circle", { cx: "500", cy: "470", r: "312", fill: "none", stroke: "#ffffff", strokeOpacity: "0.22", strokeWidth: "1.5", strokeDasharray: "4 10" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("circle", { cx: "500", cy: "470", r: "18", fill: "none", stroke: "#ffffff", strokeOpacity: "0.8", strokeWidth: "2" }),
+    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("circle", { cx: "500", cy: "470", r: "4", fill: "#ffffff" })
   ] });
 }
 
 // src/Landing.tsx
 init_define_import_meta_env();
-var import_lucide_react5 = __toESM(require_lucide_react(), 1);
+var import_lucide_react6 = __toESM(require_lucide_react(), 1);
 
 // src/lib/appTypes.ts
 init_define_import_meta_env();
@@ -41589,224 +41662,224 @@ async function loadAppTypes(useBackend) {
 }
 
 // src/Landing.tsx
-var import_jsx_runtime7 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
 var REPO = "https://github.com/talhasaleem1534-crypto/FYP-Testing";
 var DOC = (f) => `${REPO}/blob/main/${f}`;
 function Landing() {
   const known = typeof window !== "undefined" && !!savedToken("customer");
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "land", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("nav", { className: "land-nav", "aria-label": "Main", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "wrap", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "/", "aria-label": "OmniDeploy home", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Wordmark, { size: 30, mono: true }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "links", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "#how", children: "How it works" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "#why", children: "Private servers" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "#features", children: "Features" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "#types", children: "App types" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: DOC("README.md"), target: "_blank", rel: "noreferrer", children: "Docs" })
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "land", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("nav", { className: "land-nav", "aria-label": "Main", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "wrap", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "/", "aria-label": "OmniDeploy home", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Wordmark, { size: 30, mono: true }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "links", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "#how", children: "How it works" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "#why", children: "Private servers" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "#features", children: "Features" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "#types", children: "App types" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: DOC("README.md"), target: "_blank", rel: "noreferrer", children: "Docs" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "spacer" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "actions", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { className: "btn ghost sm", href: "/admin", children: "Admin" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { className: "btn ghost sm", href: "/login", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.LogIn, { size: 14 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "spacer" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { className: "btn ghost sm", href: "/admin", children: "Admin" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("a", { className: "btn ghost sm", href: "/login", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.LogIn, { size: 14 }),
           " ",
           known ? "My apps" : "Sign in"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { className: "btn blue sm", href: "/login?signup", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.UserPlus, { size: 14 }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("a", { className: "btn blue sm", href: "/login?signup", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.UserPlus, { size: 14 }),
           " Create account"
         ] })
       ] })
     ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("header", { className: "land-hero wrap", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { className: "pill", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", {}),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("header", { className: "land-hero wrap", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { className: "pill", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("i", {}),
         " Runs entirely on hardware you own. Nothing leaves your network."
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h1", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("h1", { children: [
         "Self-hosting for your ",
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("em", { children: "own servers." })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("em", { children: "own servers." })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "sub", children: "A self-hosted alternative to Vercel, Heroku and Railway built for private servers: a VPS, a home lab, an office machine. Connect it over SSH, pick your app type, push to GitHub, and OmniDeploy builds, runs and routes it. An AI copilot explains what broke, and an anomaly detector warns before a container crashes." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "cta", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { className: "btn blue lg", href: "/login?signup", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.UserPlus, { size: 16 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "sub", children: "A self-hosted alternative to Vercel, Heroku and Railway built for private servers: a VPS, a home lab, an office machine. Connect it over SSH, pick your app type, push to GitHub, and OmniDeploy builds, runs and routes it. An AI copilot explains what broke, and an anomaly detector warns before a container crashes." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "cta", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("a", { className: "btn blue lg", href: "/login?signup", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.UserPlus, { size: 16 }),
           " Create account"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { className: "btn ghost lg", href: "/login", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.LogIn, { size: 16 }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("a", { className: "btn ghost lg", href: "/login", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.LogIn, { size: 16 }),
           " Sign in"
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "facts", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: FALLBACK_APP_TYPES.length }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "facts", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: FALLBACK_APP_TYPES.length }),
           " app types"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: "1" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: "1" }),
           " SSH key to trust"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: "0" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: "0" }),
           " cloud accounts"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("span", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: "~96%" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: "~96%" }),
           " of injected container faults caught"
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(MockDashboard, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("p", { className: "caption", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: "Applications." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(MockDashboard, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { className: "caption", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: "Applications." }),
         " Every app with its type, status, port and server, and the live log of the last deployment."
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("section", { className: "land-section wrap", id: "how", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "eyebrow", children: "How it works" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Push your code. OmniDeploy does the rest." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "lead", children: "Every push is cloned, built into a container and started on the private server you connected over SSH." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "flow", "aria-label": "git push, then OmniDeploy, then your servers", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "box", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "t", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.GitBranch, { size: 15, style: { verticalAlign: -2 } }),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: "land-section wrap", id: "how", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "eyebrow", children: "How it works" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Push your code. OmniDeploy does the rest." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "lead", children: "Every push is cloned, built into a container and started on the private server you connected over SSH." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "flow", "aria-label": "git push, then OmniDeploy, then your servers", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "box", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "t", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.GitBranch, { size: 15, style: { verticalAlign: -2 } }),
             " git push"
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "s", children: "GitHub webhook" })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "s", children: "GitHub webhook" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "dash" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "box core", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "t", children: "OmniDeploy" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "s", children: "clone \xB7 build \xB7 run \xB7 route" })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "dash" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "box core", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "t", children: "OmniDeploy" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "s", children: "clone \xB7 build \xB7 run \xB7 route" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "dash" }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "servers", children: ["home-lab", "office-vm", "raspberry-pi"].map((n, i) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "srv", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("i", {}),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "dash" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "servers", children: ["home-lab", "office-vm", "raspberry-pi"].map((n, i) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "srv", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("i", {}),
           " ",
           n,
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "bars", children: [4, 7, 5, 9, 6, 11, 8, 5, 10, 7].map((h, j) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { style: { height: (h + i * 2) % 12 + 3 } }, j)) })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "bars", children: [4, 7, 5, 9, 6, 11, 8, 5, 10, 7].map((h, j) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { style: { height: (h + i * 2) % 12 + 3 } }, j)) })
         ] }, n)) })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("section", { className: "land-section wrap", id: "why", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "eyebrow", children: "Private servers only" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Why your own machine" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "lead", children: "OmniDeploy does not sell hosting and does not talk to any cloud provider. It only deploys to Linux machines you already control." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "cards", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.HardDrive, { size: 16 }), title: "No cloud bill", text: "A student laptop, an old desktop or a cheap VPS is enough. There is no per-app fee and nothing to upgrade." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Lock, { size: 16 }), title: "Your data stays in your building", text: "Source code, containers, logs and accounts live on the platform laptop and your server. Passwords are stored as scrypt hashes, never in clear." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Wifi, { size: 16 }), title: "Works on a LAN", text: "Three devices are enough: the platform laptop, the Linux server, and the customer's browser. Internet is only needed to pull from GitHub." })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: "land-section wrap", id: "why", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "eyebrow", children: "Private servers only" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Why your own machine" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "lead", children: "OmniDeploy does not sell hosting and does not talk to any cloud provider. It only deploys to Linux machines you already control." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "cards", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.HardDrive, { size: 16 }), title: "No cloud bill", text: "A student laptop, an old desktop or a cheap VPS is enough. There is no per-app fee and nothing to upgrade." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Lock, { size: 16 }), title: "Your data stays in your building", text: "Source code, containers, logs and accounts live on the platform laptop and your server. Passwords are stored as scrypt hashes, never in clear." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Wifi, { size: 16 }), title: "Works on a LAN", text: "Three devices are enough: the platform laptop, the Linux server, and the customer's browser. Internet is only needed to pull from GitHub." })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("section", { className: "land-section wrap", id: "features", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "eyebrow", children: "Features" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Everything you need to ship" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "lead", children: "One dashboard for your servers, applications, logs and container health." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "cards", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card wide", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "ic", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Bot, { size: 16 }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { children: "AI Ops Copilot" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: 'Ask in plain English and get the answer in plain English. A pattern catalog answers the common failures instantly at no cost (port already in use, 502 Bad Gateway, missing Dockerfile); harder questions and commands such as "scale my-shop to 2 replicas" go to a Claude tool-calling agent.' })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: "land-section wrap", id: "features", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "eyebrow", children: "Features" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Everything you need to ship" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "lead", children: "One dashboard for your servers, applications, logs and container health." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "cards", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "card wide", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "ic", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Bot, { size: 16 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { children: "AI Ops Copilot" }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: 'Ask in plain English and get the answer in plain English. A pattern catalog answers the common failures instantly at no cost (port already in use, 502 Bad Gateway, missing Dockerfile); harder questions and commands such as "scale my-shop to 2 replicas" go to a Claude tool-calling agent.' })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: '"Why is my app crashing with 502 Bad Gateway?"' })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("code", { children: '"Why is my app crashing with 502 Bad Gateway?"' })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card wide", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "ic", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Radar, { size: 16 }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { children: "Catches trouble before the crash" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: "An Isolation Forest trained on container telemetry (CPU, memory, restarts, network) scores every running container and flags the slow degradation fixed thresholds miss: memory creeping up while restarts climb. Combined with hard limits it catches about 96% of injected faults with under 1% false alarms." }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "tags", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "tag ok", children: "HEALTHY" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "tag warn", children: "DEGRADING" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "tag bad", children: "ANOMALOUS" })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "card wide", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "ic", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Radar, { size: 16 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { children: "Catches trouble before the crash" }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "An Isolation Forest trained on container telemetry (CPU, memory, restarts, network) scores every running container and flags the slow degradation fixed thresholds miss: memory creeping up while restarts climb. Combined with hard limits it catches about 96% of injected faults with under 1% false alarms." }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "tags", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "tag ok", children: "HEALTHY" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "tag warn", children: "DEGRADING" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "tag bad", children: "ANOMALOUS" })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("code", { children: "python -m anomaly.evaluate" })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("code", { children: "python -m anomaly.evaluate" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Layers, { size: 16 }), title: "Any app type", text: "Flask, FastAPI, Django, Node.js, Next.js, React/Vue/Vite, static HTML, Go, your own Dockerfile, or let it detect the type. Each one knows its files, port and start command." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Server, { size: 16 }), title: "Any private server", text: "A VPS, a home lab, an office VM or a Raspberry Pi. Add it with one command that trusts the platform's SSH key; Connect & check verifies SSH, Docker, git and the apps folder." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.GitBranch, { size: 16 }), title: "Push to deploy", text: "A GitHub webhook (signature-checked) redeploys the exact repository and branch you registered. Nothing else triggers a build." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Boxes, { size: 16 }), title: "Generated Dockerfiles", text: "No Dockerfile? One is written for your app type, and the deploy log shows what was checked and generated. Have one? It is used as is." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.ScrollText, { size: 16 }), title: "Readable build logs", text: "Pipeline steps, folded sections, error and warning filters, search, copy and download, and a big Open App button with your URL. Every past deployment keeps its log." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.RotateCcw, { size: 16 }), title: "Automatic rollback", text: "The previous container is kept while the new one starts. If the health check fails, the old version comes back and the failed deploy is explained." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Zap, { size: 16 }), title: "Replicas and routing", text: "Scale an app to several replicas; Traefik discovers the containers and load-balances between them. Ports are assigned automatically and freed when an app is deleted, together with its containers, images and source." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Activity, { size: 16 }), title: "Live dashboard", text: "Requests per second (Traefik via Prometheus), CPU, memory, network and the anomaly score per container, plus deployment analytics per day." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Shield, { size: 16 }), title: "Customer isolation", text: "Every customer only sees their own apps, servers and logs. Every backend route needs a signed-in session." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.LayoutDashboard, { size: 16 }), title: "Admin site", text: "The platform owner sees every customer, every app with its owner, every server, and exactly which files on the laptop hold the data." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Database, { size: 16 }), title: "State survives restarts", text: "Apps, servers, accounts and deployment history are saved as JSON on the platform laptop and restored on start." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Sparkles, { size: 16 }), title: "Demo mode", text: "Try the whole dashboard with simulated servers, deployments and telemetry before connecting a real machine." })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Layers, { size: 16 }), title: "Any app type", text: "Flask, FastAPI, Django, Node.js, Next.js, React/Vue/Vite, static HTML, Go, your own Dockerfile, or let it detect the type. Each one knows its files, port and start command." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Server, { size: 16 }), title: "Any private server", text: "A VPS, a home lab, an office VM or a Raspberry Pi. Add it with one command that trusts the platform's SSH key; Connect & check verifies SSH, Docker, git and the apps folder." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.GitBranch, { size: 16 }), title: "Push to deploy", text: "A GitHub webhook (signature-checked) redeploys the exact repository and branch you registered. Nothing else triggers a build." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Boxes, { size: 16 }), title: "Generated Dockerfiles", text: "No Dockerfile? One is written for your app type, and the deploy log shows what was checked and generated. Have one? It is used as is." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.ScrollText, { size: 16 }), title: "Readable build logs", text: "Pipeline steps, folded sections, error and warning filters, search, copy and download, and a big Open App button with your URL. Every past deployment keeps its log." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.RotateCcw, { size: 16 }), title: "Automatic rollback", text: "The previous container is kept while the new one starts. If the health check fails, the old version comes back and the failed deploy is explained." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Zap, { size: 16 }), title: "Replicas and routing", text: "Scale an app to several replicas; Traefik discovers the containers and load-balances between them. Ports are assigned automatically and freed when an app is deleted, together with its containers, images and source." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Activity, { size: 16 }), title: "Live dashboard", text: "Requests per second (Traefik via Prometheus), CPU, memory, network and the anomaly score per container, plus deployment analytics per day." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Shield, { size: 16 }), title: "Customer isolation", text: "Every customer only sees their own apps, servers and logs. Every backend route needs a signed-in session." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.LayoutDashboard, { size: 16 }), title: "Admin site", text: "The platform owner sees every customer, every app with its owner, every server, and exactly which files on the laptop hold the data." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Database, { size: 16 }), title: "State survives restarts", text: "Apps, servers, accounts and deployment history are saved as JSON on the platform laptop and restored on start." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Card, { icon: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Sparkles, { size: 16 }), title: "Demo mode", text: "Try the whole dashboard with simulated servers, deployments and telemetry before connecting a real machine." })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("section", { className: "land-section wrap", id: "types", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "eyebrow", children: "What type of app is this?" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h2", { children: "Pick the type, the rest is set up for you" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "lead", children: "The first question a new application asks. Each answer brings its required files, default port, start command and Dockerfile recipe." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "types", children: FALLBACK_APP_TYPES.map((t) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: t.label }, t.id)) })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("section", { className: "land-section wrap", id: "types", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "eyebrow", children: "What type of app is this?" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h2", { children: "Pick the type, the rest is set up for you" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "lead", children: "The first question a new application asks. Each answer brings its required files, default port, start command and Dockerfile recipe." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "types", children: FALLBACK_APP_TYPES.map((t) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: t.label }, t.id)) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("section", { className: "land-cta", children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "wrap", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("h2", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("section", { className: "land-cta", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "wrap", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("h2", { children: [
         "Your server. Your apps. ",
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("em", { children: "No cloud bill." })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("em", { children: "No cloud bill." })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: "Create a customer account, connect a server, and put your first app online." }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "cta", style: { display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("a", { className: "btn blue lg", href: "/login?signup", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.UserPlus, { size: 16 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "Create a customer account, connect a server, and put your first app online." }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "cta", style: { display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("a", { className: "btn blue lg", href: "/login?signup", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.UserPlus, { size: 16 }),
           " Create account"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { className: "btn ghost lg", href: "/login", children: "Sign in" })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { className: "btn ghost lg", href: "/login", children: "Sign in" })
       ] })
     ] }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("footer", { className: "land-foot wrap", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "cols", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Wordmark, { size: 30, mono: true }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { className: "tag-line", children: "Self-hosted platform to deploy apps from GitHub to your own private servers, with an AI copilot and container anomaly detection." })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("footer", { className: "land-foot wrap", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "cols", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Wordmark, { size: 30, mono: true }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { className: "tag-line", children: "Self-hosted platform to deploy apps from GitHub to your own private servers, with an AI copilot and container anomaly detection." })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { children: "Product" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("ul", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "/login", children: "Customer sign-in" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "/login?signup", children: "Create account" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "/admin", children: "Admin site" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "/admin", children: "Demo mode" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h4", { children: "Product" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("ul", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "/login", children: "Customer sign-in" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "/login?signup", children: "Create account" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "/admin", children: "Admin site" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "/admin", children: "Demo mode" }) })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { children: "Docs" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("ul", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: DOC("README.md"), target: "_blank", rel: "noreferrer", children: "README" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: DOC("docs/MULTI_DEVICE_SETUP.md"), target: "_blank", rel: "noreferrer", children: "Three-device setup" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: DOC("docs/COOLIFY_HOW_IT_WORKS.md"), target: "_blank", rel: "noreferrer", children: "How it compares to Coolify" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: DOC("docs/architecture.md"), target: "_blank", rel: "noreferrer", children: "Architecture" }) })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h4", { children: "Docs" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("ul", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: DOC("README.md"), target: "_blank", rel: "noreferrer", children: "README" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: DOC("docs/MULTI_DEVICE_SETUP.md"), target: "_blank", rel: "noreferrer", children: "Three-device setup" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: DOC("docs/COOLIFY_HOW_IT_WORKS.md"), target: "_blank", rel: "noreferrer", children: "How it compares to Coolify" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: DOC("docs/architecture.md"), target: "_blank", rel: "noreferrer", children: "Architecture" }) })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h4", { children: "Project" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("ul", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: REPO, target: "_blank", rel: "noreferrer", children: "GitHub repository" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: "Salman: platform & DevOps" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("li", { children: "Talha: AI & machine learning" }),
-            /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("li", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h4", { children: "Project" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("ul", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: REPO, target: "_blank", rel: "noreferrer", children: "GitHub repository" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: "Salman: platform & DevOps" }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: "Talha: AI & machine learning" }),
+            /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("li", { children: [
               "Inspired by ",
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("a", { href: "https://coolify.io", target: "_blank", rel: "noreferrer", children: "Coolify" })
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("a", { href: "https://coolify.io", target: "_blank", rel: "noreferrer", children: "Coolify" })
             ] })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "legal", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "\xA9 2026 OmniDeploy. Final year project. Source code on GitHub." }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { children: "Version 7 \xB7 self-hosted \xB7 private servers only" })
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "legal", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "\xA9 2026 OmniDeploy. Final year project. Source code on GitHub." }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: "Version 7 \xB7 self-hosted \xB7 private servers only" })
       ] })
     ] })
   ] });
 }
 function Card({ icon, title, text: text2 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "card", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "ic", children: icon }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { children: title }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: text2 })
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "card", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "ic", children: icon }),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { children: title }),
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: text2 })
   ] });
 }
 function MockDashboard() {
@@ -41816,82 +41889,82 @@ function MockDashboard() {
     { name: "thesis-site", type: "Static HTML", status: "running", port: 4003, server: "office-vm", when: "yesterday" },
     { name: "inventory", type: "Django", status: "failed", port: 4004, server: "raspberry-pi", when: "3 days ago" }
   ];
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "shot", "aria-hidden": "true", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "side", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "grp", children: "Workspace" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "it on", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Boxes, { size: 13 }),
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "shot", "aria-hidden": "true", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "side", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grp", children: "Workspace" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "it on", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Boxes, { size: 13 }),
         " Applications"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "it", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Server, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "it", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Server, { size: 13 }),
         " Private servers"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "it", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.ScrollText, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "it", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.ScrollText, { size: 13 }),
         " Deployments"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { className: "grp", children: "AI Ops" }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "it", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Bot, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "grp", children: "AI Ops" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "it", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Bot, { size: 13 }),
         " Copilot"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "it", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Radar, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "it", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Radar, { size: 13 }),
         " Health monitor"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "it", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(import_lucide_react5.Activity, { size: 13 }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "it", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Activity, { size: 13 }),
         " Dashboard"
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "main", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "head", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h3", { children: "Applications" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("p", { children: "4 apps on 3 private servers" })
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "main", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "head", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("h3", { children: "Applications" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("p", { children: "4 apps on 3 private servers" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "btn blue sm", style: { pointerEvents: "none" }, children: "+ New application" })
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "btn blue sm", style: { pointerEvents: "none" }, children: "+ New application" })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("table", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { children: "Application" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { children: "Type" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { children: "Status" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { children: "Port" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { children: "Server" }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("th", { children: "Last deploy" })
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("table", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("th", { children: "Application" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("th", { children: "Type" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("th", { children: "Status" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("th", { children: "Port" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("th", { children: "Server" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("th", { children: "Last deploy" })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("tbody", { children: rows.map((r) => /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: r.name }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { children: r.type }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: `badge badge-${r.status}`, children: r.status }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("td", { className: "mono", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("tbody", { children: rows.map((r) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: r.name }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("td", { children: r.type }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: `badge badge-${r.status}`, children: r.status }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("td", { className: "mono", children: [
             ":",
             r.port
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { className: "mono", children: r.server }),
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("td", { children: r.when })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("td", { className: "mono", children: r.server }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("td", { children: r.when })
         ] }, r.name)) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { className: "log", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "dim", children: "[21:14:02]" }),
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { className: "log", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "dim", children: "[21:14:02]" }),
           " STEP 3/4 Building image for ",
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("b", { children: "shop-api" }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("b", { children: "shop-api" }),
           " (FastAPI)"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "dim", children: "[21:14:40]" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "dim", children: "[21:14:40]" }),
           " STEP 4/4 Health check on :4002 ",
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ok", children: "passed" })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "ok", children: "passed" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "dim", children: "[21:14:41]" }),
+        /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "dim", children: "[21:14:41]" }),
           " ",
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "ok", children: "\u2713 Deployed." }),
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "ok", children: "\u2713 Deployed." }),
           " APP URL ",
-          /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { className: "url", children: "http://192.168.1.20:4002" })
+          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { className: "url", children: "http://192.168.1.20:4002" })
         ] })
       ] })
     ] })
@@ -41900,23 +41973,17 @@ function MockDashboard() {
 
 // src/NewAppWizard.tsx
 init_define_import_meta_env();
-var import_react7 = __toESM(require_react(), 1);
-var import_lucide_react6 = __toESM(require_lucide_react(), 1);
-var import_jsx_runtime8 = __toESM(require_jsx_runtime(), 1);
-var CATEGORY_COLOR = {
-  Python: "#facc15",
-  JavaScript: "#4facfe",
-  Go: "#22d3ee",
-  Other: "#a78bfa"
-};
+var import_react8 = __toESM(require_react(), 1);
+var import_lucide_react7 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
 var CATEGORY_ORDER = ["Python", "JavaScript", "Go", "Other"];
 function NewAppWizard({ servers, useBackend, onCreate, onCancel }) {
-  const [types, setTypes] = (0, import_react7.useState)(FALLBACK_APP_TYPES);
-  const [type, setType] = (0, import_react7.useState)(null);
-  const [form, setForm] = (0, import_react7.useState)({ name: "", repo_url: "", branch: "main", domain: "", port: "", start_command: "", server_id: "" });
-  const [busy, setBusy] = (0, import_react7.useState)(null);
-  const [err, setErr] = (0, import_react7.useState)("");
-  (0, import_react7.useEffect)(() => {
+  const [types, setTypes] = (0, import_react8.useState)(FALLBACK_APP_TYPES);
+  const [type, setType] = (0, import_react8.useState)(null);
+  const [form, setForm] = (0, import_react8.useState)({ name: "", repo_url: "", branch: "main", domain: "", port: "", start_command: "", server_id: "" });
+  const [busy, setBusy] = (0, import_react8.useState)(null);
+  const [err, setErr] = (0, import_react8.useState)("");
+  (0, import_react8.useEffect)(() => {
     loadAppTypes(useBackend).then(setTypes);
   }, [useBackend]);
   const pick2 = (t) => {
@@ -41954,171 +42021,230 @@ function NewAppWizard({ servers, useBackend, onCreate, onCancel }) {
       setBusy(null);
     }
   };
-  const input = {
-    width: "100%",
-    padding: "10px 14px",
-    background: "rgba(0,0,0,0.4)",
-    border: "1px solid var(--glass-border)",
-    borderRadius: 8,
-    color: "#fff",
-    fontSize: 13,
-    marginTop: 5
-  };
-  const label = { display: "block", fontSize: 11, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 };
+  const missing = (k) => err.startsWith("App name, Git repository") && !form[k].trim();
+  const steps = (at) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "steps", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: `step ${at === 1 ? "on" : "done"}`, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "n", children: "1" }),
+      " What type of app?"
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: `step ${at === 2 ? "on" : ""}`, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "n", children: "2" }),
+      " Where is the code, where should it run?"
+    ] })
+  ] });
   if (!type) {
     const groups = CATEGORY_ORDER.map((c) => ({ c, items: types.filter((t) => t.category === c) })).filter((g) => g.items.length);
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("p", { style: { color: "var(--text-secondary)", fontSize: 14, marginBottom: 18 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("strong", { style: { color: "var(--text-primary)" }, children: "Step 1 of 2 \u2014 What type of app is this?" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("br", {}),
-        "We use your answer to choose the right language version, install your dependencies and start the app."
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { maxHeight: "60vh", overflowY: "auto", paddingRight: 4 }, children: groups.map(({ c, items }) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { marginBottom: 16 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 8 }, children: c }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }, children: items.map((t) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-          "button",
-          {
-            onClick: () => pick2(t),
-            "data-type": t.id,
-            style: { textAlign: "left", padding: 14, background: "rgba(255,255,255,0.03)", border: "1px solid var(--glass-border)", borderLeft: `3px solid ${CATEGORY_COLOR[t.category] || "#94a3b8"}`, borderRadius: 10, color: "var(--text-primary)" },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontWeight: 600, fontSize: 14 }, children: t.label }),
-              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", marginTop: 4, lineHeight: 1.45 }, children: t.description }),
-              t.required_files.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { fontSize: 11, color: "var(--text-secondary)", marginTop: 8, display: "flex", alignItems: "center", gap: 5 }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.FileText, { size: 11 }),
-                " needs ",
-                t.required_files.join(" or ")
-              ] })
-            ]
-          },
-          t.id
-        )) })
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+      steps(1),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        Help,
+        {
+          id: "wizard-type",
+          title: "Step 1 of 2 \u2014 What type of app is this?",
+          need: ["The language or framework your app is written in (Flask, Node.js, plain HTML...). Look at the files in your repository if unsure."],
+          next: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
+            "If you are not sure, pick ",
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("strong", { children: '"Not sure - detect it for me"' }),
+            "; we look at your files and choose for you. You can change the type at any time."
+          ] }),
+          children: "Your answer decides which language version we install, how your dependencies (the libraries your code imports) are installed, which port your app is expected to listen on, and which command starts it. Each card says which file your repository must contain."
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { maxHeight: "55vh", overflowY: "auto", paddingRight: 4 }, children: groups.map(({ c, items }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { marginBottom: 16 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "eyebrow", style: { marginBottom: 8 }, children: c }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))", gap: 10 }, children: items.map((t) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("button", { type: "button", className: "choice", onClick: () => pick2(t), "data-type": t.id, "aria-pressed": false, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "t", children: t.label }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "d", children: t.description }),
+          t.required_files.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "f", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.FileText, { size: 11 }),
+            " needs ",
+            t.required_files.join(" or ")
+          ] })
+        ] }, t.id)) })
       ] }, c)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { display: "flex", justifyContent: "flex-end", marginTop: 8 }, children: /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { onClick: onCancel, style: { padding: "9px 16px", background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "var(--text-secondary)", fontSize: 13 }, children: "Cancel" }) })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "form-actions", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", className: "btn ghost", onClick: onCancel, children: "Cancel" }) })
     ] });
   }
   const showStart = usesStartCommand(type.id);
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-        "button",
-        {
-          onClick: () => setType(null),
-          title: "Choose another type",
-          style: { display: "flex", alignItems: "center", gap: 5, padding: "6px 10px", background: "rgba(255,255,255,0.06)", borderRadius: 8, color: "var(--text-secondary)", fontSize: 12 },
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.ArrowLeft, { size: 13 }),
-            " Change type"
-          ]
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { fontSize: 14, color: "var(--text-secondary)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("strong", { style: { color: "var(--text-primary)" }, children: "Step 2 of 2" }),
-        " \u2014 ",
-        type.label
+  const chosen = servers.find((s) => s.id === (form.server_id || servers[0]?.id));
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { children: [
+    steps(2),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: () => setType(null), title: "Choose another type", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.ArrowLeft, { size: 13 }),
+        " Change type"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { fontSize: 14, color: "var(--text-secondary)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("strong", { style: { color: "var(--text-primary)" }, children: "Step 2 of 2" }),
+        " \u2014 you chose ",
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "chip", children: type.label })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { background: "rgba(0,242,254,0.06)", border: "1px solid rgba(0,242,254,0.2)", borderRadius: 10, padding: "12px 14px", marginBottom: 18, fontSize: 13 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { style: { fontWeight: 600, marginBottom: 6 }, children: "What we will do" }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("ol", { style: { margin: "0 0 0 18px", color: "var(--text-secondary)", lineHeight: 1.7 }, children: type.steps.map((s) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("li", { children: s }, s)) }),
-      (type.required_files.length > 0 || type.tips.length > 0) && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { marginTop: 8, color: "var(--text-secondary)", lineHeight: 1.6 }, children: [
-        type.required_files.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "flex-start" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.CheckCircle2, { size: 13, color: "#34d399", style: { marginTop: 3, flexShrink: 0 } }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("span", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+      Help,
+      {
+        id: "wizard-details",
+        title: "What we will do with your code",
+        steps: [
+          "Download (clone) your repository from GitHub using git.",
+          ...type.steps,
+          "Give you a link to open the running app."
+        ],
+        need: [
+          ...type.required_files.length > 0 ? [/* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
             "Your repository must contain ",
-            /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("code", { children: type.required_files.join(" or ") })
-          ] })
+            /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: type.required_files.join(" or ") }),
+            "."
+          ] })] : [],
+          ...type.tips,
+          "The repository must be public (no password needed to download it)."
+        ],
+        next: "Fill in the form below. Fields marked with * are required; the others already have a sensible value.",
+        children: "OmniDeploy fetches your code, builds it into a container (a small box that runs the same way on every machine) and starts it on the server you pick."
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "form-grid", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { children: [
+          "App name",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "req", children: "*" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Tag, { size: 15 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", { className: `input${missing("name") ? " bad" : ""}`, placeholder: "e.g. my-flask-app", value: form.name, onChange: set("name") })
         ] }),
-        type.tips.map((t) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "flex-start" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.CheckCircle2, { size: 13, color: "#34d399", style: { marginTop: 3, flexShrink: 0 } }),
-          /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { children: t })
-        ] }, t))
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", columnGap: 14 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-        "App name",
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { style: input, placeholder: "e.g. my-flask-app", value: form.name, onChange: set("name") })
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+          "Letters, numbers and dashes, e.g. ",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: "my-flask-app" }),
+          ". Used in the container name and the app's link."
+        ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-        "Branch",
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { style: input, placeholder: "main", value: form.branch, onChange: set("branch") })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Branch" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.GitBranch, { size: 15 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", { className: "input", placeholder: "main", value: form.branch, onChange: set("branch") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+          "A branch is a named version of your code in git. Usually ",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: "main" }),
+          " (or ",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: "master" }),
+          " on older repositories)."
+        ] })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-      "Git repository URL",
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { style: input, placeholder: "https://github.com/you/your-repo", value: form.repo_url, onChange: set("repo_url") })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", columnGap: 14 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-        "Domain",
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { style: input, placeholder: "app.example.com or app.local", value: form.domain, onChange: set("domain") })
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { children: [
+        "Git repository URL",
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "req", children: "*" })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Link2, { size: 15 }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", { className: `input${missing("repo_url") ? " bad" : ""}`, placeholder: "https://github.com/you/your-repo", value: form.repo_url, onChange: set("repo_url") })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-        "Port your app listens on",
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("input", { style: input, type: "number", value: form.port, onChange: set("port") })
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+        "The link of your public GitHub repository, copied from the browser address bar, e.g. ",
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: "https://github.com/you/your-repo" }),
+        "."
       ] })
     ] }),
-    showStart && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-      "Start command ",
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { style: { textTransform: "none" }, children: "(leave empty for the default)" }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
-        "input",
-        {
-          style: { ...input, fontFamily: "var(--font-mono)" },
-          placeholder: type.default_start_command || "Detected automatically",
-          value: form.start_command,
-          onChange: set("start_command")
-        }
-      )
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "form-grid", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { children: [
+          "Domain",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "req", children: "*" })
+        ] }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Globe, { size: 15 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", { className: `input${missing("domain") ? " bad" : ""}`, placeholder: "app.example.com or app.local", value: form.domain, onChange: set("domain") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+          "A name for your app, e.g. ",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: "myapp.local" }),
+          ". The router uses it to send visitors to the right app. You still get a direct link with a port."
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Port your app listens on" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Hash, { size: 15 }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("input", { className: "input", type: "number", value: form.port, onChange: set("port") })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+          "The port (numbered door) your code listens on inside the container. Pre-filled with the usual value for ",
+          type.label,
+          " (",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: type.default_port }),
+          "); change it only if your code uses another one."
+        ] })
+      ] })
     ] }),
-    servers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("label", { style: label, children: [
-      "Deploy to server",
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("select", { style: input, value: form.server_id || servers[0].id, onChange: set("server_id"), children: servers.map((s) => /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("option", { value: s.id, children: [
-        s.name,
-        " (",
-        s.host,
-        ")",
-        s.status && s.status !== "verified" ? " - not ready" : ""
-      ] }, s.id)) })
+    showStart && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Start command (optional)" }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Terminal, { size: 15 }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+          "input",
+          {
+            className: "input",
+            style: { fontFamily: "var(--font-mono)" },
+            placeholder: type.default_start_command || "Detected automatically",
+            value: form.start_command,
+            onChange: set("start_command")
+          }
+        )
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+        "The command that starts your app. Leave it empty to use the default",
+        type.default_start_command ? /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
+          ": ",
+          /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("code", { children: type.default_start_command })
+        ] }) : "",
+        "."
+      ] })
     ] }),
-    err && /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { color: "#fb7185", fontSize: 12, marginBottom: 12, lineHeight: 1.5 }, children: [
-      "\u26A0\uFE0F ",
-      err
+    servers.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("label", { className: "field", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "Deploy to server" }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "input-wrap", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Server, { size: 15 }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("select", { className: "input", value: form.server_id || servers[0].id, onChange: set("server_id"), children: servers.map((s) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("option", { value: s.id, children: [
+          s.name,
+          " (",
+          s.host,
+          ")",
+          s.status && s.status !== "verified" ? " - not ready" : ""
+        ] }, s.id)) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "hint", children: [
+        "Which machine runs your app. ",
+        chosen && chosen.status && chosen.status !== "verified" ? 'This server is marked "not ready": the deploy will fail until it passes its checks.' : 'Pick a server marked verified; "not ready" servers cannot run apps yet.'
+      ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)("div", { style: { display: "flex", gap: 10, justifyContent: "flex-end", flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("button", { onClick: onCancel, disabled: !!busy, style: { padding: "9px 16px", background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "var(--text-secondary)", fontSize: 13 }, children: "Cancel" }),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-        "button",
-        {
-          onClick: () => submit(false),
-          disabled: !!busy,
-          style: { padding: "9px 16px", background: "rgba(255,255,255,0.08)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "#fff", fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 6 },
-          children: [
-            busy === "create" && /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }),
-            " Create only"
-          ]
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
-        "button",
-        {
-          onClick: () => submit(true),
-          disabled: !!busy,
-          style: { padding: "9px 20px", background: "linear-gradient(135deg,var(--accent-blue),var(--accent-purple))", color: "#fff", borderRadius: 8, fontWeight: 600, fontSize: 13, display: "flex", alignItems: "center", gap: 7 },
-          children: [
-            busy === "deploy" ? /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Loader2, { size: 14, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_lucide_react6.Play, { size: 14 }),
-            " Create & deploy"
-          ]
-        }
-      )
-    ] })
+    servers.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "note note-warn", children: 'There is no server to deploy to yet. Add a server first (section "Where your apps run"), then come back here.' }),
+    err && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "note note-error", role: "alert", children: [
+      err,
+      " ",
+      err.startsWith("App name, Git repository") ? "Fill in the fields marked with * and try again." : ""
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "form-actions", style: { alignItems: "center" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { type: "button", className: "btn ghost", onClick: onCancel, disabled: !!busy, children: "Cancel" }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("button", { type: "button", className: "btn ghost", onClick: () => submit(false), disabled: !!busy, title: "Save the app without deploying it", children: [
+        busy === "create" && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }),
+        " Create only"
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("button", { type: "button", className: "btn blue", onClick: () => submit(true), disabled: !!busy, children: [
+        busy === "deploy" ? /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Loader2, { size: 14, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.Play, { size: 14 }),
+        " Create & deploy"
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "hint", style: { textAlign: "right", marginTop: 6 }, children: '"Create only" saves the app without deploying it. "Create & deploy" saves it and starts the build right away.' })
   ] });
 }
 
 // src/CustomerPortal.tsx
 init_define_import_meta_env();
-var import_react10 = __toESM(require_react(), 1);
+var import_react11 = __toESM(require_react(), 1);
 
 // node_modules/socket.io-client/build/esm-debug/index.js
 init_define_import_meta_env();
@@ -45661,17 +45787,17 @@ Object.assign(lookup, {
 });
 
 // src/CustomerPortal.tsx
-var import_lucide_react11 = __toESM(require_lucide_react(), 1);
+var import_lucide_react12 = __toESM(require_lucide_react(), 1);
 
 // src/components/Modal.tsx
 init_define_import_meta_env();
-var import_lucide_react7 = __toESM(require_lucide_react(), 1);
-var import_jsx_runtime9 = __toESM(require_jsx_runtime(), 1);
+var import_lucide_react8 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
 function Modal({ title, onClose, children, width = 540 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { style: { position: "fixed", inset: 0, zIndex: 1e3, background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "glass-panel", style: { width: "100%", maxWidth: width, padding: 28, margin: 16, maxHeight: "calc(100vh - 32px)", overflowY: "auto" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 22 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h3", { style: { fontSize: 18, fontWeight: 700 }, children: title }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("button", { onClick: onClose, "aria-label": "Close", style: { background: "rgba(255,255,255,0.08)", borderRadius: 8, padding: 6, color: "var(--text-secondary)" }, children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_lucide_react7.X, { size: 17 }) })
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "modal-backdrop", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "modal", role: "dialog", "aria-modal": "true", "aria-label": title, style: { maxWidth: width }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "modal-head", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { children: title }),
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { type: "button", className: "btn subtle icon", onClick: onClose, "aria-label": "Close", title: "Close", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react8.X, { size: 17 }) })
     ] }),
     children
   ] }) });
@@ -45679,8 +45805,8 @@ function Modal({ title, onClose, children, width = 540 }) {
 
 // src/components/ServerOnboarding.tsx
 init_define_import_meta_env();
-var import_react9 = __toESM(require_react(), 1);
-var import_lucide_react9 = __toESM(require_lucide_react(), 1);
+var import_react10 = __toESM(require_react(), 1);
+var import_lucide_react10 = __toESM(require_lucide_react(), 1);
 
 // src/lib/servers.ts
 init_define_import_meta_env();
@@ -45714,19 +45840,21 @@ function demoVerifiedServer(f) {
 
 // src/components/ServerChecks.tsx
 init_define_import_meta_env();
-var import_react8 = __toESM(require_react(), 1);
-var import_lucide_react8 = __toESM(require_lucide_react(), 1);
-var import_jsx_runtime10 = __toESM(require_jsx_runtime(), 1);
+var import_react9 = __toESM(require_react(), 1);
+var import_lucide_react9 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
 function CommandBox({ cmd }) {
-  const [done, setDone] = (0, import_react8.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 8, background: "#06090e", border: "1px solid #1e293b", borderRadius: 8, padding: "8px 10px", marginTop: 6 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("code", { style: { flex: 1, fontFamily: "var(--font-mono)", fontSize: 12, color: "#7dd3fc", wordBreak: "break-all", whiteSpace: "pre-wrap" }, children: cmd }),
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+  const [done, setDone] = (0, import_react9.useState)(false);
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "note", style: { display: "flex", alignItems: "flex-start", gap: 8, margin: "6px 0 0" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("code", { style: { flex: 1, wordBreak: "break-all", whiteSpace: "pre-wrap" }, children: cmd }),
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
       "button",
       {
         type: "button",
+        className: "btn ghost sm",
         title: "Copy",
         "aria-label": "Copy command",
+        style: { flexShrink: 0 },
         onClick: async () => {
           try {
             await navigator.clipboard.writeText(cmd.replace(/\s+#.*$/, ""));
@@ -45735,39 +45863,44 @@ function CommandBox({ cmd }) {
           } catch {
           }
         },
-        style: { background: "rgba(255,255,255,0.06)", borderRadius: 6, padding: 5, color: done ? "#34d399" : "var(--text-muted)", flexShrink: 0 },
-        children: done ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react8.Check, { size: 13 }) : /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react8.Copy, { size: 13 })
+        children: done ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.Check, { size: 13, style: { color: "var(--ok)" } }),
+          " Copied"
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.Copy, { size: 13 }),
+          " Copy"
+        ] })
       }
     )
   ] });
 }
 function ServerChecks({ checks, compact = false }) {
   if (!checks?.length) return null;
-  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { display: "flex", flexDirection: "column", gap: compact ? 3 : 6 }, children: checks.map((c) => /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { fontSize: compact ? 12 : 13 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 6, color: c.ok ? "var(--text-secondary)" : "#fb7185" }, children: [
-      c.ok ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react8.CheckCircle2, { size: 14, color: "#34d399", style: { flexShrink: 0, marginTop: 2 } }) : /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_lucide_react8.XCircle, { size: 14, style: { flexShrink: 0, marginTop: 2 } }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("span", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { style: { color: c.ok ? "var(--text-primary)" : "#fb7185" }, children: c.label }),
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: compact ? 4 : 8, fontSize: compact ? 12 : 13 }, children: checks.map((c) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("li", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", alignItems: "flex-start", gap: 7, color: c.ok ? "var(--text-secondary)" : "var(--danger)" }, children: [
+      c.ok ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.CheckCircle2, { size: 14, "aria-label": "passed", style: { color: "var(--ok)", flexShrink: 0, marginTop: 2 } }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.XCircle, { size: 14, "aria-label": "failed", style: { flexShrink: 0, marginTop: 2 } }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("b", { style: { color: c.ok ? "var(--text-primary)" : "var(--danger)", fontWeight: 600 }, children: c.label }),
         " \u2014 ",
         c.detail
       ] })
     ] }),
-    !c.ok && c.fix && !compact && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { style: { marginLeft: 20 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 4 }, children: "Fix - run on the server:" }),
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(CommandBox, { cmd: c.fix })
+    !c.ok && c.fix && !compact && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginLeft: 21, marginTop: 4 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "hint", children: 'Fix - run on the server, then press "Check again":' }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CommandBox, { cmd: c.fix })
     ] })
   ] }, c.key)) });
 }
 
 // src/components/ServerOnboarding.tsx
-var import_jsx_runtime11 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
 function ServerOnboarding({ asAdmin, demo, onDone, onCancel }) {
-  const [key, setKey] = (0, import_react9.useState)(demo ? DEMO_KEY : null);
-  const [form, setForm] = (0, import_react9.useState)({ name: "", host: "", port: "22", ssh_user: "", ssh_private_key: "", shared: true });
-  const [busy, setBusy] = (0, import_react9.useState)(false);
-  const [err, setErr] = (0, import_react9.useState)("");
-  const [result, setResult] = (0, import_react9.useState)(null);
-  (0, import_react9.useEffect)(() => {
+  const [key, setKey] = (0, import_react10.useState)(demo ? DEMO_KEY : null);
+  const [form, setForm] = (0, import_react10.useState)({ name: "", host: "", port: "22", ssh_user: "", ssh_private_key: "", shared: true });
+  const [busy, setBusy] = (0, import_react10.useState)(false);
+  const [err, setErr] = (0, import_react10.useState)("");
+  const [result, setResult] = (0, import_react10.useState)(null);
+  (0, import_react10.useEffect)(() => {
     if (demo) {
       setKey(DEMO_KEY);
       return;
@@ -45815,162 +45948,309 @@ function ServerOnboarding({ asAdmin, demo, onDone, onCancel }) {
       setBusy(false);
     }
   };
-  const input = { width: "100%", padding: "10px 12px", background: "rgba(0,0,0,0.4)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "#fff", fontSize: 13, marginTop: 5 };
-  const label = { display: "block", fontSize: 11, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 12 };
-  const stepTitle = { fontWeight: 700, fontSize: 14, marginBottom: 4 };
-  const btn2 = { padding: "9px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, display: "flex", alignItems: "center", gap: 7 };
+  const missing = (k) => !!err && err.startsWith("Name, IP address") && !form[k].trim();
   if (result) {
     const ok2 = result.status === "verified";
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { padding: "12px 14px", borderRadius: 10, marginBottom: 14, background: ok2 ? "rgba(52,211,153,0.1)" : "rgba(244,63,94,0.1)", border: `1px solid ${ok2 ? "rgba(52,211,153,0.35)" : "rgba(244,63,94,0.35)"}`, color: ok2 ? "#34d399" : "#fb7185", fontWeight: 600, fontSize: 14 }, children: ok2 ? `\u2705 ${result.name} is ready. Apps can be deployed to it.` : `\u26A0\uFE0F ${result.name} is not ready yet. Fix the red items on the server, then check again.` }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ServerChecks, { checks: result.checks }),
-      err && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { color: "#fb7185", fontSize: 12, marginTop: 12 }, children: [
-        "\u26A0\uFE0F ",
-        err
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 18, flexWrap: "wrap" }, children: [
-        !ok2 && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("button", { onClick: recheck, disabled: busy, style: { ...btn2, background: "rgba(255,255,255,0.08)", border: "1px solid var(--glass-border)", color: "#fff" }, children: [
-          busy ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.Loader2, { size: 14, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.RefreshCw, { size: 14 }),
-          " Check again"
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "steps", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step done", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "1" }),
+          " Prepare the machine"
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { onClick: () => onDone(result), style: { ...btn2, background: "linear-gradient(135deg,var(--accent-blue),var(--accent-purple))", color: "#fff" }, children: ok2 ? "Done" : "Close (keep it, check later)" })
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step done", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "2" }),
+          " Trust the key"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step done", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "3" }),
+          " Connect & check"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step on", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "4" }),
+          " Result"
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        Help,
+        {
+          id: "server-result",
+          title: ok2 ? "The server is ready" : "The server is not ready yet",
+          steps: ok2 ? void 0 : ["Read each red line below; it says what is missing.", "Run the fix command on the server (copy it with the Copy button).", 'Press "Check the server again".'],
+          children: ok2 ? "OmniDeploy logged in, found Docker and git, and created its apps folder. You can now deploy applications to this machine." : "OmniDeploy tried to log in and look for Docker, git and its apps folder. Some checks failed. Nothing is broken; the server only needs a small fix."
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: `panel ${ok2 ? "ok" : "bad"}`, style: { marginBottom: 14 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, fontWeight: 600, fontSize: 15, marginBottom: 12, color: ok2 ? "var(--ok)" : "var(--danger)" }, children: [
+          ok2 ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.CheckCircle2, { size: 18 }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.AlertCircle, { size: 18 }),
+          ok2 ? `${result.name} is ready. Apps can be deployed to it.` : `${result.name} is not ready yet. Fix the red items on the server, then check again.`
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ServerChecks, { checks: result.checks })
+      ] }),
+      err && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "note note-error", role: "alert", children: [
+        "Could not check the server: ",
+        err,
+        ". Make sure the machine is on and reachable, then try again."
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-actions", children: [
+        !ok2 && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("button", { type: "button", className: "btn ghost", onClick: recheck, disabled: busy, children: [
+          busy ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Loader2, { size: 14, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.RefreshCw, { size: 14 }),
+          " Check the server again"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn blue", onClick: () => onDone(result), children: ok2 ? "Done" : "Close (keep it, check later)" })
       ] })
     ] });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 16 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: stepTitle, children: "1. Prepare the Linux machine (once)" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 12, color: "var(--text-secondary)" }, children: "Run these in a terminal on the server (Ubuntu/Debian):" }),
-      (key?.prepare_commands || DEMO_KEY.prepare_commands).map((c) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CommandBox, { cmd: c }, c))
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { marginBottom: 16 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: stepTitle, children: "2. Let OmniDeploy log in" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { fontSize: 12, color: "var(--text-secondary)" }, children: [
-        "On the server, logged in as the user OmniDeploy should use, run this. It adds the platform's ",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("em", { children: "public" }),
-        " key; no password is shared."
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "steps", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step on", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "1" }),
+        " Prepare the machine"
       ] }),
-      key ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(CommandBox, { cmd: key.trust_command }) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", marginTop: 6 }, children: "Loading the key\u2026" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { style: stepTitle, children: "3. Connect" }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", columnGap: 12, marginTop: 8 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: label, children: [
-        "Server name",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { style: input, placeholder: "e.g. linux-laptop", value: form.name, onChange: set("name") })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step on", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "2" }),
+        " Trust the key"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: label, children: [
-        "IP address",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { style: input, placeholder: "e.g. 192.168.1.30", value: form.host, onChange: set("host") })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: label, children: [
-        "SSH user",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { style: input, placeholder: "e.g. ubuntu", value: form.ssh_user, onChange: set("ssh_user") })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: label, children: [
-        "SSH port",
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { style: input, type: "number", value: form.port, onChange: set("port") })
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "step on", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "n", children: "3" }),
+        " Connect & check"
       ] })
     ] }),
-    asAdmin && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--text-secondary)", marginBottom: 12 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("input", { type: "checkbox", checked: form.shared, onChange: set("shared") }),
-      " Customers can deploy their apps to this server"
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("details", { style: { marginBottom: 12, fontSize: 12, color: "var(--text-muted)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("summary", { style: { cursor: "pointer" }, children: "Advanced: use my own SSH private key instead of step 2" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-        "textarea",
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+      Help,
+      {
+        id: "server-add",
+        title: "What is a server here?",
+        need: [
+          "A Linux computer (Ubuntu or Debian) that stays on: a laptop, a desktop, a Raspberry Pi or a rented VPS.",
+          "Its IP address, for example 192.168.1.30, and a user you can log in as.",
+          "A terminal on that machine (or an SSH session to it) to paste three commands."
+        ],
+        children: "A server is just a Linux machine that runs your apps. OmniDeploy connects to it over SSH (the secure remote login Linux machines use), copies your code there and starts it with Docker. Do the three steps below once per machine; it takes about five minutes."
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("section", { style: { marginBottom: 22 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h4", { style: { fontSize: 15, fontWeight: 600, marginBottom: 4 }, children: "1. Prepare the Linux machine (once)" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        Help,
         {
-          placeholder: "-----BEGIN OPENSSH PRIVATE KEY-----",
-          value: form.ssh_private_key,
-          onChange: set("ssh_private_key"),
-          rows: 3,
-          style: { ...input, fontFamily: "var(--font-mono)", fontSize: 11, resize: "vertical" }
+          id: "server-prepare",
+          title: "Why these commands?",
+          steps: ["Open a terminal on the server (or log in to it with SSH).", "Paste each command below, one at a time, and press Enter. Enter your password when asked.", "After the Docker command, log out and log in again so the permission takes effect."],
+          children: "OmniDeploy needs three things on the machine: an SSH server (so it can log in), git (the tool that downloads your code from GitHub) and Docker (the tool that packs your app into a container, a small box that runs the same way everywhere). The last command prints the server's IP address; you will need it in step 3."
         }
-      )
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "hint", style: { marginBottom: 2 }, children: "Run these in a terminal on the server (Ubuntu/Debian):" }),
+      (key?.prepare_commands || DEMO_KEY.prepare_commands).map((c) => /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(CommandBox, { cmd: c }, c))
     ] }),
-    err && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { color: "#fb7185", fontSize: 12, marginBottom: 12, lineHeight: 1.5 }, children: [
-      "\u26A0\uFE0F ",
-      err
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("section", { style: { marginBottom: 22 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h4", { style: { fontSize: 15, fontWeight: 600, marginBottom: 4 }, children: "2. Let OmniDeploy log in" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+        Help,
+        {
+          id: "server-trust",
+          title: "What does this command do?",
+          steps: ['On the server, log in as the Linux user OmniDeploy should use (for example "ubuntu").', "Paste the command below and press Enter. It prints nothing when it works."],
+          children: [
+            "It adds OmniDeploy's ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("em", { children: "public" }),
+            " key to the file ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "~/.ssh/authorized_keys" }),
+            " on the server. That file lists who may log in without a password. Only the public half of the key is shared; no password and no secret ever leaves the platform. You can remove the line from that file at any time to revoke access."
+          ]
+        }
+      ),
+      key ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(CommandBox, { cmd: key.trust_command }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "hint", style: { display: "flex", alignItems: "center", gap: 6 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Loader2, { size: 12, style: { animation: "spin 1s linear infinite" } }),
+        " Loading the key\u2026"
+      ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { style: { display: "flex", gap: 10, justifyContent: "flex-end" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { onClick: onCancel, disabled: busy, style: { ...btn2, background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", color: "var(--text-secondary)" }, children: "Cancel" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("button", { onClick: connect, disabled: busy, style: { ...btn2, background: "linear-gradient(135deg,var(--accent-blue),var(--accent-purple))", color: "#fff" }, children: busy ? /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(import_lucide_react9.Loader2, { size: 14, style: { animation: "spin 1s linear infinite" } }),
-        " Connecting\u2026"
-      ] }) : "Connect & check" })
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("section", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h4", { style: { fontSize: 15, fontWeight: 600, marginBottom: 4 }, children: "3. Connect & check" }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        Help,
+        {
+          id: "server-connect",
+          title: "What happens when you press Connect?",
+          steps: ["OmniDeploy logs in to the server over SSH with the key from step 2.", "It checks that Docker and git are installed and that your user may use Docker.", "It creates a folder for your apps and a private Docker network.", "You get a checklist: green means fine, red says what to fix."],
+          children: "Tell OmniDeploy where the machine is and which user to log in as. Nothing is installed or changed on the server except the apps folder."
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-grid", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { children: [
+            "Server name",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "req", children: "*" })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Tag, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { className: `input${missing("name") ? " bad" : ""}`, placeholder: "e.g. linux-laptop", value: form.name, onChange: set("name") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "hint", children: [
+            "Any short name so you recognise it later, e.g. ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "linux-laptop" }),
+            " or ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "home-pi" }),
+            "."
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { children: [
+            "IP address or hostname",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "req", children: "*" })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Network, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { className: `input${missing("host") ? " bad" : ""}`, placeholder: "e.g. 192.168.1.30", value: form.host, onChange: set("host") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "hint", children: [
+            "The address printed by ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "ip -4 addr" }),
+            " in step 1, e.g. ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "192.168.1.30" }),
+            ", or a name like ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "server.local" }),
+            "."
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { children: [
+            "SSH user",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "req", children: "*" })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.UserRound, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { className: `input${missing("ssh_user") ? " bad" : ""}`, placeholder: "e.g. ubuntu", value: form.ssh_user, onChange: set("ssh_user") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "hint", children: [
+            "The Linux user you log in as on that machine, the same one you used in step 2, e.g. ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "ubuntu" }),
+            "."
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "field", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "SSH port" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "input-wrap", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "ico", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Hash, { size: 15 }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { className: "input", type: "number", value: form.port, onChange: set("port") })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "hint", children: [
+            "A port is a numbered door on the machine. SSH uses ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "22" }),
+            " unless you changed it; leave it as is."
+          ] })
+        ] })
+      ] }),
+      asAdmin && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "field", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: "check", style: { fontSize: 13 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { type: "checkbox", checked: form.shared, onChange: set("shared") }),
+          " Customers can deploy their apps to this server"
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "hint", children: `Admin only. When ticked, this machine appears in every customer's "Deploy to server" list. Untick it to keep it for your own apps.` })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("details", { style: { marginBottom: 14 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("summary", { className: "hint", style: { cursor: "pointer", fontSize: 13 }, children: "Advanced: use my own SSH private key instead of step 2" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { className: "field", style: { marginTop: 10 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "lbl", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children: "SSH private key (optional)" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("textarea", { className: "input", style: { paddingLeft: 14, fontSize: 11 }, placeholder: "-----BEGIN OPENSSH PRIVATE KEY-----", value: form.ssh_private_key, onChange: set("ssh_private_key"), rows: 3 }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "hint", children: [
+            "Only if you cannot run the command in step 2. Paste the whole private key file (it starts with ",
+            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("code", { children: "-----BEGIN" }),
+            "). It is stored on the platform machine only."
+          ] })
+        ] })
+      ] }),
+      err && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "note note-error", role: "alert", children: [
+        err,
+        " ",
+        err.startsWith("Name, IP address") ? "Fill in the fields marked with * and press Connect again." : "Check that the machine is on, the address is right and you ran step 2 as that user, then try again."
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "form-actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn ghost", onClick: onCancel, disabled: busy, children: "Cancel" }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { type: "button", className: "btn blue", onClick: connect, disabled: busy, children: busy ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Loader2, { size: 14, style: { animation: "spin 1s linear infinite" } }),
+          " Connecting\u2026"
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Network, { size: 14 }),
+          " Connect & check"
+        ] }) })
+      ] })
     ] })
   ] });
 }
 
 // src/components/ServerCard.tsx
 init_define_import_meta_env();
-var import_lucide_react10 = __toESM(require_lucide_react(), 1);
-var import_jsx_runtime12 = __toESM(require_jsx_runtime(), 1);
+var import_lucide_react11 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
 function Badge({ status }) {
   const cls = status === "verified" ? "badge-verified" : status === "pending" ? "badge-building" : "badge-failed";
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("span", { className: `badge ${cls}`, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "currentColor" } }),
-    status === "unreachable" ? "not ready" : status
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: `badge ${cls}`, children: status === "unreachable" ? "not ready" : status });
 }
 function ServerCard({ server, note, canManage, canShare, busy, onVerify, onShare, onDelete }) {
-  const small = { display: "flex", alignItems: "center", gap: 6, padding: "7px 11px", borderRadius: 8, fontSize: 12, fontWeight: 600 };
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "glass-panel", style: { padding: 20, borderColor: server.status === "verified" ? "rgba(52,211,153,0.3)" : void 0 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, marginBottom: 10 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { minWidth: 0 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { fontWeight: 700, fontSize: 17 }, children: server.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", marginTop: 2, wordBreak: "break-all" }, children: server.is_local ? "the platform machine" : `${server.ssh_user ? `${server.ssh_user}@` : ""}${server.host}${server.port && server.port !== 22 ? `:${server.port}` : ""}` }),
-        note && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 3 }, children: note })
+  const address = server.is_local ? "the platform machine (the computer that runs OmniDeploy)" : `${server.ssh_user ? `${server.ssh_user}@` : ""}${server.host}${server.port && server.port !== 22 ? `:${server.port}` : ""}`;
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: `panel${server.status === "verified" ? " ok" : ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "panel-head", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { minWidth: 0 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h3", { style: { overflow: "hidden", textOverflow: "ellipsis" }, children: server.name }),
+        note && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "hint", children: note })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Badge, { status: server.status })
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Badge, { status: server.status })
     ] }),
-    server.checks?.length ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { style: { background: "rgba(0,0,0,0.25)", borderRadius: 8, padding: "9px 11px", marginBottom: 12 }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ServerChecks, { checks: server.checks, compact: true }) }) : server.docker_version ? /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { fontSize: 12, color: "var(--text-secondary)", marginBottom: 12 }, children: [
-      "\u{1F433} ",
-      server.docker_version
-    ] }) : null,
-    (canShare || canManage) && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }, children: [
-      canShare && onShare && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("label", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--text-secondary)", marginRight: "auto" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("input", { type: "checkbox", checked: !!server.shared, disabled: busy, onChange: (e) => onShare(e.target.checked) }),
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Users, { size: 12 }),
+    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "kv", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.MapPin, { size: 12 }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children: address })
+      ] }),
+      server.docker_version && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Box, { size: 12 }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { children: [
+          "Docker: ",
+          server.docker_version
+        ] })
+      ] })
+    ] }),
+    server.checks?.length ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(ServerChecks, { checks: server.checks, compact: true }) : null,
+    server.status !== "verified" && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "hint", style: { marginTop: 8 }, children: server.status === "pending" ? 'Not checked yet. Press "Check again" to test the connection.' : 'Something is missing on this machine. Each red line above says what to fix; then press "Check again".' }),
+    (canShare || canManage) && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "panel-foot", children: [
+      canShare && onShare && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("label", { className: "check", style: { marginRight: "auto", fontSize: 12 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("input", { type: "checkbox", checked: !!server.shared, disabled: busy, onChange: (e) => onShare(e.target.checked) }),
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Users, { size: 12 }),
         " Customers can deploy here"
       ] }),
-      canManage && onVerify && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("button", { onClick: onVerify, disabled: busy, style: { ...small, background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", color: "var(--text-secondary)", marginLeft: canShare ? void 0 : "auto" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.RefreshCw, { size: 12, style: busy ? { animation: "spin 1s linear infinite" } : void 0 }),
+      canManage && onVerify && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: onVerify, disabled: busy, style: { marginLeft: canShare ? void 0 : "auto" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.RefreshCw, { size: 12, style: busy ? { animation: "spin 1s linear infinite" } : void 0 }),
         " Check again"
       ] }),
-      canManage && onDelete && !server.is_local && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("button", { onClick: onDelete, disabled: busy, title: "Remove server", "aria-label": `Remove ${server.name}`, style: { ...small, background: "rgba(244,63,94,0.12)", border: "1px solid rgba(244,63,94,0.35)", color: "#fb7185" }, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_lucide_react10.Trash2, { size: 12 }) })
+      canManage && onDelete && !server.is_local && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { type: "button", className: "btn danger sm icon", onClick: onDelete, disabled: busy, title: "Remove from OmniDeploy", "aria-label": `Remove ${server.name}`, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Trash2, { size: 12 }) })
     ] })
   ] });
 }
 
 // src/CustomerPortal.tsx
-var import_jsx_runtime13 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
 var appUrl = (a) => a.app_url || (a.host_port ? `http://${window.location.hostname}:${a.host_port}` : void 0);
 var depUrl = (d) => d.app_url && !d.app_url.includes("localhost") ? d.app_url : appUrl({ host_port: d.host_port });
 var forThisDevice = (line) => line.replace(/http:\/\/localhost:(\d+)/g, (_, port) => `http://${window.location.hostname}:${port}`);
 var typeLabel = (id) => FALLBACK_APP_TYPES.find((t) => t.id === id)?.label || "Auto-detect";
 function StatusBadge({ status }) {
   const cls = ["running", "success"].includes(status) ? "badge-verified" : ["building", "deploying"].includes(status) ? "badge-building" : status === "failed" ? "badge-failed" : "badge-idle";
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("span", { className: `badge ${cls}`, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { style: { width: 6, height: 6, borderRadius: "50%", background: "currentColor" } }),
-    status
-  ] });
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: `badge ${cls}`, children: status });
 }
 function CustomerPortal({ customer, onLogout }) {
-  const [apps, setApps] = (0, import_react10.useState)([]);
-  const [servers, setServers] = (0, import_react10.useState)([]);
-  const [addServer, setAddServer] = (0, import_react10.useState)(false);
-  const [srvBusy, setSrvBusy] = (0, import_react10.useState)(null);
-  const [loading, setLoading] = (0, import_react10.useState)(true);
-  const [error, setError] = (0, import_react10.useState)("");
-  const [wizard, setWizard] = (0, import_react10.useState)(false);
-  const [view, setView] = (0, import_react10.useState)(null);
-  const [busyId, setBusyId] = (0, import_react10.useState)(null);
-  const [delTarget, setDelTarget] = (0, import_react10.useState)(null);
-  const viewRef = (0, import_react10.useRef)(null);
+  const [apps, setApps] = (0, import_react11.useState)([]);
+  const [servers, setServers] = (0, import_react11.useState)([]);
+  const [addServer, setAddServer] = (0, import_react11.useState)(false);
+  const [srvBusy, setSrvBusy] = (0, import_react11.useState)(null);
+  const [loading, setLoading] = (0, import_react11.useState)(true);
+  const [error, setError] = (0, import_react11.useState)("");
+  const [wizard, setWizard] = (0, import_react11.useState)(false);
+  const [view, setView] = (0, import_react11.useState)(null);
+  const [busyId, setBusyId] = (0, import_react11.useState)(null);
+  const [delTarget, setDelTarget] = (0, import_react11.useState)(null);
+  const viewRef = (0, import_react11.useRef)(null);
   viewRef.current = view;
-  const logsRef = (0, import_react10.useRef)(null);
-  const load2 = (0, import_react10.useCallback)(async () => {
+  const logsRef = (0, import_react11.useRef)(null);
+  const load2 = (0, import_react11.useCallback)(async () => {
     try {
       const [a, s] = await Promise.all([tryBackend("/applications"), tryBackend("/servers")]);
       setApps(a);
@@ -45982,10 +46262,10 @@ function CustomerPortal({ customer, onLogout }) {
       setLoading(false);
     }
   }, []);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     load2();
   }, [load2]);
-  (0, import_react10.useEffect)(() => {
+  (0, import_react11.useEffect)(() => {
     const socket = lookup(BACKEND_URL, { auth: { token: getAuthToken() } });
     socket.on("global_deploy_log", (d) => {
       setView((v) => v && v.id === d.deploymentId ? { ...v, lines: [...v.lines, d.log] } : v);
@@ -46082,168 +46362,247 @@ function CustomerPortal({ customer, onLogout }) {
   };
   const serverName = (id) => servers.find((x) => x.id === id)?.name;
   const errLine = view ? firstError(parseLogs(shownLines)) : void 0;
-  const btn2 = { display: "flex", alignItems: "center", gap: 6, padding: "8px 12px", borderRadius: 8, fontSize: 13, fontWeight: 600 };
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { minHeight: "100vh" }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("header", { style: { display: "flex", alignItems: "center", gap: 12, padding: "14px 24px", borderBottom: "1px solid var(--glass-border)", background: "var(--bg-secondary)", flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { flex: 1, minWidth: 140 }, children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Brand, { subtitle: "Customer portal", size: 34 }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { textAlign: "right", minWidth: 0 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { fontSize: 13, fontWeight: 600 }, children: customer.name }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: customer.email })
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { minHeight: "100vh" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("header", { className: "topbar", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Brand, { subtitle: "Customer portal", size: 34 }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "spacer" }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { textAlign: "right", minWidth: 0 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: { fontSize: 13, fontWeight: 600 }, children: customer.name }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "hint", style: { marginTop: 0 }, children: [
+          "Signed in as ",
+          customer.email
+        ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { onClick: onLogout, style: { ...btn2, background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", color: "var(--text-secondary)", fontWeight: 500 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.LogOut, { size: 14 }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: onLogout, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.LogOut, { size: 14 }),
         " Sign out"
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("main", { style: { maxWidth: 1100, margin: "0 auto", padding: "28px 16px 60px" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, marginBottom: 22, flexWrap: "wrap" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h1", { style: { fontSize: 24, fontWeight: 700 }, children: "My applications" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { style: { color: "var(--text-secondary)", fontSize: 14, marginTop: 4 }, children: "Pick your app type, paste your GitHub link, and we build and run it for you." })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-          "button",
-          {
-            onClick: () => setWizard(true),
-            style: { ...btn2, padding: "10px 18px", fontSize: 14, background: "linear-gradient(135deg, var(--accent-blue), var(--accent-purple))", color: "#fff" },
-            children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Plus, { size: 16 }),
-              " New application"
-            ]
-          }
-        )
-      ] }),
-      error && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { color: "#fb7185", fontSize: 13, marginBottom: 16, padding: "10px 14px", background: "rgba(244,63,94,0.1)", border: "1px solid rgba(244,63,94,0.3)", borderRadius: 10 }, children: [
-        "\u26A0\uFE0F ",
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("main", { className: "content", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        PageHead,
+        {
+          title: "My applications",
+          text: "Each application is a GitHub repository that OmniDeploy builds and runs on a server for you. Pick the type, paste the link, press deploy.",
+          actions: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn blue", onClick: () => setWizard(true), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Plus, { size: 16 }),
+            " New application"
+          ] })
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        Help,
+        {
+          id: "customer-apps",
+          title: "How does this page work?",
+          need: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+              "A ",
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "public GitHub repository" }),
+              " link, e.g. ",
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("code", { children: "https://github.com/you/your-repo" }),
+              ". Git is the tool that stores your code; GitHub hosts it online."
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+              "To know ",
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "what kind of app" }),
+              ' it is (Flask, Node.js, a static HTML site...). If unsure, choose "Not sure - detect it for me".'
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+              "A ",
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "server" }),
+              " to run it on. One is provided by OmniDeploy; you can also add your own Linux machine below."
+            ] })
+          ],
+          steps: [
+            "We download (clone) your code from GitHub.",
+            "We build it into a container: a small box with your code and everything it needs, so it runs the same way everywhere (this is what Docker does).",
+            "We start the container on the server and check that it answers.",
+            "You get a link to open your app. The whole thing takes one to three minutes."
+          ],
+          next: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+            "Press ",
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "New application" }),
+            ' to begin. Each app card shows its status, its link when it is running, a "Deploy now" button and its log.'
+          ] }),
+          children: "An application here is simply your code on GitHub. OmniDeploy turns it into a running website or API on a private server, without any cloud account."
+        }
+      ),
+      error && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "note note-error", role: "alert", children: [
+        "Something went wrong: ",
         error
       ] }),
-      loading ? /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, color: "var(--text-muted)" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }),
+      loading ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "hint", style: { display: "flex", alignItems: "center", gap: 8, fontSize: 14 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }),
         " Loading your apps\u2026"
-      ] }) : apps.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "glass-panel", style: { padding: 32, textAlign: "center" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Layers, { size: 40, style: { opacity: 0.3 } }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { fontWeight: 600, fontSize: 17, marginTop: 10 }, children: "You have no applications yet" }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("ol", { style: { color: "var(--text-secondary)", fontSize: 14, lineHeight: 1.9, margin: "12px auto 18px", textAlign: "left", display: "inline-block" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("li", { children: [
-            "Click ",
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("strong", { children: "New application" })
+      ] }) : apps.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "empty", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Layers, { size: 40 }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h3", { children: "You have no applications yet" }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { children: "Three short steps and your first app is online:" }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("ol", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
+            "Press ",
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "New application" }),
+            "."
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("li", { children: "Choose what type of app it is (Flask, Node.js, static site\u2026)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("li", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("li", { children: "Choose what type of app it is (Flask, Node.js, static site\u2026)." }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("li", { children: [
             "Paste your GitHub repository link and press ",
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("strong", { children: "Create & deploy" })
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "Create & deploy" }),
+            "."
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { onClick: () => setWizard(true), style: { ...btn2, margin: "0 auto", background: "rgba(79,172,254,0.15)", color: "var(--accent-cyan)", border: "1px solid rgba(79,172,254,0.35)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Plus, { size: 14 }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn blue", onClick: () => setWizard(true), children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Plus, { size: 14 }),
           " New application"
         ] }) })
-      ] }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }, children: apps.map((app) => {
-        const url2 = app.status === "running" ? appUrl(app) : void 0;
-        const busy = busyId === app.id || app.status === "building";
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "glass-panel", style: { padding: 20, borderColor: app.status === "running" ? "rgba(52,211,153,0.35)" : void 0 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 10 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { minWidth: 0 }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { fontWeight: 700, fontSize: 17, overflow: "hidden", textOverflow: "ellipsis" }, children: app.name }),
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { style: { display: "inline-block", marginTop: 5, fontSize: 11, padding: "2px 8px", borderRadius: 6, background: "rgba(167,139,250,0.15)", color: "#c4b5fd", border: "1px solid rgba(167,139,250,0.3)" }, children: typeLabel(app.app_type) })
+      ] }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "grid", children: apps.map((app) => {
+          const url2 = app.status === "running" ? appUrl(app) : void 0;
+          const busy = busyId === app.id || app.status === "building";
+          return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: `panel${app.status === "running" ? " ok" : ""}`, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "panel-head", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { minWidth: 0 }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h3", { style: { overflow: "hidden", textOverflow: "ellipsis" }, children: app.name }),
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "chip", style: { marginTop: 5 }, children: typeLabel(app.app_type) })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(StatusBadge, { status: app.status })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(StatusBadge, { status: app.status })
-          ] }),
-          url2 && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("a", { href: url2, target: "_blank", rel: "noreferrer", style: { display: "flex", alignItems: "center", gap: 8, padding: "9px 12px", background: "rgba(52,211,153,0.12)", border: "1px solid rgba(52,211,153,0.35)", borderRadius: 10, marginBottom: 10, color: "#34d399", fontWeight: 600, fontSize: 13, textDecoration: "none" }, children: [
-            url2,
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.ExternalLink, { size: 13, style: { marginLeft: "auto" } })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { fontSize: 12, color: "var(--text-secondary)", background: "rgba(0,0,0,0.25)", borderRadius: 8, padding: "8px 11px", marginBottom: 14, lineHeight: 1.7, wordBreak: "break-all" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.GitBranch, { size: 11, style: { flexShrink: 0 } }),
-              app.repo_url.replace("https://github.com/", ""),
-              " (",
-              app.branch,
-              ")"
+            url2 && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("a", { className: "url-box", href: url2, target: "_blank", rel: "noreferrer", title: "Open the app in a new tab", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Globe, { size: 13 }),
+              " ",
+              url2,
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.ExternalLink, { size: 13, style: { marginLeft: "auto" } })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Globe, { size: 11, style: { flexShrink: 0 } }),
-              app.domain
-            ] }),
-            serverName(app.server_id) && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", gap: 6, alignItems: "center" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Server, { size: 11, style: { flexShrink: 0 } }),
-              "runs on ",
-              serverName(app.server_id)
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", gap: 8, flexWrap: "wrap" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
-              "button",
-              {
-                onClick: () => deploy(app),
-                disabled: busy,
-                style: { ...btn2, background: "rgba(16,185,129,0.18)", color: "#34d399", border: "1px solid rgba(16,185,129,0.4)", opacity: busy ? 0.6 : 1 },
-                children: [
-                  busy ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Play, { size: 13 }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "kv", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.GitBranch, { size: 12 }),
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { children: [
+                  app.repo_url.replace("https://github.com/", ""),
                   " ",
-                  app.status === "building" ? "Deploying\u2026" : "Deploy"
-                ]
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { onClick: () => openLatestLog(app), style: { ...btn2, background: "rgba(255,255,255,0.06)", color: "var(--text-secondary)", border: "1px solid var(--glass-border)" }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.ScrollText, { size: 13 }),
-              " Logs"
+                  /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("b", { children: [
+                    "(",
+                    app.branch,
+                    ")"
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Globe, { size: 12 }),
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { children: [
+                  "domain: ",
+                  /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("b", { children: app.domain })
+                ] })
+              ] }),
+              serverName(app.server_id) && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Server, { size: 12 }),
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { children: [
+                  "runs on ",
+                  /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("b", { children: serverName(app.server_id) })
+                ] })
+              ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-              "button",
-              {
-                onClick: () => setDelTarget(app),
-                disabled: busy,
-                title: "Delete application",
-                "aria-label": `Delete ${app.name}`,
-                style: { ...btn2, marginLeft: "auto", background: "rgba(244,63,94,0.12)", color: "#fb7185", border: "1px solid rgba(244,63,94,0.35)", opacity: busy ? 0.4 : 1 },
-                children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Trash2, { size: 13 })
-              }
-            )
-          ] })
-        ] }, app.id);
-      }) }),
-      view && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { ref: logsRef, style: { marginTop: 28 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("h2", { style: { fontSize: 18, fontWeight: 700 }, children: [
-            "Deploy log \xB7 ",
-            view.appName
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { onClick: () => setView(null), style: { ...btn2, background: "transparent", color: "var(--text-muted)", fontWeight: 500 }, children: "Close" })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(DeployBanner, { status: view.status, appName: view.appName, url: view.url, errorText: errLine?.text }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(LogViewer, { lines: shownLines, status: view.status, minHeight: 360 })
+            app.status === "failed" && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "hint", style: { color: "var(--danger)" }, children: 'The last deploy did not work. Press "Show the log" to see the first error, fix it in your repository, then deploy again.' }),
+            app.status === "idle" && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "hint", children: 'Saved but not deployed yet. Press "Deploy now" to build and start it.' }),
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "panel-foot", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn ok sm", onClick: () => deploy(app), disabled: busy, title: "Build the latest code and start the app", children: [
+                busy ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Play, { size: 13 }),
+                " ",
+                app.status === "building" ? "Deploying\u2026" : "Deploy now"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: () => openLatestLog(app), title: "Show the log of the last deploy", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.ScrollText, { size: 13 }),
+                " Show the log"
+              ] }),
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "button", className: "btn danger sm icon", onClick: () => setDelTarget(app), disabled: busy, title: "Remove from OmniDeploy", "aria-label": `Delete ${app.name}`, style: { marginLeft: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Trash2, { size: 13 }) })
+            ] })
+          ] }, app.id);
+        }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(StatusLegend, { items: APP_STATUS_LEGEND })
       ] }),
-      !loading && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("section", { style: { marginTop: 36 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, marginBottom: 14, flexWrap: "wrap" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h2", { style: { fontSize: 19, fontWeight: 700 }, children: "Where your apps run" }),
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { style: { color: "var(--text-secondary)", fontSize: 13, marginTop: 4 }, children: "Servers you can deploy to. Have your own Linux machine? Add it and your apps run there." })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { onClick: () => setAddServer(true), style: { ...btn2, background: "rgba(79,172,254,0.15)", color: "var(--accent-cyan)", border: "1px solid rgba(79,172,254,0.35)" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Plus, { size: 14 }),
+      view && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("section", { ref: logsRef, style: { marginTop: 32 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+          PageHead,
+          {
+            small: true,
+            title: `Deploy log \xB7 ${view.appName}`,
+            text: "Everything the platform did for this deploy, line by line, as it happens.",
+            actions: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "button", className: "btn ghost sm", onClick: () => setView(null), children: "Close the log" })
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+          Help,
+          {
+            id: "deploy-log",
+            title: "How to read this log",
+            steps: ["Fetch code: your repository is downloaded from GitHub.", "Build: the container image is created (dependencies are installed here).", "Start & verify: the container is started and the platform checks that it answers."],
+            next: "Green lines are fine. If something fails, the first red line usually names the missing file or package; fix it in your repository and deploy again.",
+            children: "The log is live: new lines appear while the deploy runs. When it finishes, the result and the link to your app are shown above the log."
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DeployBanner, { status: view.status, appName: view.appName, url: view.url, errorText: errLine?.text }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(LogViewer, { lines: shownLines, status: view.status, minHeight: 360 })
+      ] }),
+      !loading && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("section", { style: { marginTop: 40 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+          PageHead,
+          {
+            small: true,
+            title: "Where your apps run",
+            text: "The machines your apps can be deployed to. Have your own Linux machine? Add it and your apps run there.",
+            actions: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn ghost", onClick: () => setAddServer(true), children: [
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Plus, { size: 14 }),
+              " Add my server"
+            ] })
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+          Help,
+          {
+            id: "customer-servers",
+            title: "What is a server here?",
+            need: [
+              "Nothing, if you use the server provided by OmniDeploy: it is already set up.",
+              "To add your own: a Linux machine (Ubuntu or Debian) that stays on, its IP address, and five minutes to paste three commands on it."
+            ],
+            next: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+              "Press ",
+              /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "Add my server" }),
+              ' and follow the three steps. "Check again" re-tests a server; a verified server is ready to run apps.'
+            ] }),
+            children: "A server is a Linux computer that runs your apps: a laptop in the lab, a Raspberry Pi, a rented VPS. OmniDeploy logs in to it over SSH (the secure remote login Linux machines use) and starts your apps there with Docker. The platform may provide one for everyone."
+          }
+        ),
+        servers.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "empty", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Server, { size: 36 }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h3", { children: "No server yet" }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { children: "Apps need a machine to run on. Add your own Linux machine, or ask the platform owner to share one." }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn blue", onClick: () => setAddServer(true), children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Plus, { size: 14 }),
             " Add my server"
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }, children: servers.map((srv) => {
-          const mine = srv.owner_id === customer.id;
-          return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-            ServerCard,
-            {
-              server: srv,
-              busy: srvBusy === srv.id,
-              canManage: mine,
-              canShare: false,
-              note: mine ? "Your own server" : "Provided by OmniDeploy",
-              onVerify: () => verifyServer(srv),
-              onDelete: () => removeServer(srv)
-            },
-            srv.id
-          );
-        }) })
+          ] }) })
+        ] }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "grid", children: servers.map((srv) => {
+            const mine = srv.owner_id === customer.id;
+            return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+              ServerCard,
+              {
+                server: srv,
+                busy: srvBusy === srv.id,
+                canManage: mine,
+                canShare: false,
+                note: mine ? "Your own server" : "Provided by OmniDeploy",
+                onVerify: () => verifyServer(srv),
+                onDelete: () => removeServer(srv)
+              },
+              srv.id
+            );
+          }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(StatusLegend, { items: SERVER_STATUS_LEGEND })
+        ] })
       ] })
     ] }),
-    addServer && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Modal, { title: "Add my server", width: 720, onClose: () => setAddServer(false), children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+    addServer && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Modal, { title: "Add my server", width: 720, onClose: () => setAddServer(false), children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
       ServerOnboarding,
       {
         asAdmin: false,
@@ -46255,14 +46614,30 @@ function CustomerPortal({ customer, onLogout }) {
         }
       }
     ) }),
-    wizard && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Modal, { title: "New application", width: 760, onClose: () => setWizard(false), children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(NewAppWizard, { servers, useBackend: true, onCreate: create, onCancel: () => setWizard(false) }) }),
-    delTarget && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(Modal, { title: `Delete \u201C${delTarget.name}\u201D?`, onClose: () => busyId !== delTarget.id && setDelTarget(null), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { style: { fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: 18 }, children: "This stops the app and deletes its container and the copy of your code on the platform. Your GitHub repository is not touched." }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { style: { display: "flex", gap: 10, justifyContent: "flex-end" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("button", { onClick: () => setDelTarget(null), style: { ...btn2, background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", color: "var(--text-secondary)" }, children: "Cancel" }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("button", { onClick: remove, disabled: busyId === delTarget.id, style: { ...btn2, background: "#e11d48", color: "#fff" }, children: [
-          busyId === delTarget.id ? /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(import_lucide_react11.Trash2, { size: 13 }),
-          " Delete"
+    wizard && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Modal, { title: "New application", width: 760, onClose: () => setWizard(false), children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(NewAppWizard, { servers, useBackend: true, onCreate: create, onCancel: () => setWizard(false) }) }),
+    delTarget && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(Modal, { title: `Delete \u201C${delTarget.name}\u201D?`, onClose: () => busyId !== delTarget.id && setDelTarget(null), children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        Help,
+        {
+          id: "delete-app",
+          title: "What will be deleted",
+          steps: [
+            "The running app is stopped and its container is removed from the server.",
+            "The copy of your code on the server and the app's deploy logs are deleted.",
+            `"${delTarget.name}" disappears from this page and its link stops working.`
+          ],
+          next: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "Not touched:" }),
+            " your GitHub repository, your account, and the server itself. You can create the app again at any time."
+          ] }),
+          children: "This cannot be undone. Here is exactly what happens:"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "form-actions", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("button", { type: "button", className: "btn ghost", onClick: () => setDelTarget(null), disabled: busyId === delTarget.id, children: "Cancel, keep it" }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { type: "button", className: "btn danger solid", onClick: remove, disabled: busyId === delTarget.id, children: [
+          busyId === delTarget.id ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Loader2, { size: 13, style: { animation: "spin 1s linear infinite" } }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Trash2, { size: 13 }),
+          " Remove from OmniDeploy"
         ] })
       ] })
     ] })
@@ -46271,9 +46646,9 @@ function CustomerPortal({ customer, onLogout }) {
 
 // src/AdminCustomers.tsx
 init_define_import_meta_env();
-var import_react11 = __toESM(require_react(), 1);
-var import_lucide_react12 = __toESM(require_lucide_react(), 1);
-var import_jsx_runtime14 = __toESM(require_jsx_runtime(), 1);
+var import_react12 = __toESM(require_react(), 1);
+var import_lucide_react13 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
 var DEMO = [
   {
     id: "d1",
@@ -46301,10 +46676,11 @@ var DEMO = [
 ];
 var when = (iso) => iso ? new Date(iso).toLocaleString() : "never";
 var typeLabel2 = (id) => FALLBACK_APP_TYPES.find((t) => t.id === id)?.label || id;
+var APP_BADGE = { running: "badge-running", building: "badge-building", deploying: "badge-deploying", failed: "badge-failed", idle: "badge-idle" };
 function AdminCustomers({ demo, onRows }) {
-  const [rows, setRows] = (0, import_react11.useState)(demo ? DEMO : []);
-  const [loading, setLoading] = (0, import_react11.useState)(!demo);
-  const [err, setErr] = (0, import_react11.useState)("");
+  const [rows, setRows] = (0, import_react12.useState)(demo ? DEMO : []);
+  const [loading, setLoading] = (0, import_react12.useState)(!demo);
+  const [err, setErr] = (0, import_react12.useState)("");
   const load2 = () => {
     if (demo) {
       setRows(DEMO);
@@ -46318,89 +46694,102 @@ function AdminCustomers({ demo, onRows }) {
       setErr("");
     }).catch((e) => setErr(e.message)).finally(() => setLoading(false));
   };
-  (0, import_react11.useEffect)(load2, [demo]);
+  (0, import_react12.useEffect)(load2, [demo]);
   const customers = rows.filter((r) => r.role === "customer");
-  const th = { textAlign: "left", padding: "10px 12px", fontSize: 11, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px", fontWeight: 600 };
-  const td = { padding: "12px", fontSize: 13, borderTop: "1px solid var(--glass-border)", verticalAlign: "top" };
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "animate-slide-up", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 22, gap: 16, flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h2", { style: { fontSize: 24, fontWeight: 700 }, children: "Customers" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("p", { style: { color: "var(--text-secondary)", fontSize: 14, marginTop: 5 }, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "animate-slide-up", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      PageHead,
+      {
+        title: "Customers",
+        text: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
           "Everyone who signed up on the customer portal, and what they deployed. ",
           customers.length,
           " customer",
           customers.length === 1 ? "" : "s",
           "."
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("button", { onClick: load2, style: { display: "flex", alignItems: "center", gap: 6, padding: "9px 14px", background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "var(--text-secondary)", fontSize: 13 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.RefreshCw, { size: 13 }),
-        " Refresh"
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { display: "flex", gap: 10, alignItems: "flex-start", padding: "11px 14px", background: "rgba(0,242,254,0.06)", border: "1px solid rgba(0,242,254,0.2)", borderRadius: 10, fontSize: 13, color: "var(--text-secondary)", marginBottom: 18, lineHeight: 1.6 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.KeyRound, { size: 15, style: { flexShrink: 0, marginTop: 3, color: "var(--accent-cyan)" } }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { children: [
-        "Passwords are never stored. Each one is turned into a salted ",
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "scrypt" }),
-        " hash, so not even the admin can read it back. Only the first characters of the hash are shown here. The full file is listed on ",
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: "Data & Storage" }),
-        "."
-      ] })
-    ] }),
-    err && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { color: "#fb7185", fontSize: 13, marginBottom: 14 }, children: [
-      "\u26A0\uFE0F ",
-      err
-    ] }),
-    loading ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { display: "flex", gap: 8, color: "var(--text-muted)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }),
-      " Loading\u2026"
-    ] }) : rows.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { textAlign: "center", color: "var(--text-muted)", padding: 40 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(import_lucide_react12.Users, { size: 40, style: { opacity: 0.3 } }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: { marginTop: 8 }, children: "Nobody has signed up yet." })
-    ] }) : /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "glass-panel", style: { overflowX: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", minWidth: 760 }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { style: th, children: "Account" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { style: th, children: "Signed up / last login" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { style: th, children: "Password stored as" }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("th", { style: th, children: "Applications" })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("tbody", { children: rows.map((u) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("tr", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("td", { style: td, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: { fontWeight: 600 }, children: u.name }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12 }, children: u.email }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { display: "inline-block", marginTop: 5, fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 5, background: u.role === "admin" ? "rgba(245,158,11,0.18)" : "rgba(79,172,254,0.15)", color: u.role === "admin" ? "#fbbf24" : "var(--accent-cyan)", textTransform: "uppercase" }, children: u.role }),
-          u.active_sessions > 0 && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { marginLeft: 6, fontSize: 11, color: "#34d399" }, children: "\u25CF signed in" })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("td", { style: { ...td, fontSize: 12, color: "var(--text-secondary)" }, children: [
+        actions: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: load2, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.RefreshCw, { size: 13 }),
+          " Refresh"
+        ] })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+      Help,
+      {
+        id: "admin-customers",
+        title: "What am I looking at?",
+        next: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+          "Passwords are never stored. Each one is turned into a salted ",
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "scrypt" }),
+          " hash, so not even the owner can read it back. Only the first characters of the hash are shown here. The file itself is listed on ",
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "Data & Storage" }),
+          "."
+        ] }),
+        children: [
+          "Each row is one account. Customers create their own account on the customer portal; the ",
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { children: "admin" }),
+          " row is you.",
+          " ",
+          "For every account you can see when it signed up, when it last signed in, how its password is stored, and the apps it owns."
+        ]
+      }
+    ),
+    err && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "note note-error", children: err }),
+    loading ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "hint", style: { display: "flex", gap: 8, alignItems: "center" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }),
+      " Loading\u2026"
+    ] }) : rows.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "empty", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Users, { size: 36 }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h3", { children: "Nobody has signed up yet." }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { children: "Accounts appear here as soon as someone creates one on the customer portal." })
+    ] }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "panel table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { className: "table", style: { minWidth: 760 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Account" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Signed up / last login" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Password stored as" }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { children: "Applications" })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: rows.map((u) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("b", { children: u.name }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { color: "var(--text-muted)", fontSize: 12 }, children: u.email }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { marginTop: 6, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "chip", style: u.role === "admin" ? { color: "var(--text-primary)", borderColor: "var(--accent)" } : void 0, children: u.role }),
+            u.active_sessions > 0 && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { style: { fontSize: 11, color: "var(--text-secondary)" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "status-dot on" }),
+              "signed in"
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { style: { fontSize: 12 }, children: [
           when(u.created_at),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("br", {}),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("br", {}),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("span", { style: { color: "var(--text-muted)" }, children: [
             "last: ",
             when(u.last_login_at)
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("td", { style: { ...td, fontSize: 12 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { style: { color: "var(--text-secondary)" }, children: u.password_storage.algorithm }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("code", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { style: { fontSize: 12 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { children: u.password_storage.algorithm }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("code", { style: { fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-muted)" }, children: [
             "hash ",
             u.password_storage.hash_preview
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("td", { style: td, children: [
-          u.apps.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 12 }, children: u.role === "admin" ? "\u2014" : "none yet" }) : u.apps.map((a) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { marginBottom: 6 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("strong", { children: a.name }),
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { fontSize: 11, color: "#c4b5fd" }, children: typeLabel2(a.app_type) }),
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { style: { fontSize: 11, color: a.status === "running" ? "#34d399" : a.status === "failed" ? "#fb7185" : "var(--text-muted)" }, children: a.status }),
-            /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)", wordBreak: "break-all" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { children: [
+          u.apps.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { color: "var(--text-muted)", fontSize: 12 }, children: u.role === "admin" ? "\u2014" : "none yet" }) : u.apps.map((a) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { marginBottom: 8 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("b", { children: a.name }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "chip", children: typeLabel2(a.app_type) }),
+              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: `badge ${APP_BADGE[a.status] || "badge-idle"}`, children: a.status })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)", wordBreak: "break-all" }, children: [
               a.repo_url,
               a.host_port ? ` \xB7 port ${a.host_port}` : ""
             ] })
           ] }, a.id)),
-          u.deployments > 0 && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
+          u.deployments > 0 && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { fontSize: 11, color: "var(--text-muted)" }, children: [
             u.deployments,
             " deployment",
             u.deployments === 1 ? "" : "s"
@@ -46413,9 +46802,9 @@ function AdminCustomers({ demo, onRows }) {
 
 // src/AdminStorage.tsx
 init_define_import_meta_env();
-var import_react12 = __toESM(require_react(), 1);
-var import_lucide_react13 = __toESM(require_lucide_react(), 1);
-var import_jsx_runtime15 = __toESM(require_jsx_runtime(), 1);
+var import_react13 = __toESM(require_react(), 1);
+var import_lucide_react14 = __toESM(require_lucide_react(), 1);
+var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
 var DEMO2 = {
   machine: { hostname: "admin-laptop", os: "Windows_NT 10.0", user: "talha", lan_addresses: ["192.168.1.20"], customer_portal_urls: ["http://192.168.1.20:5173/"], admin_url: "http://localhost:5173/admin", backend_port: 3e3 },
   data_dir: "C:\\Users\\talha\\.paas-data",
@@ -46432,38 +46821,37 @@ var DEMO2 = {
   docker_note: "Built images and running containers are stored by Docker on this machine (docker images / docker ps)."
 };
 var size = (b) => b < 1024 ? `${b} B` : b < 1048576 ? `${(b / 1024).toFixed(1)} KB` : `${(b / 1048576).toFixed(1)} MB`;
-function CopyPath({ text: text2 }) {
-  const [done, setDone] = (0, import_react12.useState)(false);
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
-    "button",
-    {
-      title: "Copy path",
-      "aria-label": "Copy path",
-      onClick: async () => {
-        try {
-          await navigator.clipboard.writeText(text2);
-          setDone(true);
-          setTimeout(() => setDone(false), 1200);
-        } catch {
-        }
-      },
-      style: { background: "transparent", color: done ? "#34d399" : "var(--text-muted)", padding: 2, display: "inline-flex" },
-      children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Copy, { size: 12 })
+var MONO = { fontFamily: "var(--font-mono)", fontSize: 12, wordBreak: "break-all", color: "var(--text-primary)" };
+function Path({ text: text2, strong = false, size: fs }) {
+  const [done, setDone] = (0, import_react13.useState)(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(text2);
+      setDone(true);
+      setTimeout(() => setDone(false), 1200);
+    } catch {
     }
-  );
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("span", { style: { display: "inline-flex", alignItems: "center", gap: 4, maxWidth: "100%" }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { style: { ...MONO, fontSize: fs ?? 12, fontWeight: strong ? 600 : 400 }, children: text2 }),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("button", { type: "button", title: "Copy path", "aria-label": "Copy path", onClick: copy, className: "btn subtle sm icon", style: { padding: 3, color: done ? "var(--ok)" : "var(--text-muted)" }, children: done ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Check, { size: 12 }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Copy, { size: 12 }) })
+  ] });
 }
-function Section({ icon, title, children }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "glass-panel", style: { padding: 20, marginBottom: 18 }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 8, fontWeight: 700, fontSize: 15, marginBottom: 14 }, children: [
-      icon,
-      title
-    ] }),
+function Section({ icon, title, hint, children }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "panel", style: { marginBottom: 14 }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "panel-head", style: { alignItems: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("h3", { style: { display: "flex", alignItems: "center", gap: 8 }, children: [
+        icon,
+        title
+      ] }),
+      hint && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "hint", children: hint })
+    ] }) }),
     children
   ] });
 }
 function AdminStorage({ demo }) {
-  const [data, setData] = (0, import_react12.useState)(demo ? DEMO2 : null);
-  const [err, setErr] = (0, import_react12.useState)("");
+  const [data, setData] = (0, import_react13.useState)(demo ? DEMO2 : null);
+  const [err, setErr] = (0, import_react13.useState)("");
   const load2 = () => {
     if (demo) {
       setData(DEMO2);
@@ -46475,158 +46863,164 @@ function AdminStorage({ demo }) {
       setErr("");
     }).catch((e) => setErr(e.message));
   };
-  (0, import_react12.useEffect)(load2, [demo]);
-  const mono = { fontFamily: "var(--font-mono)", fontSize: 12, wordBreak: "break-all" };
-  const th = { textAlign: "left", padding: "8px 10px", fontSize: 11, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.5px" };
-  const td = { padding: "10px", fontSize: 13, borderTop: "1px solid var(--glass-border)", verticalAlign: "top" };
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "animate-slide-up", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 22, gap: 16, flexWrap: "wrap" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h2", { style: { fontSize: 24, fontWeight: 700 }, children: "Data & Storage" }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("p", { style: { color: "var(--text-secondary)", fontSize: 14, marginTop: 5 }, children: "Everything customers send is saved on this admin laptop. Here is exactly where." })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("button", { onClick: load2, style: { display: "flex", alignItems: "center", gap: 6, padding: "9px 14px", background: "rgba(255,255,255,0.06)", border: "1px solid var(--glass-border)", borderRadius: 8, color: "var(--text-secondary)", fontSize: 13 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.RefreshCw, { size: 13 }),
-        " Refresh"
-      ] })
-    ] }),
-    err && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { color: "#fb7185", fontSize: 13, marginBottom: 14 }, children: [
-      "\u26A0\uFE0F ",
-      err
-    ] }),
-    !data && !err && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", gap: 8, color: "var(--text-muted)" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }),
+  (0, import_react13.useEffect)(load2, [demo]);
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "animate-slide-up", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      PageHead,
+      {
+        title: "Data & Storage",
+        text: "Everything customers send is saved on this admin laptop. Here is exactly where.",
+        actions: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("button", { type: "button", className: "btn ghost sm", onClick: load2, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.RefreshCw, { size: 13 }),
+          " Refresh"
+        ] })
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      Help,
+      {
+        id: "admin-storage",
+        title: "What am I looking at?",
+        steps: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Accounts, sessions, apps, servers and deployments" }),
+            " are small JSON text files in one data folder on this laptop."
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Cloned code" }),
+            " is one folder per app inside the apps folder (or on the Linux server the app was deployed to)."
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Built images and containers" }),
+            " are kept by Docker itself."
+          ] })
+        ],
+        next: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_jsx_runtime16.Fragment, { children: "To back up, copy the data folder to another drive (add the apps folder if you want the code too). Deleting an app removes its code folder and its record. Nothing is sent to the cloud." }),
+        children: "OmniDeploy does not use a database server. Every record is a plain file you can open, copy or delete yourself. The paths below are on this machine."
+      }
+    ),
+    err && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "note note-error", children: err }),
+    !data && !err && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "hint", style: { display: "flex", gap: 8, alignItems: "center" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Loader2, { size: 16, style: { animation: "spin 1s linear infinite" } }),
       " Loading\u2026"
     ] }),
-    data && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Laptop, { size: 17, color: "var(--accent-cyan)" }), title: "This machine (the admin laptop)", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, fontSize: 13, color: "var(--text-secondary)" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            "Computer name",
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("br", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { style: { color: "var(--text-primary)" }, children: data.machine.hostname })
+    data && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Laptop, { size: 16 }), title: "This machine (the admin laptop)", hint: "The computer OmniDeploy is running on.", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "grid", style: { gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", marginBottom: 14 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "stat", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "v", style: { fontSize: 18 }, children: data.machine.hostname }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "l", children: "Computer name" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            "Operating system",
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("br", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { style: { color: "var(--text-primary)" }, children: data.machine.os })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "stat", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "v", style: { fontSize: 18 }, children: data.machine.os }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "l", children: "Operating system" })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { children: [
-            "Runs as user",
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("br", {}),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("strong", { style: { color: "var(--text-primary)" }, children: data.machine.user })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "stat", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "v", style: { fontSize: 18 }, children: data.machine.user }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "l", children: "Runs as user" })
           ] })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { marginTop: 14, padding: "11px 14px", background: "rgba(52,211,153,0.08)", border: "1px solid rgba(52,211,153,0.3)", borderRadius: 10 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: "#34d399", marginBottom: 6 }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Wifi, { size: 14 }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "kv", style: { marginBottom: 0 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { color: "var(--text-primary)", fontWeight: 600 }, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Wifi, { size: 14 }),
             " Customer portal link (open on the customer's device, same Wi-Fi/network)"
           ] }),
-          data.machine.customer_portal_urls.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: "No network connection found on this laptop." }) : data.machine.customer_portal_urls.map((u) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { ...mono, fontSize: 14, color: "var(--text-primary)" }, children: [
-            u,
-            " ",
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CopyPath, { text: u })
-          ] }, u)),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { fontSize: 12, color: "var(--text-muted)", marginTop: 6 }, children: [
+          data.machine.customer_portal_urls.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: "No network connection found on this laptop." }) : data.machine.customer_portal_urls.map((u) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Path, { text: u, strong: true, size: 14 }) }, u)),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { color: "var(--text-muted)" }, children: [
             "Admin site (this laptop only): ",
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: mono, children: data.machine.admin_url })
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { style: MONO, children: data.machine.admin_url })
           ] })
         ] })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Database, { size: 17, color: "var(--accent-cyan)" }), title: "Accounts and platform records", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Database, { size: 16 }), title: "Accounts and platform records", hint: "JSON files: one per kind of record. Copy this folder to back up the platform.", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 12 }, children: [
           "Folder: ",
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { ...mono, color: "var(--text-primary)" }, children: data.data_dir }),
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CopyPath, { text: data.data_dir }),
-          !data.persistence_enabled && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { color: "#fbbf24" }, children: " \u2014 saving is turned OFF (PAAS_PERSISTENCE=off): data is lost on restart" })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Path, { text: data.data_dir, strong: true })
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { overflowX: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", minWidth: 640 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "File" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "What is inside" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Records" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Size / updated" })
+        !data.persistence_enabled && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "note note-warn", children: [
+          "Saving is turned OFF (",
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { children: "PAAS_PERSISTENCE=off" }),
+          "): records are lost when the backend restarts."
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("table", { className: "table", style: { minWidth: 640 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "File" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "What is inside" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Records" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Size / updated" })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: data.data_files.map((f) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: td, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { ...mono, fontWeight: 600, color: "var(--text-primary)" }, children: [
-              f.name,
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CopyPath, { text: f.path })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { style: { ...td, color: "var(--text-secondary)" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("tbody", { children: data.data_files.map((f) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("td", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Path, { text: f.name, strong: true }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { style: { fontSize: 11, color: "var(--text-muted)", marginTop: 2 }, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { style: { ...MONO, fontSize: 11, color: "inherit" }, children: f.path }) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("td", { children: [
               f.what,
-              f.sensitive && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { display: "flex", gap: 5, marginTop: 4, fontSize: 12, color: "#fbbf24" }, children: [
-                /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.ShieldAlert, { size: 12, style: { flexShrink: 0, marginTop: 2 } }),
+              f.sensitive && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { display: "flex", gap: 5, marginTop: 4, fontSize: 12, color: "var(--warn)" }, children: [
+                /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.ShieldAlert, { size: 12, style: { flexShrink: 0, marginTop: 2 } }),
                 f.sensitive
               ] })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: td, children: f.exists ? f.records ?? "\u2013" : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { color: "var(--text-muted)" }, children: "not created yet" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: { ...td, fontSize: 12, color: "var(--text-muted)" }, children: f.exists ? /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { children: f.exists ? f.records ?? "\u2013" : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { style: { color: "var(--text-muted)" }, children: "not created yet" }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { style: { fontSize: 12, color: "var(--text-muted)" }, children: f.exists ? /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
               size(f.size_bytes),
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("br", {}),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("br", {}),
               f.modified && new Date(f.modified).toLocaleString()
             ] }) : "\u2013" })
           ] }, f.name)) })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 12, color: "var(--text-muted)", marginTop: 10 }, children: "On Linux/macOS the files are readable only by the user running the backend (permission 600). On Windows they are protected by your user account folder." })
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "hint", style: { marginTop: 10 }, children: "On Linux/macOS the files are readable only by the user running the backend (permission 600). On Windows they are protected by your user account folder." })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.FolderGit2, { size: 17, color: "var(--accent-cyan)" }), title: "Customers' code (cloned from GitHub)", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 12 }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.FolderGit2, { size: 16 }), title: "Customers' code (cloned from GitHub)", hint: "One folder per app. Deleting the app removes its folder.", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { style: { fontSize: 13, color: "var(--text-secondary)", marginBottom: 12 }, children: [
           "Folder: ",
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { ...mono, color: "var(--text-primary)" }, children: data.apps_dir }),
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CopyPath, { text: data.apps_dir })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Path, { text: data.apps_dir, strong: true })
         ] }),
-        data.app_checkouts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, color: "var(--text-muted)" }, children: "Nothing cloned yet. A folder appears here after an app's first deploy." }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { overflowX: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", minWidth: 560 }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Folder" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Owner" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Files" }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Size" })
+        data.app_checkouts.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "hint", children: "Nothing cloned yet. A folder appears here after an app's first deploy." }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("table", { className: "table", style: { minWidth: 560 }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Folder" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Owner" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Files" }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Size" })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: data.app_checkouts.map((c) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: td, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { style: { ...mono, color: "var(--text-primary)" }, children: [
-              c.path,
-              " ",
-              /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(CopyPath, { text: c.path })
-            ] }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: { ...td, color: "var(--text-secondary)" }, children: c.owner }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { style: td, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("tbody", { children: data.app_checkouts.map((c) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Path, { text: c.path }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { children: c.owner }),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("td", { children: [
               c.files,
               c.truncated ? "+" : ""
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { style: td, children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("td", { children: [
               size(c.bytes),
               c.truncated ? "+" : ""
             ] })
           ] }, c.name)) })
         ] }) })
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.Server, { size: 17, color: "var(--accent-cyan)" }), title: "Customers' code on Linux servers", children: !data.server_checkouts?.length ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, color: "var(--text-muted)" }, children: "No app is deployed to a Linux server yet." }) : /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { overflowX: "auto" }, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("table", { style: { width: "100%", borderCollapse: "collapse", minWidth: 560 }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "App" }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Server" }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Folder on that server" }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("th", { style: th, children: "Owner" })
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.Server, { size: 16 }), title: "Customers' code on Linux servers", hint: "Apps deployed to a private server keep their code on that server, not on this laptop.", children: !data.server_checkouts?.length ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "hint", children: "No app is deployed to a Linux server yet." }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "table-wrap", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("table", { className: "table", style: { minWidth: 560 }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("thead", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "App" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Server" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Folder on that server" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("th", { children: "Owner" })
         ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("tbody", { children: data.server_checkouts.map((c) => /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("tr", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: { ...td, fontWeight: 600 }, children: c.app }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("td", { style: { ...td, color: "var(--text-secondary)" }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("tbody", { children: data.server_checkouts.map((c) => /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("tr", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("b", { children: c.app }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("td", { children: [
             c.server,
-            /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { ...mono, color: "var(--text-muted)" }, children: c.host })
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { style: { ...MONO, color: "var(--text-muted)" }, children: c.host }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: td, children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { style: { ...mono, color: "var(--text-primary)" }, children: c.path }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("td", { style: { ...td, color: "var(--text-secondary)" }, children: c.owner })
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { style: MONO, children: c.path }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("td", { children: c.owner })
         ] }, c.app)) })
       ] }) }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react13.HardDrive, { size: 17, color: "var(--accent-cyan)" }), title: "Built apps", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: data.docker_note }) })
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Section, { icon: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react14.HardDrive, { size: 16 }), title: "Built apps", hint: "Docker keeps these; they are rebuilt on the next deploy.", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { style: { fontSize: 13, color: "var(--text-secondary)" }, children: data.docker_note }) })
     ] })
   ] });
 }
 
 // tests/render.tsx
-var import_jsx_runtime16 = __toESM(require_jsx_runtime(), 1);
+var import_jsx_runtime17 = __toESM(require_jsx_runtime(), 1);
 var text = (html) => html.replace(/<!-- -->/g, "");
 var load = (n) => JSON.parse((0, import_node_fs.readFileSync)((0, import_node_path.resolve)(process.cwd(), "tests", "fixtures", `${n}.json`), "utf8"));
 var ok = load("deploy_success");
@@ -46673,27 +47067,27 @@ var props = (over = {}) => ({
   ...over
 });
 test("Dashboard renders KPIs, charts and the container table", () => {
-  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Dashboard, { ...props() }));
+  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Dashboard, { ...props() }));
   for (const needle of ["Dashboard", "HTTP requests / second", "CPU usage", "Anomaly score", "Deployments per day", "Containers right now", "50%", "api", "web"]) {
     import_strict.default.ok(html.includes(needle), `missing "${needle}"`);
   }
   import_strict.default.ok((html.match(/<path /g) || []).length >= 4, "charts should draw paths");
 });
 test("Dashboard degrades gracefully: no data, errors, no deployments", () => {
-  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Dashboard, { ...props({ history: [], deployments: [], traffic: [], trafficError: "Failed to fetch", telemetryError: "AI engine unreachable: x", apps: [] }) }));
+  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Dashboard, { ...props({ history: [], deployments: [], traffic: [], trafficError: "Failed to fetch", telemetryError: "AI engine unreachable: x", apps: [] }) }));
   import_strict.default.ok(html.includes("AI engine unreachable"));
   import_strict.default.ok(html.includes("Could not read request rates"));
   import_strict.default.ok(html.includes("No deployments yet"));
 });
 test("charts survive edge cases (empty, one point, flat line, NaN-free)", () => {
-  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LineChart, { series: [] }));
-  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LineChart, { series: [{ name: "a", color: "#fff", points: [{ t: now, v: 5 }] }] }));
-  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LineChart, { series: [{ name: "a", color: "#fff", points: [{ t: now, v: 0 }, { t: now + 1e3, v: 0 }] }], area: true }));
-  const svg = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LineChart, { series: [{ name: "a", color: "#fff", points: [{ t: now - 5e3, v: 1 }, { t: now, v: 3 }] }] }));
+  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LineChart, { series: [] }));
+  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LineChart, { series: [{ name: "a", color: "#fff", points: [{ t: now, v: 5 }] }] }));
+  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LineChart, { series: [{ name: "a", color: "#fff", points: [{ t: now, v: 0 }, { t: now + 1e3, v: 0 }] }], area: true }));
+  const svg = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LineChart, { series: [{ name: "a", color: "#fff", points: [{ t: now - 5e3, v: 1 }, { t: now, v: 3 }] }] }));
   import_strict.default.ok(!/NaN|Infinity/.test(svg), "no NaN/Infinity in SVG attributes");
-  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(StackedBars, { data: [], colors: { a: "#fff" } }));
-  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(HBars, { rows: [] }));
-  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Donut, { parts: [{ label: "a", value: 0, color: "#fff" }] }));
+  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(StackedBars, { data: [], colors: { a: "#fff" } }));
+  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(HBars, { rows: [] }));
+  (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Donut, { parts: [{ label: "a", value: 0, color: "#fff" }] }));
 });
 test("series helpers respect the time window", () => {
   import_strict.default.equal(seriesFor(history, (c) => c.cpu, 6e4).length, 2);
@@ -46703,32 +47097,32 @@ test("series helpers respect the time window", () => {
   import_strict.default.equal(t.points[0].v, history[0].c.web.netIn + history[0].c.api.netIn);
 });
 test("LogViewer: success log shows the highlighted APP URL row with an Open link", () => {
-  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LogViewer, { lines: ok.logs, status: "success" }));
+  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LogViewer, { lines: ok.logs, status: "success" }));
   import_strict.default.ok(html.includes("APP URL"));
   import_strict.default.ok(html.includes('href="http://dash.example:4000"'), "URL host should follow the browser host");
   import_strict.default.ok(html.includes(">Open<") || html.includes("Open</a>"));
   import_strict.default.ok(html.includes("Fetch code") && html.includes("Start &amp; verify"));
 });
 test("LogViewer: failed log shows error counts and no APP URL row", () => {
-  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LogViewer, { lines: bad.logs, status: "failed" }));
+  const html = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LogViewer, { lines: bad.logs, status: "failed" }));
   import_strict.default.ok(!html.includes("APP URL"));
   import_strict.default.ok(/Errors<span[^>]*>[1-9]/.test(html), "error pill should have a count");
 });
 test("LogViewer: empty and idle states", () => {
-  import_strict.default.ok((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LogViewer, { lines: [], status: "idle" })).includes("No log output yet"));
+  import_strict.default.ok((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LogViewer, { lines: [], status: "idle" })).includes("No log output yet"));
 });
 test("DeployBanner: success is a big clickable link; failure offers diagnosis; building shows progress", () => {
-  const s = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DeployBanner, { status: "success", appName: "blog", url: "http://localhost:4000", domainUrl: "http://blog.local" }));
+  const s = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DeployBanner, { status: "success", appName: "blog", url: "http://localhost:4000", domainUrl: "http://blog.local" }));
   import_strict.default.ok(s.includes('href="http://localhost:4000"') && s.includes("Open App") && s.includes("Copy") && s.includes("blog.local"));
-  const f = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DeployBanner, { status: "failed", appName: "blog", errorText: "boom", onDiagnose: () => {
+  const f = (0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DeployBanner, { status: "failed", appName: "blog", errorText: "boom", onDiagnose: () => {
   }, onJumpToError: () => {
   } }));
   import_strict.default.ok(f.includes("Diagnose with Copilot") && f.includes("boom"));
-  import_strict.default.ok(text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DeployBanner, { status: "building", appName: "blog" }))).includes("Deploying blog"));
-  import_strict.default.equal((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DeployBanner, { status: "idle", appName: "x" })), "");
+  import_strict.default.ok(text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DeployBanner, { status: "building", appName: "blog" }))).includes("Deploying blog"));
+  import_strict.default.equal((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DeployBanner, { status: "idle", appName: "x" })), "");
 });
 test("LoginPage: punch line + form only, offline hint only when the platform is down, demo button only when offered", () => {
-  const off = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoginPage, { backendOk: false, onLogin: () => {
+  const off = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoginPage, { backendOk: false, onLogin: () => {
   } })));
   import_strict.default.ok(off.includes("Sign in") && off.includes("Create account"));
   import_strict.default.ok(off.includes('type="password"') && off.includes("Platform offline"));
@@ -46736,31 +47130,31 @@ test("LoginPage: punch line + form only, offline hint only when the platform is 
   import_strict.default.ok(!off.includes("Pick your app type"), "the how-it-works details are behind the login now");
   import_strict.default.ok(!off.includes("Confirm password"), "sign-in form has no confirm field");
   import_strict.default.ok(!off.includes("Try the demo"), "customer portal has no demo button");
-  const on2 = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  const on2 = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoginPage, { backendOk: true, onLogin: () => {
   }, onDemo: () => {
   } })));
   import_strict.default.ok(!on2.includes("Platform offline") && on2.includes("Try the demo"));
 });
 test("LoginPage: create-account tab asks for name, password and confirm password", () => {
-  const reg = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  const reg = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoginPage, { backendOk: true, onLogin: () => {
   }, initialMode: "register" })));
   import_strict.default.ok(reg.includes("Your name") && reg.includes("Confirm password") && reg.includes("Create my account"));
   import_strict.default.equal((reg.match(/type="password"/g) || []).length, 2, "two password fields");
   import_strict.default.ok(reg.includes("One account per email"));
 });
 test("LoginPage on /admin: account type locked to owner, no Create account tab, setup form only on the admin laptop", () => {
-  const owner = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  const owner = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoginPage, { backendOk: true, onLogin: () => {
   }, portal: "admin", lockPortal: true, status: { admin_exists: true, on_admin_laptop: true } })));
   import_strict.default.ok(owner.includes("Owner sign-in") && !owner.includes("Create account") && !owner.includes("Platform owner?"));
-  const setup = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  const setup = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoginPage, { backendOk: true, onLogin: () => {
   }, portal: "admin", lockPortal: true, status: { admin_exists: false, on_admin_laptop: true } })));
   import_strict.default.ok(setup.includes("Create the owner account") && setup.includes("Confirm password"));
-  const remote = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(LoginPage, { backendOk: true, onLogin: () => {
+  const remote = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LoginPage, { backendOk: true, onLogin: () => {
   }, portal: "admin", lockPortal: true, status: { admin_exists: false, on_admin_laptop: false } })));
   import_strict.default.ok(remote.includes("only be created") && !remote.includes("Create owner account"));
 });
 test("Landing: hero, how it works, features, app types and footer; no sponsors; links to /login and /admin", () => {
-  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(Landing, {})));
+  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(Landing, {})));
   for (const needle of ["Self-hosting for your", "How it works", "Why your own machine", "Everything you need to ship", "AI Ops Copilot", "Catches trouble before the crash", "Pick the type", 'href="/login?signup"', 'href="/login"', 'href="/admin"', "Flask", "I have my own Dockerfile", "Inspired by"]) {
     import_strict.default.ok(html.includes(needle), `missing "${needle}"`);
   }
@@ -46768,7 +47162,7 @@ test("Landing: hero, how it works, features, app types and footer; no sponsors; 
   import_strict.default.ok(!/DeployStack/.test(html), "old name must not appear");
 });
 test("NewAppWizard: step 1 lists every app type, grouped, with the files each one needs", () => {
-  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(NewAppWizard, { servers: [{ id: "s", name: "lab", host: "1.2.3.4" }], useBackend: false, onCreate: async () => {
+  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(NewAppWizard, { servers: [{ id: "s", name: "lab", host: "1.2.3.4" }], useBackend: false, onCreate: async () => {
   }, onCancel: () => {
   } })));
   import_strict.default.ok(html.includes("What type of app is this?"));
@@ -46784,33 +47178,33 @@ test("app types: ids unique, sensible ports, start command only where it applies
   import_strict.default.ok(usesStartCommand("flask") && usesStartCommand("django") && !usesStartCommand("static") && !usesStartCommand("dockerfile"));
 });
 test("CustomerPortal: shows the customer and their apps area, none of the admin pages", () => {
-  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(CustomerPortal, { customer: { id: "c1", name: "Ayesha Khan", email: "ayesha@example.com", role: "customer" }, onLogout: () => {
+  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(CustomerPortal, { customer: { id: "c1", name: "Ayesha Khan", email: "ayesha@example.com", role: "customer" }, onLogout: () => {
   } })));
   import_strict.default.ok(html.includes("Customer portal") && html.includes("Ayesha Khan") && html.includes("My applications") && html.includes("New application"));
   import_strict.default.ok(html.includes("Sign out"));
   for (const adminOnly of ["Private Servers", "Data &amp; Storage", "Health Monitor", "Customers<"]) import_strict.default.ok(!html.includes(adminOnly), `customer must not see ${adminOnly}`);
 });
 test("AdminCustomers (demo): accounts, roles, apps, and only a hash preview of passwords", () => {
-  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AdminCustomers, { demo: true })));
+  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AdminCustomers, { demo: true })));
   import_strict.default.ok(html.includes("ayesha@example.com") && html.includes("bilal@example.com") && html.includes("hello-flask"));
   import_strict.default.ok(html.includes("scrypt") && html.includes("Passwords are never stored"));
   import_strict.default.ok(/hash [0-9a-f]{12}…/.test(html), "only a 12-character hash preview");
 });
 test("AdminStorage (demo): data folder, every data file, code folder and the customer portal link", () => {
-  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AdminStorage, { demo: true })));
+  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AdminStorage, { demo: true })));
   for (const f of ["users.json", "sessions.json", "applications.json"]) import_strict.default.ok(html.includes(f), f);
   import_strict.default.ok(html.includes(".paas-data") && html.includes("paas-apps") && html.includes("http://192.168.1.20:5173/"));
   import_strict.default.ok(html.includes("Passwords are NOT stored"));
 });
 test("ServerOnboarding: prepare commands, trust command with the platform key, connect form; share box only for the admin", () => {
-  const admin = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ServerOnboarding, { asAdmin: true, demo: true, onDone: () => {
+  const admin = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ServerOnboarding, { asAdmin: true, demo: true, onDone: () => {
   }, onCancel: () => {
   } })));
   import_strict.default.ok(admin.includes("Prepare the Linux machine") && admin.includes("get.docker.com") && admin.includes("openssh-server"));
   import_strict.default.ok(admin.includes("authorized_keys") && admin.includes(DEMO_KEY.public_key));
   import_strict.default.ok(admin.includes("IP address") && admin.includes("SSH user") && admin.includes("Connect &amp; check"));
   import_strict.default.ok(admin.includes("Customers can deploy their apps to this server"));
-  const customer = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ServerOnboarding, { asAdmin: false, demo: true, onDone: () => {
+  const customer = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ServerOnboarding, { asAdmin: false, demo: true, onDone: () => {
   }, onCancel: () => {
   } })));
   import_strict.default.ok(!customer.includes("Customers can deploy their apps to this server"));
@@ -46820,15 +47214,15 @@ test("ServerChecks / ServerCard: failures show the fix command; customers get no
     { key: "ssh", label: "SSH connection", ok: true, detail: "Logged in as ubuntu" },
     { key: "docker", label: "Docker", ok: false, detail: "User 'ubuntu' may not use Docker", fix: "sudo usermod -aG docker ubuntu" }
   ];
-  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ServerChecks, { checks })));
+  const html = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ServerChecks, { checks })));
   import_strict.default.ok(html.includes("Logged in as ubuntu") && html.includes("sudo usermod -aG docker ubuntu") && html.includes("Fix - run on the server"));
   const srv = { id: "s", name: "linux-laptop", host: "192.168.1.30", port: 22, ssh_user: "ubuntu", status: "unreachable", checks, shared: true };
-  const adminCard = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ServerCard, { server: srv, canManage: true, canShare: true, onVerify: () => {
+  const adminCard = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ServerCard, { server: srv, canManage: true, canShare: true, onVerify: () => {
   }, onShare: () => {
   }, onDelete: () => {
   } })));
   import_strict.default.ok(adminCard.includes("ubuntu@192.168.1.30") && adminCard.includes("not ready") && adminCard.includes("Customers can deploy here") && adminCard.includes("Check again"));
-  const customerCard = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ServerCard, { server: { ...srv, status: "verified" }, note: "Provided by DeployStack", canManage: false, canShare: false })));
+  const customerCard = text((0, import_server.renderToString)(/* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ServerCard, { server: { ...srv, status: "verified" }, note: "Provided by DeployStack", canManage: false, canShare: false })));
   import_strict.default.ok(customerCard.includes("Provided by DeployStack") && !customerCard.includes("Check again") && !customerCard.includes("Customers can deploy here"));
 });
 console.log(`

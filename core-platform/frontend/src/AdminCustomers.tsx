@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { KeyRound, Loader2, RefreshCw, Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Loader2, RefreshCw, Users } from 'lucide-react';
 import { tryBackend } from './lib/backend';
 import { FALLBACK_APP_TYPES } from './lib/appTypes';
+import { Help, PageHead } from './components/ui';
 
 export interface CustomerRow {
   id: string; name: string; email: string; role: 'admin' | 'customer'; created_at: string; last_login_at?: string;
@@ -20,6 +21,7 @@ const DEMO: CustomerRow[] = [
 
 const when = (iso?: string) => (iso ? new Date(iso).toLocaleString() : 'never');
 const typeLabel = (id: string) => FALLBACK_APP_TYPES.find(t => t.id === id)?.label || id;
+const APP_BADGE: Record<string, string> = { running: 'badge-running', building: 'badge-building', deploying: 'badge-deploying', failed: 'badge-failed', idle: 'badge-idle' };
 
 /** Admin page: every account on the platform and what each customer has deployed. */
 export default function AdminCustomers({ demo, onRows }: { demo: boolean; onRows?: (rows: CustomerRow[]) => void }) {
@@ -36,57 +38,53 @@ export default function AdminCustomers({ demo, onRows }: { demo: boolean; onRows
   useEffect(load, [demo]);
 
   const customers = rows.filter(r => r.role === 'customer');
-  const th: React.CSSProperties = { textAlign: 'left', padding: '10px 12px', fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: 600 };
-  const td: React.CSSProperties = { padding: '12px', fontSize: 13, borderTop: '1px solid var(--glass-border)', verticalAlign: 'top' };
 
   return (
     <div className="animate-slide-up">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 22, gap: 16, flexWrap: 'wrap' }}>
-        <div>
-          <h2 style={{ fontSize: 24, fontWeight: 700 }}>Customers</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 5 }}>
-            Everyone who signed up on the customer portal, and what they deployed. {customers.length} customer{customers.length === 1 ? '' : 's'}.
-          </p>
-        </div>
-        <button onClick={load} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '9px 14px', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', borderRadius: 8, color: 'var(--text-secondary)', fontSize: 13 }}>
-          <RefreshCw size={13} /> Refresh
-        </button>
-      </div>
+      <PageHead title="Customers"
+        text={<>Everyone who signed up on the customer portal, and what they deployed. {customers.length} customer{customers.length === 1 ? '' : 's'}.</>}
+        actions={<button type="button" className="btn ghost sm" onClick={load}><RefreshCw size={13} /> Refresh</button>} />
 
-      <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '11px 14px', background: 'rgba(0,242,254,0.06)', border: '1px solid rgba(0,242,254,0.2)', borderRadius: 10, fontSize: 13, color: 'var(--text-secondary)', marginBottom: 18, lineHeight: 1.6 }}>
-        <KeyRound size={15} style={{ flexShrink: 0, marginTop: 3, color: 'var(--accent-cyan)' }} />
-        <span>Passwords are never stored. Each one is turned into a salted <strong>scrypt</strong> hash, so not even the admin can read it back.
-          Only the first characters of the hash are shown here. The full file is listed on <strong>Data &amp; Storage</strong>.</span>
-      </div>
+      <Help id="admin-customers" title="What am I looking at?"
+        next={<>Passwords are never stored. Each one is turned into a salted <strong>scrypt</strong> hash, so not even the owner can read it back.
+          Only the first characters of the hash are shown here. The file itself is listed on <strong>Data &amp; Storage</strong>.</>}>
+        Each row is one account. Customers create their own account on the customer portal; the <strong>admin</strong> row is you.
+        {' '}For every account you can see when it signed up, when it last signed in, how its password is stored, and the apps it owns.
+      </Help>
 
-      {err && <div style={{ color: '#fb7185', fontSize: 13, marginBottom: 14 }}>⚠️ {err}</div>}
+      {err && <div className="note note-error">{err}</div>}
       {loading ? (
-        <div style={{ display: 'flex', gap: 8, color: 'var(--text-muted)' }}><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> Loading…</div>
+        <div className="hint" style={{ display: 'flex', gap: 8, alignItems: 'center' }}><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> Loading…</div>
       ) : rows.length === 0 ? (
-        <div style={{ textAlign: 'center', color: 'var(--text-muted)', padding: 40 }}><Users size={40} style={{ opacity: 0.3 }} /><div style={{ marginTop: 8 }}>Nobody has signed up yet.</div></div>
+        <div className="empty"><Users size={36} /><h3>Nobody has signed up yet.</h3><p>Accounts appear here as soon as someone creates one on the customer portal.</p></div>
       ) : (
-        <div className="glass-panel" style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 760 }}>
-            <thead><tr><th style={th}>Account</th><th style={th}>Signed up / last login</th><th style={th}>Password stored as</th><th style={th}>Applications</th></tr></thead>
+        <div className="panel table-wrap">
+          <table className="table" style={{ minWidth: 760 }}>
+            <thead><tr><th>Account</th><th>Signed up / last login</th><th>Password stored as</th><th>Applications</th></tr></thead>
             <tbody>
               {rows.map(u => (
                 <tr key={u.id}>
-                  <td style={td}>
-                    <div style={{ fontWeight: 600 }}>{u.name}</div>
+                  <td>
+                    <b>{u.name}</b>
                     <div style={{ color: 'var(--text-muted)', fontSize: 12 }}>{u.email}</div>
-                    <span style={{ display: 'inline-block', marginTop: 5, fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 5, background: u.role === 'admin' ? 'rgba(245,158,11,0.18)' : 'rgba(79,172,254,0.15)', color: u.role === 'admin' ? '#fbbf24' : 'var(--accent-cyan)', textTransform: 'uppercase' }}>{u.role}</span>
-                    {u.active_sessions > 0 && <span style={{ marginLeft: 6, fontSize: 11, color: '#34d399' }}>● signed in</span>}
+                    <div style={{ marginTop: 6, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                      <span className="chip" style={u.role === 'admin' ? { color: 'var(--text-primary)', borderColor: 'var(--accent)' } : undefined}>{u.role}</span>
+                      {u.active_sessions > 0 && <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}><span className="status-dot on" />signed in</span>}
+                    </div>
                   </td>
-                  <td style={{ ...td, fontSize: 12, color: 'var(--text-secondary)' }}>{when(u.created_at)}<br /><span style={{ color: 'var(--text-muted)' }}>last: {when(u.last_login_at)}</span></td>
-                  <td style={{ ...td, fontSize: 12 }}>
-                    <div style={{ color: 'var(--text-secondary)' }}>{u.password_storage.algorithm}</div>
-                    <code style={{ fontSize: 11, color: 'var(--text-muted)' }}>hash {u.password_storage.hash_preview}</code>
+                  <td style={{ fontSize: 12 }}>{when(u.created_at)}<br /><span style={{ color: 'var(--text-muted)' }}>last: {when(u.last_login_at)}</span></td>
+                  <td style={{ fontSize: 12 }}>
+                    <div>{u.password_storage.algorithm}</div>
+                    <code style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>hash {u.password_storage.hash_preview}</code>
                   </td>
-                  <td style={td}>
+                  <td>
                     {u.apps.length === 0 ? <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>{u.role === 'admin' ? '—' : 'none yet'}</span> : u.apps.map(a => (
-                      <div key={a.id} style={{ marginBottom: 6 }}>
-                        <strong>{a.name}</strong> <span style={{ fontSize: 11, color: '#c4b5fd' }}>{typeLabel(a.app_type)}</span>{' '}
-                        <span style={{ fontSize: 11, color: a.status === 'running' ? '#34d399' : a.status === 'failed' ? '#fb7185' : 'var(--text-muted)' }}>{a.status}</span>
+                      <div key={a.id} style={{ marginBottom: 8 }}>
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                          <b>{a.name}</b>
+                          <span className="chip">{typeLabel(a.app_type)}</span>
+                          <span className={`badge ${APP_BADGE[a.status] || 'badge-idle'}`}>{a.status}</span>
+                        </div>
                         <div style={{ fontSize: 11, color: 'var(--text-muted)', wordBreak: 'break-all' }}>{a.repo_url}{a.host_port ? ` · port ${a.host_port}` : ''}</div>
                       </div>
                     ))}

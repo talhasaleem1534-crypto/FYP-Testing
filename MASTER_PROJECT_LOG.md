@@ -438,5 +438,11 @@ curl -X POST http://localhost:8001/chat \
 - **Proof:** `tsc` clean, `npm test` 28/28, `vite build` OK, screenshots published.
 - **Viva point:** the facts line uses only numbers derived from the code and the evaluation script (10 app types, ~96% recall on injected faults); no invented customer counts.
 
+## 13. Whole App Restyled + Explanations Everywhere (Session 31)
+- **Date:** 10 October 2026. Every customer-portal and admin screen now uses the approved theme through shared classes in [index.css](file:///core-platform/frontend/src/index.css) and the `PageHead` / `Help` / `StatusLegend` components in [components/ui.tsx](file:///core-platform/frontend/src/components/ui.tsx). 23 explanation boxes (what this is, what you need, what happens), a hint under every form field, a legend under every status list, plain-word buttons. `/admin?demo` opens the demo directly.
+- **Hurdles:** signed-in screenshots needed a DevTools-protocol driver and a stand-in backend; the login storage key is `deploystack.token.*` (unchanged), which the capture plan first got wrong.
+- **Proof:** `tsc` clean, `npm test` 28/28, `vite build` OK, 18 screenshots published.
+- **Viva point:** usability for beginners is a stated project goal (README: "beginner-friendly"); the Help boxes make the required inputs explicit at the moment they are needed instead of in a manual.
+
 ---
 *Maintained by OmniDeploy (formerly DeployStack AI) Team | Master Academic Handover Document*

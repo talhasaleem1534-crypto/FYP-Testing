@@ -1,7 +1,7 @@
 import { Brand } from './components/Brand';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
-import { ExternalLink, GitBranch, Globe, Layers, Loader2, LogOut, Play, Plus, ScrollText, Server as ServerIcon, Trash2, Zap } from 'lucide-react';
+import { ExternalLink, GitBranch, Globe, Layers, Loader2, LogOut, Play, Plus, ScrollText, Server as ServerIcon, Trash2 } from 'lucide-react';
 import { BACKEND_URL, getAuthToken, tryBackend } from './lib/backend';
 import { Customer } from './lib/auth';
 import { FALLBACK_APP_TYPES } from './lib/appTypes';
@@ -13,6 +13,7 @@ import DeployBanner from './components/DeployBanner';
 import ServerOnboarding from './components/ServerOnboarding';
 import ServerCard from './components/ServerCard';
 import { ServerRecord } from './lib/servers';
+import { APP_STATUS_LEGEND, Help, PageHead, SERVER_STATUS_LEGEND, StatusLegend } from './components/ui';
 
 interface PortalApp {
   id: string; name: string; repo_url: string; branch: string; domain: string;
@@ -38,7 +39,7 @@ function StatusBadge({ status }: { status: string }) {
   const cls = ['running', 'success'].includes(status) ? 'badge-verified'
     : ['building', 'deploying'].includes(status) ? 'badge-building'
     : status === 'failed' ? 'badge-failed' : 'badge-idle';
-  return <span className={`badge ${cls}`}><span style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor' }} />{status}</span>;
+  return <span className={`badge ${cls}`}>{status}</span>;
 }
 
 /**
@@ -149,128 +150,160 @@ export default function CustomerPortal({ customer, onLogout }: { customer: Custo
   const serverName = (id: string) => servers.find(x => x.id === id)?.name;
 
   const errLine = view ? firstError(parseLogs(shownLines)) : undefined;
-  const btn: React.CSSProperties = { display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600 };
 
   return (
     <div style={{ minHeight: '100vh' }}>
       {/* Top bar */}
-      <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 24px', borderBottom: '1px solid var(--glass-border)', background: 'var(--bg-secondary)', flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, minWidth: 140 }}>
-          <Brand subtitle="Customer portal" size={34} />
-        </div>
+      <header className="topbar">
+        <Brand subtitle="Customer portal" size={34} />
+        <div className="spacer" />
         <div style={{ textAlign: 'right', minWidth: 0 }}>
           <div style={{ fontSize: 13, fontWeight: 600 }}>{customer.name}</div>
-          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{customer.email}</div>
+          <div className="hint" style={{ marginTop: 0 }}>Signed in as {customer.email}</div>
         </div>
-        <button onClick={onLogout} style={{ ...btn, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)', fontWeight: 500 }}>
-          <LogOut size={14} /> Sign out
-        </button>
+        <button type="button" className="btn ghost sm" onClick={onLogout}><LogOut size={14} /> Sign out</button>
       </header>
 
-      <main style={{ maxWidth: 1100, margin: '0 auto', padding: '28px 16px 60px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginBottom: 22, flexWrap: 'wrap' }}>
-          <div>
-            <h1 style={{ fontSize: 24, fontWeight: 700 }}>My applications</h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 4 }}>Pick your app type, paste your GitHub link, and we build and run it for you.</p>
-          </div>
-          <button onClick={() => setWizard(true)}
-            style={{ ...btn, padding: '10px 18px', fontSize: 14, background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))', color: '#fff' }}>
-            <Plus size={16} /> New application
-          </button>
-        </div>
+      <main className="content">
+        <PageHead title="My applications"
+          text="Each application is a GitHub repository that OmniDeploy builds and runs on a server for you. Pick the type, paste the link, press deploy."
+          actions={<button type="button" className="btn blue" onClick={() => setWizard(true)}><Plus size={16} /> New application</button>} />
 
-        {error && <div style={{ color: '#fb7185', fontSize: 13, marginBottom: 16, padding: '10px 14px', background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.3)', borderRadius: 10 }}>⚠️ {error}</div>}
+        <Help id="customer-apps" title="How does this page work?"
+          need={[
+            <>A <strong>public GitHub repository</strong> link, e.g. <code>https://github.com/you/your-repo</code>. Git is the tool that stores your code; GitHub hosts it online.</>,
+            <>To know <strong>what kind of app</strong> it is (Flask, Node.js, a static HTML site...). If unsure, choose "Not sure - detect it for me".</>,
+            <>A <strong>server</strong> to run it on. One is provided by OmniDeploy; you can also add your own Linux machine below.</>,
+          ]}
+          steps={[
+            'We download (clone) your code from GitHub.',
+            'We build it into a container: a small box with your code and everything it needs, so it runs the same way everywhere (this is what Docker does).',
+            'We start the container on the server and check that it answers.',
+            'You get a link to open your app. The whole thing takes one to three minutes.',
+          ]}
+          next={<>Press <strong>New application</strong> to begin. Each app card shows its status, its link when it is running, a "Deploy now" button and its log.</>}>
+          An application here is simply your code on GitHub. OmniDeploy turns it into a running website or API on a private server, without any cloud account.
+        </Help>
+
+        {error && (
+          <div className="note note-error" role="alert">
+            Something went wrong: {error}
+          </div>
+        )}
 
         {loading ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)' }}><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> Loading your apps…</div>
+          <div className="hint" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> Loading your apps…</div>
         ) : apps.length === 0 ? (
-          <div className="glass-panel" style={{ padding: 32, textAlign: 'center' }}>
-            <Layers size={40} style={{ opacity: 0.3 }} />
-            <div style={{ fontWeight: 600, fontSize: 17, marginTop: 10 }}>You have no applications yet</div>
-            <ol style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.9, margin: '12px auto 18px', textAlign: 'left', display: 'inline-block' }}>
-              <li>Click <strong>New application</strong></li>
-              <li>Choose what type of app it is (Flask, Node.js, static site…)</li>
-              <li>Paste your GitHub repository link and press <strong>Create &amp; deploy</strong></li>
+          <div className="empty">
+            <Layers size={40} />
+            <h3>You have no applications yet</h3>
+            <p>Three short steps and your first app is online:</p>
+            <ol>
+              <li>Press <strong>New application</strong>.</li>
+              <li>Choose what type of app it is (Flask, Node.js, static site…).</li>
+              <li>Paste your GitHub repository link and press <strong>Create &amp; deploy</strong>.</li>
             </ol>
-            <div><button onClick={() => setWizard(true)} style={{ ...btn, margin: '0 auto', background: 'rgba(79,172,254,0.15)', color: 'var(--accent-cyan)', border: '1px solid rgba(79,172,254,0.35)' }}><Plus size={14} /> New application</button></div>
+            <div><button type="button" className="btn blue" onClick={() => setWizard(true)}><Plus size={14} /> New application</button></div>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
-            {apps.map(app => {
-              const url = app.status === 'running' ? appUrl(app) : undefined;
-              const busy = busyId === app.id || app.status === 'building';
-              return (
-                <div key={app.id} className="glass-panel" style={{ padding: 20, borderColor: app.status === 'running' ? 'rgba(52,211,153,0.35)' : undefined }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: 17, overflow: 'hidden', textOverflow: 'ellipsis' }}>{app.name}</div>
-                      <span style={{ display: 'inline-block', marginTop: 5, fontSize: 11, padding: '2px 8px', borderRadius: 6, background: 'rgba(167,139,250,0.15)', color: '#c4b5fd', border: '1px solid rgba(167,139,250,0.3)' }}>{typeLabel(app.app_type)}</span>
+          <>
+            <div className="grid">
+              {apps.map(app => {
+                const url = app.status === 'running' ? appUrl(app) : undefined;
+                const busy = busyId === app.id || app.status === 'building';
+                return (
+                  <div key={app.id} className={`panel${app.status === 'running' ? ' ok' : ''}`}>
+                    <div className="panel-head">
+                      <div style={{ minWidth: 0 }}>
+                        <h3 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{app.name}</h3>
+                        <span className="chip" style={{ marginTop: 5 }}>{typeLabel(app.app_type)}</span>
+                      </div>
+                      <StatusBadge status={app.status} />
                     </div>
-                    <StatusBadge status={app.status} />
+                    {url && (
+                      <a className="url-box" href={url} target="_blank" rel="noreferrer" title="Open the app in a new tab">
+                        <Globe size={13} /> {url}<ExternalLink size={13} style={{ marginLeft: 'auto' }} />
+                      </a>
+                    )}
+                    <div className="kv">
+                      <div><GitBranch size={12} /><span>{app.repo_url.replace('https://github.com/', '')} <b>({app.branch})</b></span></div>
+                      <div><Globe size={12} /><span>domain: <b>{app.domain}</b></span></div>
+                      {serverName(app.server_id) && <div><ServerIcon size={12} /><span>runs on <b>{serverName(app.server_id)}</b></span></div>}
+                    </div>
+                    {app.status === 'failed' && <div className="hint" style={{ color: 'var(--danger)' }}>The last deploy did not work. Press "Show the log" to see the first error, fix it in your repository, then deploy again.</div>}
+                    {app.status === 'idle' && <div className="hint">Saved but not deployed yet. Press "Deploy now" to build and start it.</div>}
+                    <div className="panel-foot">
+                      <button type="button" className="btn ok sm" onClick={() => deploy(app)} disabled={busy} title="Build the latest code and start the app">
+                        {busy ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Play size={13} />} {app.status === 'building' ? 'Deploying…' : 'Deploy now'}
+                      </button>
+                      <button type="button" className="btn ghost sm" onClick={() => openLatestLog(app)} title="Show the log of the last deploy">
+                        <ScrollText size={13} /> Show the log
+                      </button>
+                      <button type="button" className="btn danger sm icon" onClick={() => setDelTarget(app)} disabled={busy} title="Remove from OmniDeploy" aria-label={`Delete ${app.name}`} style={{ marginLeft: 'auto' }}>
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
                   </div>
-                  {url && (
-                    <a href={url} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 12px', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.35)', borderRadius: 10, marginBottom: 10, color: '#34d399', fontWeight: 600, fontSize: 13, textDecoration: 'none' }}>
-                      {url}<ExternalLink size={13} style={{ marginLeft: 'auto' }} />
-                    </a>
-                  )}
-                  <div style={{ fontSize: 12, color: 'var(--text-secondary)', background: 'rgba(0,0,0,0.25)', borderRadius: 8, padding: '8px 11px', marginBottom: 14, lineHeight: 1.7, wordBreak: 'break-all' }}>
-                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}><GitBranch size={11} style={{ flexShrink: 0 }} />{app.repo_url.replace('https://github.com/', '')} ({app.branch})</div>
-                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}><Globe size={11} style={{ flexShrink: 0 }} />{app.domain}</div>
-                    {serverName(app.server_id) && <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}><ServerIcon size={11} style={{ flexShrink: 0 }} />runs on {serverName(app.server_id)}</div>}
-                  </div>
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                    <button onClick={() => deploy(app)} disabled={busy}
-                      style={{ ...btn, background: 'rgba(16,185,129,0.18)', color: '#34d399', border: '1px solid rgba(16,185,129,0.4)', opacity: busy ? 0.6 : 1 }}>
-                      {busy ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Play size={13} />} {app.status === 'building' ? 'Deploying…' : 'Deploy'}
-                    </button>
-                    <button onClick={() => openLatestLog(app)} style={{ ...btn, background: 'rgba(255,255,255,0.06)', color: 'var(--text-secondary)', border: '1px solid var(--glass-border)' }}>
-                      <ScrollText size={13} /> Logs
-                    </button>
-                    <button onClick={() => setDelTarget(app)} disabled={busy} title="Delete application" aria-label={`Delete ${app.name}`}
-                      style={{ ...btn, marginLeft: 'auto', background: 'rgba(244,63,94,0.12)', color: '#fb7185', border: '1px solid rgba(244,63,94,0.35)', opacity: busy ? 0.4 : 1 }}>
-                      <Trash2 size={13} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+            <StatusLegend items={APP_STATUS_LEGEND} />
+          </>
         )}
 
         {/* Deploy log of the selected deployment */}
         {view && (
-          <div ref={logsRef} style={{ marginTop: 28 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 700 }}>Deploy log · {view.appName}</h2>
-              <button onClick={() => setView(null)} style={{ ...btn, background: 'transparent', color: 'var(--text-muted)', fontWeight: 500 }}>Close</button>
-            </div>
+          <section ref={logsRef} style={{ marginTop: 32 }}>
+            <PageHead small title={`Deploy log · ${view.appName}`}
+              text="Everything the platform did for this deploy, line by line, as it happens."
+              actions={<button type="button" className="btn ghost sm" onClick={() => setView(null)}>Close the log</button>} />
+            <Help id="deploy-log" title="How to read this log"
+              steps={['Fetch code: your repository is downloaded from GitHub.', 'Build: the container image is created (dependencies are installed here).', 'Start & verify: the container is started and the platform checks that it answers.']}
+              next="Green lines are fine. If something fails, the first red line usually names the missing file or package; fix it in your repository and deploy again.">
+              The log is live: new lines appear while the deploy runs. When it finishes, the result and the link to your app are shown above the log.
+            </Help>
             <DeployBanner status={view.status} appName={view.appName} url={view.url} errorText={errLine?.text} />
             <LogViewer lines={shownLines} status={view.status} minHeight={360} />
-          </div>
+          </section>
         )}
 
         {/* Where apps run: servers the platform shares + the customer's own */}
         {!loading && (
-          <section style={{ marginTop: 36 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginBottom: 14, flexWrap: 'wrap' }}>
-              <div>
-                <h2 style={{ fontSize: 19, fontWeight: 700 }}>Where your apps run</h2>
-                <p style={{ color: 'var(--text-secondary)', fontSize: 13, marginTop: 4 }}>Servers you can deploy to. Have your own Linux machine? Add it and your apps run there.</p>
+          <section style={{ marginTop: 40 }}>
+            <PageHead small title="Where your apps run"
+              text="The machines your apps can be deployed to. Have your own Linux machine? Add it and your apps run there."
+              actions={<button type="button" className="btn ghost" onClick={() => setAddServer(true)}><Plus size={14} /> Add my server</button>} />
+            <Help id="customer-servers" title="What is a server here?"
+              need={[
+                'Nothing, if you use the server provided by OmniDeploy: it is already set up.',
+                'To add your own: a Linux machine (Ubuntu or Debian) that stays on, its IP address, and five minutes to paste three commands on it.',
+              ]}
+              next={<>Press <strong>Add my server</strong> and follow the three steps. "Check again" re-tests a server; a verified server is ready to run apps.</>}>
+              A server is a Linux computer that runs your apps: a laptop in the lab, a Raspberry Pi, a rented VPS. OmniDeploy logs in to it over SSH
+              (the secure remote login Linux machines use) and starts your apps there with Docker. The platform may provide one for everyone.
+            </Help>
+            {servers.length === 0 ? (
+              <div className="empty">
+                <ServerIcon size={36} />
+                <h3>No server yet</h3>
+                <p>Apps need a machine to run on. Add your own Linux machine, or ask the platform owner to share one.</p>
+                <div><button type="button" className="btn blue" onClick={() => setAddServer(true)}><Plus size={14} /> Add my server</button></div>
               </div>
-              <button onClick={() => setAddServer(true)} style={{ ...btn, background: 'rgba(79,172,254,0.15)', color: 'var(--accent-cyan)', border: '1px solid rgba(79,172,254,0.35)' }}>
-                <Plus size={14} /> Add my server
-              </button>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
-              {servers.map(srv => {
-                const mine = srv.owner_id === customer.id;
-                return (
-                  <ServerCard key={srv.id} server={srv} busy={srvBusy === srv.id} canManage={mine} canShare={false}
-                    note={mine ? 'Your own server' : 'Provided by OmniDeploy'}
-                    onVerify={() => verifyServer(srv)} onDelete={() => removeServer(srv)} />
-                );
-              })}
-            </div>
+            ) : (
+              <>
+                <div className="grid">
+                  {servers.map(srv => {
+                    const mine = srv.owner_id === customer.id;
+                    return (
+                      <ServerCard key={srv.id} server={srv} busy={srvBusy === srv.id} canManage={mine} canShare={false}
+                        note={mine ? 'Your own server' : 'Provided by OmniDeploy'}
+                        onVerify={() => verifyServer(srv)} onDelete={() => removeServer(srv)} />
+                    );
+                  })}
+                </div>
+                <StatusLegend items={SERVER_STATUS_LEGEND} />
+              </>
+            )}
           </section>
         )}
       </main>
@@ -290,13 +323,19 @@ export default function CustomerPortal({ customer, onLogout }: { customer: Custo
 
       {delTarget && (
         <Modal title={`Delete “${delTarget.name}”?`} onClose={() => busyId !== delTarget.id && setDelTarget(null)}>
-          <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 18 }}>
-            This stops the app and deletes its container and the copy of your code on the platform. Your GitHub repository is not touched.
-          </p>
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
-            <button onClick={() => setDelTarget(null)} style={{ ...btn, background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}>Cancel</button>
-            <button onClick={remove} disabled={busyId === delTarget.id} style={{ ...btn, background: '#e11d48', color: '#fff' }}>
-              {busyId === delTarget.id ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Trash2 size={13} />} Delete
+          <Help id="delete-app" title="What will be deleted"
+            steps={[
+              'The running app is stopped and its container is removed from the server.',
+              'The copy of your code on the server and the app\'s deploy logs are deleted.',
+              `"${delTarget.name}" disappears from this page and its link stops working.`,
+            ]}
+            next={<><strong>Not touched:</strong> your GitHub repository, your account, and the server itself. You can create the app again at any time.</>}>
+            This cannot be undone. Here is exactly what happens:
+          </Help>
+          <div className="form-actions">
+            <button type="button" className="btn ghost" onClick={() => setDelTarget(null)} disabled={busyId === delTarget.id}>Cancel, keep it</button>
+            <button type="button" className="btn danger solid" onClick={remove} disabled={busyId === delTarget.id}>
+              {busyId === delTarget.id ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Trash2 size={13} />} Remove from OmniDeploy
             </button>
           </div>
         </Modal>

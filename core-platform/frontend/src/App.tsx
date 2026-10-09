@@ -3,10 +3,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import {
   Server as ServerIcon, Layers, Terminal, Bot, TrendingUp,
-  Plus, Play, RefreshCw, CheckCircle2, Cpu, ShieldCheck,
-  Globe, GitBranch, Send, Zap, X, Loader2, AlertTriangle,
-  FlaskConical, Wifi, WifiOff, ExternalLink, Activity, ShieldAlert,
-  BarChart3, AlertCircle, LayoutDashboard, Trash2, History, LogOut, Users, HardDrive,
+  Plus, Minus, Play, RefreshCw, CheckCircle2, Cpu,
+  Globe, GitBranch, Send, Loader2, AlertTriangle,
+  FlaskConical, ExternalLink, Activity, Gauge, UserRound,
+  LayoutDashboard, Trash2, History, LogOut, Users, HardDrive,
 } from 'lucide-react';
 import LogViewer from './components/LogViewer';
 import DeployBanner from './components/DeployBanner';
@@ -23,6 +23,7 @@ import { Customer } from './lib/auth';
 import NewAppWizard, { NewAppPayload } from './NewAppWizard';
 import Modal from './components/Modal';
 import { FALLBACK_APP_TYPES } from './lib/appTypes';
+import { PageHead, Help, StatusLegend, APP_STATUS_LEGEND, SERVER_STATUS_LEGEND } from './components/ui';
 
 const envAi = import.meta.env.VITE_AI_ENGINE_URL;
 const envProm = import.meta.env.VITE_PROMETHEUS_URL;
@@ -118,15 +119,19 @@ const tryAI = async (body: object) => {
 };
 
 // ── Subcomponents ─────────────────────────────────────────────────────────────
-function Field({ label, placeholder, value, onChange, type = 'text', mono = false }: {
+/** A labelled input with an optional example line under it (.field / .lbl / .input / .hint). */
+function Field({ label, placeholder, value, onChange, type = 'text', mono = false, hint, min, max }: {
   label: string; placeholder?: string; value: string; onChange: (v: string) => void; type?: string; mono?: boolean;
+  /** One line under the box: what to type, with an example. */
+  hint?: React.ReactNode; min?: number | string; max?: number | string;
 }) {
   return (
-    <div style={{ marginBottom: 14 }}>
-      <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{label}</label>
-      <input type={type} placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)}
-        style={{ width: '100%', padding: '10px 14px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13, fontFamily: mono ? 'var(--font-mono)' : 'inherit' }} />
-    </div>
+    <label className="field">
+      <span className="lbl">{label}</span>
+      <input className="input" type={type} placeholder={placeholder} value={value} min={min} max={max} onChange={e => onChange(e.target.value)}
+        style={mono ? { fontFamily: 'var(--font-mono)' } : undefined} />
+      {hint && <div className="hint">{hint}</div>}
+    </label>
   );
 }
 
@@ -134,39 +139,38 @@ function Badge({ status }: { status: string }) {
   const cls = ['running', 'verified', 'success'].includes(status) ? 'badge-verified'
     : ['building', 'deploying', 'pending'].includes(status) ? 'badge-building'
     : ['failed', 'unreachable'].includes(status) ? 'badge-failed' : 'badge-idle';
-  return <span className={`badge ${cls}`}><span style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor', display: 'inline-block' }} />{status}</span>;
+  return <span className={`badge ${cls}`}>{status}</span>;
 }
 
+/** Page title + one sentence. Kept as a thin wrapper so the tabs read the same as the customer portal. */
 function Header({ title, subtitle, action }: { title: string; subtitle?: string; action?: React.ReactNode }) {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
-      <div>
-        <h2 style={{ fontSize: 24, fontWeight: 700 }}>{title}</h2>
-        {subtitle && <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 5 }}>{subtitle}</p>}
-      </div>
-      {action}
-    </div>
-  );
+  return <PageHead title={title} text={subtitle} actions={action} />;
 }
 
-function Callout({ color, children }: { color: string; children: React.ReactNode }) {
+/** A short warning or error line. `color` is kept for the callers; only "error" changes the look. */
+function Callout({ color, children }: { color?: 'warn' | 'error' | string; children: React.ReactNode }) {
+  const error = color === 'error';
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '11px 14px', background: `${color}18`, border: `1px solid ${color}44`, borderRadius: 10, color, fontSize: 13, marginBottom: 20, lineHeight: 1.6 }}>
+    <div className={`note ${error ? 'note-error' : 'note-warn'}`} role={error ? 'alert' : undefined} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
       <AlertTriangle size={15} style={{ flexShrink: 0, marginTop: 2 }} />
       <span>{children}</span>
     </div>
   );
 }
 
-function Empty({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) {
+function Empty({ icon, title, subtitle, action }: { icon: React.ReactNode; title: string; subtitle: React.ReactNode; action?: React.ReactNode }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 260, gap: 12, color: 'var(--text-muted)', textAlign: 'center' }}>
-      <div style={{ opacity: 0.25 }}>{icon}</div>
-      <div style={{ fontWeight: 600, fontSize: 17, color: 'var(--text-secondary)' }}>{title}</div>
-      <div style={{ fontSize: 13, maxWidth: 340 }}>{subtitle}</div>
+    <div className="empty">
+      {icon}
+      <h3>{title}</h3>
+      <p>{subtitle}</p>
+      {action && <div style={{ marginTop: 16 }}>{action}</div>}
     </div>
   );
 }
+
+/** The spinning "working" icon. */
+const Spin = ({ size = 14 }: { size?: number }) => <Loader2 size={size} style={{ animation: 'spin 1s linear infinite' }} />;
 
 // ── Main App ──────────────────────────────────────────────────────────────────
 export default function App({ customer, onLogout, startInDemo = false }: {
@@ -196,7 +200,7 @@ export default function App({ customer, onLogout, startInDemo = false }: {
 
   // Copilot
   const [chatMsgs, setChatMsgs] = useState<ChatMsg[]>([
-    { sender: 'bot', text: "👋 I'm your Ops Copilot. Ask me to deploy apps, scale replicas, or paste an error log for instant AI diagnosis.", source: 'system' }
+    { sender: 'bot', text: "Hi, I am your Ops Copilot. Ask me to deploy an app, scale it, or paste an error line from a deploy log and I will explain it.", source: 'system' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [chatBusy, setChatBusy] = useState(false);
@@ -424,7 +428,7 @@ export default function App({ customer, onLogout, startInDemo = false }: {
       } else {
         const res = await tryBackend(`/applications/${app.id}${force ? '?force=true' : ''}`, 'DELETE');
         addLog(`Application '${app.name}' deleted: ${res.removed_containers?.length ?? 0} container(s) and ${res.removed_images ?? 0} image(s) removed${res.removed_files ? ', checkout deleted' : ''}.`);
-        (res.warnings || []).forEach((w: string) => addLog(`⚠️ ${w}`));
+        (res.warnings || []).forEach((w: string) => addLog(`Warning: ${w}`));
         loadDeployments();
       }
       setApps(p => p.filter(a => a.id !== app.id));
@@ -590,103 +594,88 @@ export default function App({ customer, onLogout, startInDemo = false }: {
     }
   };
 
-  // Preset fault scenarios
+
+  // Preset fault scenarios (`ok` = the model should call it healthy; shown as a green / red dot)
   const faultPresets = [
-    { label: '🟢 Normal', values: { cpu_percent: '18', mem_percent: '30', restart_count: '0', net_in_kb: '150', net_out_kb: '80' } },
-    { label: '🔴 Memory Leak', values: { cpu_percent: '22', mem_percent: '92', restart_count: '1', net_in_kb: '160', net_out_kb: '90' } },
-    { label: '🔴 CPU Spike', values: { cpu_percent: '95', mem_percent: '35', restart_count: '0', net_in_kb: '140', net_out_kb: '75' } },
-    { label: '🔴 Crash Loop', values: { cpu_percent: '30', mem_percent: '40', restart_count: '12', net_in_kb: '120', net_out_kb: '60' } },
-    { label: '🔴 Net Flood', values: { cpu_percent: '20', mem_percent: '32', restart_count: '0', net_in_kb: '2400', net_out_kb: '1900' } },
+    { label: 'Normal', ok: true, values: { cpu_percent: '18', mem_percent: '30', restart_count: '0', net_in_kb: '150', net_out_kb: '80' } },
+    { label: 'Memory leak', ok: false, values: { cpu_percent: '22', mem_percent: '92', restart_count: '1', net_in_kb: '160', net_out_kb: '90' } },
+    { label: 'CPU spike', ok: false, values: { cpu_percent: '95', mem_percent: '35', restart_count: '0', net_in_kb: '140', net_out_kb: '75' } },
+    { label: 'Crash loop', ok: false, values: { cpu_percent: '30', mem_percent: '40', restart_count: '12', net_in_kb: '120', net_out_kb: '60' } },
+    { label: 'Net flood', ok: false, values: { cpu_percent: '20', mem_percent: '32', restart_count: '0', net_in_kb: '2400', net_out_kb: '1900' } },
   ];
 
   const NAV = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'apps', label: 'Applications', icon: Layers },
-    { id: 'servers', label: 'Private Servers', icon: ServerIcon },
-    { id: 'customers', label: 'Customers', icon: Users },
-    { id: 'storage', label: 'Data & Storage', icon: HardDrive },
-    { id: 'terminal', label: 'Deploy Logs', icon: Terminal },
-    { id: 'copilot', label: 'Ops Copilot AI', icon: Bot, badge: 'AI' },
-    { id: 'metrics', label: 'Health Monitor', icon: Activity, badge: 'ML' },
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, group: 'Workspace' },
+    { id: 'apps', label: 'Applications', icon: Layers, group: 'Workspace' },
+    { id: 'servers', label: 'Private Servers', icon: ServerIcon, group: 'Workspace' },
+    { id: 'customers', label: 'Customers', icon: Users, group: 'People & data' },
+    { id: 'storage', label: 'Data & Storage', icon: HardDrive, group: 'People & data' },
+    { id: 'terminal', label: 'Deploy Logs', icon: Terminal, group: 'Operations' },
+    { id: 'copilot', label: 'Ops Copilot', icon: Bot, badge: 'AI', group: 'Operations' },
+    { id: 'metrics', label: 'Health Monitor', icon: Activity, badge: 'ML', group: 'Operations' },
   ];
+  const NAV_GROUPS = ['Workspace', 'People & data', 'Operations'];
 
-  // ── FORM PREFILL with sample data ─────────────────────────────────────────────
+  const serverName = (id: string) => servers.find(s => s.id === id)?.name || 'not set';
+  const typeLabel = (t?: string) => FALLBACK_APP_TYPES.find(x => x.id === t)?.label || t;
+  const healthCls = (c: { is_anomaly: boolean; status?: string }) => c.is_anomaly ? 'badge-failed' : c.status === 'DEGRADING' ? 'badge-building' : 'badge-running';
+  const healthWord = (c: { is_anomaly: boolean; status?: string }) => c.is_anomaly ? 'anomalous' : c.status === 'DEGRADING' ? 'degrading' : 'healthy';
+  const healthPanel = (c: { is_anomaly: boolean; status?: string }) => c.is_anomaly ? 'panel bad' : c.status === 'DEGRADING' ? 'panel' : 'panel ok';
+  const nice = (s: string) => s.replace(/_/g, ' ');
+  const backendNote = (
+    <Callout>
+      The backend (port 3000) is not reachable, so nothing real can be loaded. Turn on <strong>Demo mode</strong> in the sidebar to try the page with sample data, or start it on this laptop: <code>cd core-platform/backend &amp;&amp; npm run start:dev</code>
+    </Callout>
+  );
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div className="shell">
 
       {/* ── Sidebar ── */}
-      <aside style={{ width: 256, flexShrink: 0, borderRight: '1px solid var(--glass-border)', background: 'var(--bg-secondary)', display: 'flex', flexDirection: 'column', padding: '22px 14px', gap: 5 }}>
+      <aside className="sidebar">
+        <div className="brand"><Brand subtitle="Admin site" /></div>
 
-        {/* Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '0 10px 20px', borderBottom: '1px solid var(--glass-border)' }}>
-          <Brand subtitle="Admin site" />
-        </div>
+        {/* Demo mode: sample servers and apps, every action simulated in the browser */}
+        <button type="button" className="nav-item" onClick={toggleDemo} aria-pressed={demoMode}
+          title={demoMode ? 'Turn demo mode off and go back to real data' : 'Load sample data; nothing is sent to a server'}>
+          <FlaskConical size={16} />
+          <span style={{ flex: 1 }}>Demo mode: {demoMode ? 'on' : 'off'} - simulated data</span>
+          {demoMode && <span className="pill">DEMO</span>}
+        </button>
 
-        {/* Demo Mode Toggle */}
-        <div style={{ margin: '12px 0', padding: '10px 12px', background: demoMode ? 'rgba(245,158,11,0.15)' : 'rgba(255,255,255,0.04)', border: `1px solid ${demoMode ? 'rgba(245,158,11,0.4)' : 'var(--glass-border)'}`, borderRadius: 10, cursor: 'pointer' }} onClick={toggleDemo}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <FlaskConical size={15} color={demoMode ? '#fbbf24' : 'var(--text-muted)'} />
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: demoMode ? '#fbbf24' : 'var(--text-secondary)' }}>{demoMode ? 'Demo Mode ON' : 'Demo Mode OFF'}</div>
-              <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>{demoMode ? 'Using simulated data' : 'Click to load sample data'}</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Nav */}
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: 3, flex: 1 }}>
-          {NAV.map(({ id, label, icon: Icon, badge }) => {
-            const active = tab === id;
-            return (
-              <button key={id} onClick={() => setTab(id as any)} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px',
-                borderRadius: 10, textAlign: 'left', fontSize: 13,
-                background: active ? 'rgba(79,172,254,0.15)' : 'transparent',
-                color: active ? 'var(--accent-cyan)' : 'var(--text-secondary)',
-                border: active ? '1px solid rgba(0,242,254,0.2)' : '1px solid transparent',
-                fontWeight: active ? 600 : 400,
-              }}>
-                <Icon size={16} />
-                <span style={{ flex: 1 }}>{label}</span>
-                {badge && <span style={{ fontSize: 9, fontWeight: 700, background: 'var(--accent-purple)', color: '#fff', padding: '2px 5px', borderRadius: 5 }}>{badge}</span>}
-              </button>
-            );
-          })}
+        <nav aria-label="Admin pages" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {NAV_GROUPS.map(g => (
+            <React.Fragment key={g}>
+              <div className="grp">{g}</div>
+              {NAV.filter(n => n.group === g).map(({ id, label, icon: Icon, badge }) => (
+                <button key={id} type="button" className="nav-item" onClick={() => setTab(id as any)} aria-current={tab === id ? 'page' : undefined}>
+                  <Icon size={16} />
+                  <span>{label}</span>
+                  {badge && <span className="pill">{badge}</span>}
+                </button>
+              ))}
+            </React.Fragment>
+          ))}
         </nav>
 
-        {/* Signed-in customer */}
-        {customer && (
-          <div style={{ padding: '10px 10px 12px', borderTop: '1px solid var(--glass-border)', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{customer.name}</div>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{customer.email}</div>
-            </div>
-            {onLogout && (
-              <button onClick={onLogout} title="Sign out"
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 9px', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', borderRadius: 8, color: 'var(--text-secondary)', fontSize: 11 }}>
-                <LogOut size={13} /> Sign out
-              </button>
-            )}
+        <div className="foot">
+          {customer && (
+            <div className="who"><b>{customer.name}</b><span>{customer.email}</span></div>
+          )}
+          {onLogout && (
+            <button type="button" className="btn ghost sm" onClick={onLogout} title="Sign out"><LogOut size={13} /> Sign out</button>
+          )}
+          <div className="svc" title={backendOk ? 'The backend answers' : 'The backend does not answer on port 3000'}>
+            <span className={`status-dot ${backendOk ? 'on' : 'off'}`} /> Backend :3000 - {backendOk ? 'connected' : 'offline'}
           </div>
-        )}
-
-        {/* Status pills */}
-        <div style={{ paddingTop: 12, borderTop: '1px solid var(--glass-border)', display: 'flex', flexDirection: 'column', gap: 5 }}>
-          {[
-            { label: 'Backend :3000', ok: backendOk },
-            { label: 'AI Engine :8001', ok: aiOk },
-          ].map(s => (
-            <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 11, color: 'var(--text-muted)', padding: '4px 10px' }}>
-              {s.ok ? <Wifi size={12} color="#34d399" /> : <WifiOff size={12} color="#64748b" />}
-              <span style={{ color: s.ok ? '#34d399' : 'var(--text-muted)' }}>{s.label}</span>
-            </div>
-          ))}
+          <div className="svc" title={aiOk ? 'The AI engine answers' : 'The AI engine does not answer on port 8001'}>
+            <span className={`status-dot ${aiOk ? 'on' : 'off'}`} /> AI engine :8001 - {aiOk ? 'connected' : 'offline'}
+          </div>
         </div>
       </aside>
 
       {/* ── Main Content ── */}
-      <main style={{ flex: 1, padding: '36px 44px', overflowY: 'auto' }}>
+      <main className="main">
 
         {/* ══ DASHBOARD ══ */}
         {tab === 'dashboard' && (
@@ -702,90 +691,85 @@ export default function App({ customer, onLogout, startInDemo = false }: {
           <div className="animate-slide-up">
             <Header
               title="Applications"
-              subtitle="Connect a Git repository and deploy containers to your private server with Traefik auto-routing."
-              action={
-                <button onClick={() => setAppModal(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))', color: '#fff', border: 'none', borderRadius: 10, fontWeight: 600, fontSize: 14, boxShadow: '0 4px 14px rgba(79,172,254,0.25)', cursor: 'pointer' }}>
-                  <Plus size={16} /> New Application
-                </button>
-              }
+              subtitle="Every app on the platform, from every customer. Deploy, open, scale or remove them from here."
+              action={<button type="button" className="btn blue" onClick={() => setAppModal(true)}><Plus size={14} /> New application</button>}
             />
 
-            {!backendOk && !demoMode && (
-              <Callout color="#f59e0b">
-                Backend offline. <strong>Enable Demo Mode</strong> (sidebar) to test with sample data, or start backend: <code style={{ fontSize: 11 }}>cd core-platform/backend && npm run start:dev</code>
-              </Callout>
-            )}
+            <Help id="admin-apps" title="What is an application?"
+              need={[
+                <>A GitHub repository with the code (public, or private with a token).</>,
+                <>A private server that is <span className="badge badge-verified">verified</span> (see Private Servers).</>,
+              ]}
+              steps={[
+                <><b>Deploy now</b>: OmniDeploy clones the repository, builds a container image, starts it and checks that it answers.</>,
+                <>When the health check passes, the new version replaces the old one. The old version is kept, so you can roll back.</>,
+                <><b>Scale</b> runs N copies of the app behind the router; visitors are shared between the copies.</>,
+                <>If a step fails, the card turns <span className="badge badge-failed">failed</span> and the log shows the reason.</>,
+              ]}
+              next="As the owner you see every customer's apps; each card names who owns it.">
+              An application is a GitHub repository that OmniDeploy builds into a container and runs on one of the private servers.
+              Click <b>New application</b> to add one; the wizard asks for the repository, the server and the port.
+            </Help>
+
+            {!backendOk && !demoMode && backendNote}
 
             {apps.length === 0 ? (
-              <Empty icon={<Layers size={42} />} title="No applications yet"
-                subtitle={demoMode ? 'Click "New Application" to create your first app.' : 'Enable Demo Mode in the sidebar to load sample apps instantly.'} />
+              <Empty icon={<Layers size={36} />} title="No applications yet"
+                subtitle={demoMode ? 'Click "New application" to create the first one. In demo mode the deploy is simulated.' : 'Turn on Demo mode in the sidebar to load sample apps, or click "New application".'}
+                action={<button type="button" className="btn blue" onClick={() => setAppModal(true)}><Plus size={14} /> New application</button>} />
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px,1fr))', gap: 20 }}>
+              <div className="grid">
                 {apps.map(app => (
-                  <div key={app.id} className="glass-panel" style={{ padding: 24, borderColor: app.status === 'running' ? 'rgba(52,211,153,0.35)' : undefined }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14 }}>
-                      <div>
-                        <div style={{ fontWeight: 700, fontSize: 18 }}>{app.name}</div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--accent-cyan)', fontSize: 12, marginTop: 3 }}>
-                          <Globe size={12} />{app.domain}
+                  <div key={app.id} className={`panel${app.status === 'running' ? ' ok' : app.status === 'failed' ? ' bad' : ''}`}>
+                    <div className="panel-head">
+                      <div style={{ minWidth: 0 }}>
+                        <h3 style={{ wordBreak: 'break-all' }}>{app.name}</h3>
+                        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 6 }}>
+                          {app.app_type && app.app_type !== 'auto' && <span className="chip">{typeLabel(app.app_type)}</span>}
+                          <span className="chip">{app.replicas} {app.replicas === 1 ? 'copy' : 'copies'}</span>
                         </div>
-                        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
-                          👤 {app.owner_id ? owners[app.owner_id] || 'customer' : 'admin'}
-                        </div>
-                        {app.app_type && app.app_type !== 'auto' && (
-                          <span style={{ display: 'inline-block', marginTop: 6, fontSize: 11, padding: '2px 8px', borderRadius: 6, background: 'rgba(167,139,250,0.15)', color: '#c4b5fd', border: '1px solid rgba(167,139,250,0.3)' }}>
-                            {FALLBACK_APP_TYPES.find(t => t.id === app.app_type)?.label || app.app_type}
-                          </span>
-                        )}
                       </div>
                       <Badge status={app.status} />
                     </div>
 
-                    {/* Live URL Banner — shows when running */}
+                    {/* Where the app answers - shown when it is running */}
                     {app.status === 'running' && (
-                      <a href={appHref(app)} target="_blank" rel="noreferrer"
-                        style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.35)', borderRadius: 10, marginBottom: 12, textDecoration: 'none', color: '#34d399', fontWeight: 600, fontSize: 13 }}>
-                        <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#34d399', display: 'inline-block', boxShadow: '0 0 6px #34d399', animation: 'pulse 2s infinite' }} />
-                        {appHref(app)}
-                        <ExternalLink size={13} style={{ marginLeft: 'auto', opacity: 0.7 }} />
+                      <a href={appHref(app)} target="_blank" rel="noreferrer" className="url-box">
+                        <Globe size={14} /> {appHref(app)} <ExternalLink size={13} style={{ marginLeft: 'auto' }} />
                       </a>
                     )}
 
-                    <div style={{ background: 'rgba(0,0,0,0.25)', borderRadius: 8, padding: '9px 12px', fontSize: 12, color: 'var(--text-secondary)', marginBottom: 14 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 4 }}><GitBranch size={11} />{app.repo_url.replace('https://github.com/', '')} ({app.branch})</div>
-                      {app.current_commit_sha && <div style={{ color: 'var(--text-muted)' }}>Commit: {app.current_commit_sha}</div>}
+                    <div className="kv">
+                      <div><Globe size={13} /> Address: <b>{app.domain}</b></div>
+                      <div><GitBranch size={13} /> Code: <b>{app.repo_url.replace('https://github.com/', '')}</b> (branch {app.branch})</div>
+                      {app.current_commit_sha && <div><History size={13} /> Running version: <b>{app.current_commit_sha.slice(0, 7)}</b></div>}
+                      <div><ServerIcon size={13} /> Server: <b>{serverName(app.server_id)}</b></div>
+                      <div><UserRound size={13} /> Owner: <b>{app.owner_id ? owners[app.owner_id] || 'customer' : 'you (admin)'}</b></div>
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--glass-border)', paddingTop: 14 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Replicas</span>
-                        <button onClick={() => scaleApp(app, -1)} style={{ padding: '2px 9px', background: 'rgba(255,255,255,0.08)', color: '#fff', borderRadius: 5, cursor: 'pointer' }}>-</button>
-                        <span style={{ fontWeight: 700, minWidth: 18, textAlign: 'center' }}>{app.replicas}</span>
-                        <button onClick={() => scaleApp(app, 1)} style={{ padding: '2px 9px', background: 'rgba(255,255,255,0.08)', color: '#fff', borderRadius: 5, cursor: 'pointer' }}>+</button>
-                      </div>
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        {app.status === 'running' && (
-                          <a href={appHref(app)} target="_blank" rel="noreferrer"
-                            style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '8px 12px', background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.35)', borderRadius: 8, fontWeight: 600, fontSize: 12, textDecoration: 'none' }}>
-                            <ExternalLink size={12} /> Open
-                          </a>
-                        )}
-                        <button onClick={() => { setDelErr(''); setDelTarget(app); }} disabled={app.status === 'building'}
-                          title={app.status === 'building' ? 'Wait for the deployment to finish' : 'Delete application'}
-                          style={{ display: 'flex', alignItems: 'center', padding: '8px 10px', background: 'rgba(244,63,94,0.12)', color: '#fb7185', border: '1px solid rgba(244,63,94,0.35)', borderRadius: 8, cursor: app.status === 'building' ? 'not-allowed' : 'pointer', opacity: app.status === 'building' ? 0.4 : 1 }}>
-                          <Trash2 size={14} />
-                        </button>
-                        <button onClick={() => deployApp(app)} disabled={deployingId === app.id}
-                          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', background: 'rgba(16,185,129,0.2)', color: '#34d399', border: '1px solid rgba(16,185,129,0.4)', borderRadius: 8, fontWeight: 600, fontSize: 13, cursor: 'pointer', opacity: deployingId === app.id ? 0.6 : 1 }}>
-                          {deployingId === app.id ? <><Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> Deploying...</> : <><Play size={13} /> Deploy</>}
-                        </button>
-                      </div>
+                    <div className="panel-foot">
+                      <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Scale</span>
+                      <button type="button" className="btn ghost sm icon" onClick={() => scaleApp(app, -1)} disabled={app.replicas <= 1} aria-label="Run one copy fewer" title="Run one copy fewer"><Minus size={13} /></button>
+                      <b style={{ minWidth: 18, textAlign: 'center' }}>{app.replicas}</b>
+                      <button type="button" className="btn ghost sm icon" onClick={() => scaleApp(app, 1)} disabled={app.replicas >= 10} aria-label="Run one copy more" title="Run one copy more"><Plus size={13} /></button>
+                      <span style={{ flex: 1 }} />
+                      {app.status === 'running' && (
+                        <a href={appHref(app)} target="_blank" rel="noreferrer" className="btn ok sm"><ExternalLink size={13} /> Open the app</a>
+                      )}
+                      <button type="button" className="btn blue sm" onClick={() => deployApp(app)} disabled={deployingId === app.id}>
+                        {deployingId === app.id ? <><Spin size={13} /> Deploying...</> : <><Play size={13} /> Deploy now</>}
+                      </button>
+                      <button type="button" className="btn danger sm icon" onClick={() => { setDelErr(''); setDelTarget(app); }} disabled={app.status === 'building'}
+                        aria-label={`Remove ${app.name}`} title={app.status === 'building' ? 'Wait for the deployment to finish' : 'Remove this application'}>
+                        <Trash2 size={14} />
+                      </button>
                     </div>
+                    <div className="hint" style={{ marginTop: 8 }}>Scale = how many copies run at the same time (1 to 10). More copies help when the app is busy. "Show the log" is under Deploy Logs.</div>
                   </div>
                 ))}
               </div>
             )}
+            <StatusLegend items={APP_STATUS_LEGEND} />
           </div>
         )}
 
@@ -794,34 +778,43 @@ export default function App({ customer, onLogout, startInDemo = false }: {
           <div className="animate-slide-up">
             <Header
               title="Private Servers"
-              subtitle="Linux machines where apps run. OmniDeploy logs in over SSH with its own key and runs git and Docker there."
-              action={
-                <button onClick={() => setSrvModal(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 18px', background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))', color: '#fff', border: 'none', borderRadius: 10, fontWeight: 600, fontSize: 14, cursor: 'pointer' }}>
-                  <Plus size={16} /> Add a server
-                </button>
-              }
+              subtitle="The Linux machines where the apps run. OmniDeploy logs in over SSH with its own key and runs git and Docker there."
+              action={<button type="button" className="btn blue" onClick={() => setSrvModal(true)}><Plus size={14} /> Add a server</button>}
             />
 
-            {!backendOk && !demoMode && (
-              <Callout color="#f59e0b">
-                Backend offline. Enable <strong>Demo Mode</strong> in the sidebar to test with sample servers.
-              </Callout>
-            )}
+            <Help id="admin-servers" title="What is a private server?"
+              need={[
+                <>A Linux machine (a home PC, a lab box, a VPS) that this laptop can reach over the network.</>,
+                <>SSH (secure remote login) turned on, with <b>Docker</b> and <b>git</b> installed. The wizard tells you which command installs what is missing.</>,
+                <>The platform's own SSH key added to that machine. OmniDeploy never stores a password.</>,
+              ]}
+              steps={[
+                <><b>Add a server</b>: type its address and user name; the wizard shows the key to copy onto the machine.</>,
+                <>OmniDeploy logs in and runs a checklist (login, Docker, git, free disk). A server that passes is <span className="badge badge-verified">verified</span>.</>,
+                <><b>Share</b> a server to offer it to customers; their apps can then run on it. Un-share to hide it again.</>,
+                <><b>Check the server again</b> re-runs the checklist, for example after you installed Docker.</>,
+              ]}
+              next="Customers can also register their own servers; those cards show the customer's email and cannot be shared with others.">
+              A private server is any Linux machine OmniDeploy can reach over SSH. Apps are built and started on it inside Docker containers.
+            </Help>
+
+            {!backendOk && !demoMode && backendNote}
 
             {servers.length === 0 ? (
-              <Empty icon={<ServerIcon size={42} />} title="No servers registered"
-                subtitle="Enable Demo Mode to load sample servers, or click Add a server to connect a Linux machine." />
+              <Empty icon={<ServerIcon size={36} />} title="No servers yet"
+                subtitle='Click "Add a server" to connect a Linux machine, or turn on Demo mode to load sample servers.'
+                action={<button type="button" className="btn blue" onClick={() => setSrvModal(true)}><Plus size={14} /> Add a server</button>} />
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px,1fr))', gap: 20 }}>
+              <div className="grid">
                 {servers.map(srv => (
                   <ServerCard key={srv.id} server={srv} busy={srvBusy === srv.id}
-                    note={srv.owner_id ? `👤 customer's own server: ${owners[srv.owner_id] || 'customer'}` : srv.is_local ? 'Runs apps on this admin laptop' : undefined}
+                    note={srv.owner_id ? `Customer's own server: ${owners[srv.owner_id] || 'customer'}` : srv.is_local ? 'Runs apps on this admin laptop' : undefined}
                     canManage canShare={!srv.owner_id}
                     onVerify={() => verifyServer(srv)} onShare={v => shareServer(srv, v)} onDelete={() => removeServer(srv)} />
                 ))}
               </div>
             )}
+            <StatusLegend items={SERVER_STATUS_LEGEND} />
           </div>
         )}
 
@@ -845,25 +838,35 @@ export default function App({ customer, onLogout, startInDemo = false }: {
           const dur = (d: DeploymentRec) => d.finished_at ? `${Math.max(1, Math.round((new Date(d.finished_at).getTime() - new Date(d.created_at).getTime()) / 1000))}s` : '';
           return (
             <div className="animate-slide-up">
-              <Header title="Deployment Logs" subtitle="Live pipeline output with progress, folding, search and one-click app links." action={<Badge status={viewStatus} />} />
+              <Header title="Deploy Logs" subtitle="What happened, line by line, while an app was being deployed. The live stream shows the deployment running right now." action={<Badge status={viewStatus} />} />
+
+              <Help id="admin-logs" title="How to read a deploy log"
+                steps={[
+                  <><b>Step 1/4 Fetch</b>: the code is cloned from GitHub onto the server.</>,
+                  <><b>Step 2/4 Build</b>: a container image is built from it (this is where most errors happen - missing files, a failing <code>npm run build</code>).</>,
+                  <><b>Step 3/4 Route</b>: the router learns the app's address.</>,
+                  <><b>Step 4/4 Swap</b>: the new container is started, health-checked and replaces the old one.</>,
+                ]}
+                next="Every past deployment keeps its log: pick one from the list on the left. Live stream = the deployment running right now.">
+              The log is the pipeline's own output. If a deployment fails, the <b>first red line</b> is almost always the cause; the "Show the first error" button jumps to it and "Ask the copilot" explains it in plain words.
+              </Help>
+
               <div style={{ display: 'flex', gap: 18, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                <div style={{ width: 250, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', display: 'flex', alignItems: 'center', gap: 6 }}><History size={12} /> Deployments</div>
-                  <button onClick={() => setSelectedDep('live')} style={{ textAlign: 'left', padding: '9px 12px', borderRadius: 9, cursor: 'pointer', fontSize: 13, fontWeight: 600,
-                    background: live ? 'rgba(0,242,254,0.12)' : 'rgba(255,255,255,0.03)', color: live ? '#00f2fe' : 'var(--text-secondary)', border: `1px solid ${live ? 'rgba(0,242,254,0.4)' : 'var(--glass-border)'}` }}>
-                    <span style={{ display: 'inline-block', width: 7, height: 7, borderRadius: '50%', background: '#34d399', marginRight: 8, animation: 'pulse 2s infinite' }} />Live stream
+                <div style={{ width: 250, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <div className="grp" style={{ paddingLeft: 0 }}>Deployments</div>
+                  <button type="button" className="nav-item" onClick={() => setSelectedDep('live')} aria-current={live ? 'page' : undefined}>
+                    <span className={`status-dot ${deployStatus === 'building' ? 'on' : ''}`} />
+                    <span>Live stream</span>
                   </button>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 'calc(100vh - 330px)', overflowY: 'auto' }}>
-                    {deployments.length === 0 && <div style={{ fontSize: 12, color: 'var(--text-muted)', padding: '8px 4px' }}>No deployments yet.</div>}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4, maxHeight: 'calc(100vh - 330px)', overflowY: 'auto' }}>
+                    {deployments.length === 0 && <div className="hint" style={{ padding: '6px 10px' }}>No deployments yet. Click "Deploy now" on an application.</div>}
                     {deployments.slice(0, 60).map(d => (
-                      <button key={d.id} onClick={() => setSelectedDep(d.id)} style={{ textAlign: 'left', padding: '9px 12px', borderRadius: 9, cursor: 'pointer', fontSize: 12,
-                        background: selectedDep === d.id ? 'rgba(0,242,254,0.10)' : 'rgba(255,255,255,0.03)', color: 'var(--text-secondary)',
-                        border: `1px solid ${selectedDep === d.id ? 'rgba(0,242,254,0.4)' : 'var(--glass-border)'}` }}>
+                      <button key={d.id} type="button" className="nav-item" onClick={() => setSelectedDep(d.id)} aria-current={selectedDep === d.id ? 'page' : undefined} style={{ display: 'block' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 6 }}>
-                          <strong style={{ color: '#f8fafc', fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.app_name}</strong>
+                          <strong style={{ fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{d.app_name}</strong>
                           <Badge status={d.status} />
                         </div>
-                        <div style={{ color: 'var(--text-muted)', marginTop: 4 }}>{relTime(d.created_at)}{dur(d) && ` · ${dur(d)}`}{d.commit_sha && ` · ${d.commit_sha.slice(0, 7)}`}</div>
+                        <div className="hint" style={{ fontWeight: 400 }}>{relTime(d.created_at)}{dur(d) && ` · ${dur(d)}`}{d.commit_sha && ` · ${d.commit_sha.slice(0, 7)}`}</div>
                       </button>
                     ))}
                   </div>
@@ -886,413 +889,260 @@ export default function App({ customer, onLogout, startInDemo = false }: {
 
         {/* ══ COPILOT ══ */}
         {tab === 'copilot' && (
-          <div className="animate-slide-up" style={{ maxWidth: 780 }}>
-            <Header title="Ops Copilot AI" subtitle="Layer 1: instant deterministic log diagnostics. Layer 2: Claude LLM tool execution." />
+          <div className="animate-slide-up" style={{ maxWidth: 820 }}>
+            <Header title="Ops Copilot" subtitle="Paste an error or ask a question in plain words. The copilot explains what went wrong and can run commands for you." />
+
+            <Help id="admin-copilot" title="What can the copilot do?"
+              need={[
+                <>Nothing for the instant answers: common errors (port in use, 502, DNS, permission denied) are recognised locally at no cost.</>,
+                <>For everything else, the AI engine on port 8001 (<code>cd ai-engine &amp;&amp; uvicorn chatbot.main:app --port 8001</code>). It runs a Claude agent that can read your apps and act on them.</>,
+              ]}
+              steps={[
+                <>Type a question or paste the red lines from a deploy log, then press Enter or <b>Send</b>.</>,
+                <>Layer 1 answers instantly if it recognises a known error pattern.</>,
+                <>Otherwise layer 2 (the Claude agent) answers, and can run commands such as <code>scale my-app to 2 replicas</code> or <code>deploy my-portfolio</code>.</>,
+              ]}
+              next="Try one of the example questions below.">
+              Two layers: instant pattern answers for common errors, and a Claude agent for questions and commands.
+            </Help>
 
             {!aiOk && (
-              <Callout color="#f59e0b">
-                AI Engine offline — running in <strong>local fallback mode</strong>. Common errors are still diagnosed instantly. Start AI Engine: <code style={{ fontSize: 11 }}>cd ai-engine && uvicorn chatbot.main:app --port 8001</code>
+              <Callout>
+                The AI engine is offline, so only the instant pattern answers work. Start it with <code>cd ai-engine &amp;&amp; uvicorn chatbot.main:app --port 8001</code> for full answers.
               </Callout>
             )}
 
-            {/* Quick test buttons */}
+            {/* Example questions */}
+            <div className="hint" style={{ marginBottom: 6 }}>Examples - click one to send it:</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
               {[
-                { label: '⚡ EADDRINUSE Error', msg: 'Error: listen EADDRINUSE: address already in use :::3000', c: 'rgba(244,63,94,0.15)', t: '#fb7185', b: 'rgba(244,63,94,0.3)' },
-                { label: '🌐 502 Bad Gateway', msg: '502 Bad Gateway — Traefik upstream timeout', c: 'rgba(245,158,11,0.15)', t: '#fbbf24', b: 'rgba(245,158,11,0.3)' },
-                { label: '🔗 DNS Failed', msg: 'Error: getaddrinfo ENOTFOUND postgres-db', c: 'rgba(127,0,255,0.15)', t: '#c084fc', b: 'rgba(127,0,255,0.3)' },
-                { label: '🚀 Deploy App', msg: apps[0] ? `deploy ${apps[0].name}` : 'deploy my-portfolio', c: 'rgba(0,242,254,0.12)', t: 'var(--accent-cyan)', b: 'rgba(0,242,254,0.3)' },
+                { label: 'Port already in use (EADDRINUSE)', msg: 'Error: listen EADDRINUSE: address already in use :::3000' },
+                { label: '502 Bad Gateway', msg: '502 Bad Gateway — Traefik upstream timeout' },
+                { label: 'DNS lookup failed (ENOTFOUND)', msg: 'Error: getaddrinfo ENOTFOUND postgres-db' },
+                { label: apps[0] ? `Deploy ${apps[0].name}` : 'Deploy my-portfolio', msg: apps[0] ? `deploy ${apps[0].name}` : 'deploy my-portfolio' },
+                { label: apps[0] ? `Scale ${apps[0].name} to 2 replicas` : 'Scale api-service to 2 replicas', msg: apps[0] ? `scale ${apps[0].name} to 2 replicas` : 'scale api-service to 2 replicas' },
               ].map(b => (
-                <button key={b.label} onClick={() => sendChat(b.msg)}
-                  style={{ padding: '6px 12px', background: b.c, color: b.t, border: `1px solid ${b.b}`, borderRadius: 8, fontSize: 12, cursor: 'pointer' }}>
-                  {b.label}
-                </button>
+                <button key={b.label} type="button" className="btn ghost sm" onClick={() => sendChat(b.msg)}>{b.label}</button>
               ))}
             </div>
 
-            <div className="glass-panel" style={{ height: 440, display: 'flex', flexDirection: 'column', padding: 18 }}>
-              <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div className="panel" style={{ display: 'flex', flexDirection: 'column', height: 480 }}>
+              <div className="chat" style={{ flex: 1, overflowY: 'auto' }} aria-live="polite">
                 {chatMsgs.map((m, i) => (
-                  <div key={i} style={{
-                    alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
-                    maxWidth: '88%', padding: '11px 15px', borderRadius: 12,
-                    background: m.sender === 'user' ? 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))' : 'rgba(255,255,255,0.06)',
-                    fontSize: 13, lineHeight: 1.6,
-                  }}>
-                    {m.source && <div style={{ fontSize: 10, textTransform: 'uppercase', color: 'var(--accent-cyan)', marginBottom: 4, letterSpacing: '0.5px' }}>▸ {m.source}</div>}
-                    <div style={{ whiteSpace: 'pre-wrap' }}>{m.text}</div>
+                  <div key={i} className={`msg ${m.sender === 'user' ? 'me' : 'bot'}`}>
+                    <div className="from">{m.sender === 'user' ? 'You' : `Copilot${m.source ? ` · ${nice(m.source)}` : ''}`}</div>
+                    {m.text}
                   </div>
                 ))}
                 {chatBusy && (
-                  <div style={{ alignSelf: 'flex-start', padding: '10px 14px', background: 'rgba(255,255,255,0.05)', borderRadius: 12, fontSize: 12, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 7 }}>
-                    <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> Thinking...
-                  </div>
+                  <div className="msg bot" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)' }}><Spin size={13} /> Thinking...</div>
                 )}
                 <div ref={chatRef} />
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                <input placeholder="Ask Copilot or paste an error log..." value={chatInput}
-                  onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendChat()}
-                  style={{ flex: 1, padding: '10px 14px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13 }} />
-                <button onClick={() => sendChat()} disabled={chatBusy}
-                  style={{ padding: '0 18px', background: 'var(--accent-cyan)', color: '#000', fontWeight: 700, borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                  <Send size={16} />
-                </button>
+                <input className="input" aria-label="Message for the copilot" placeholder="Ask a question or paste an error line..." value={chatInput}
+                  onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendChat()} style={{ flex: 1 }} />
+                <button type="button" className="btn blue" onClick={() => sendChat()} disabled={chatBusy}><Send size={14} /> Send</button>
               </div>
+              <div className="hint">Example: "Why did the deployment of my-portfolio fail?" or paste a line like <code>Error: listen EADDRINUSE</code>. Press Enter to send.</div>
             </div>
           </div>
         )}
 
         {/* ══ CONTAINER HEALTH & ANOMALY MONITOR ══ */}
         {tab === 'metrics' && (
-          <div className="animate-slide-up" style={{ maxWidth: 960 }}>
+          <div className="animate-slide-up" style={{ maxWidth: 1000 }}>
             <Header
-              title="Container Health & Anomaly Detector"
-              subtitle="Unsupervised Isolation Forest ML model analyzing Docker CPU, Memory, Restart, and Network I/O metrics in real time."
+              title="Health Monitor"
+              subtitle="A small machine-learning model watches CPU, memory, restarts and network traffic of every running container and flags the ones that look unusual."
               action={
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <button
-                    onClick={() => setAutoScan(p => !p)}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px',
-                      background: autoScan ? 'rgba(52,211,153,0.2)' : 'rgba(255,255,255,0.06)',
-                      border: `1px solid ${autoScan ? 'rgba(52,211,153,0.4)' : 'var(--glass-border)'}`,
-                      borderRadius: 8, color: autoScan ? '#34d399' : 'var(--text-secondary)',
-                      fontSize: 12, fontWeight: 600, cursor: 'pointer',
-                    }}>
+                <>
+                  <button type="button" className={`btn ghost sm${autoScan ? '' : ''}`} onClick={() => setAutoScan(p => !p)} aria-pressed={autoScan}
+                    title="Scan again every 10 seconds">
                     <RefreshCw size={13} style={{ animation: autoScan ? 'spin 3s linear infinite' : 'none' }} />
-                    {autoScan ? 'Auto-Scan ON (10s)' : 'Auto-Scan OFF'}
+                    {autoScan ? 'Auto-scan: on (every 10 s)' : 'Auto-scan: off'}
                   </button>
-                  <button
-                    onClick={scanContainerHealth}
-                    disabled={healthLoading}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 7, padding: '8px 16px',
-                      background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-blue))',
-                      color: '#000', fontWeight: 700, borderRadius: 8, fontSize: 13, cursor: 'pointer',
-                    }}>
-                    {healthLoading ? <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> : <Activity size={14} />}
-                    Scan Live Containers
+                  <button type="button" className="btn blue sm" onClick={scanContainerHealth} disabled={healthLoading}>
+                    {healthLoading ? <Spin size={14} /> : <Activity size={14} />} Scan live containers
                   </button>
-                </div>
+                </>
               }
             />
 
-            {/* Model & System Status Pills */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 24 }}>
-              <div className="glass-panel" style={{ padding: '14px 18px', borderLeft: '3px solid var(--accent-cyan)' }}>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 0.5 }}>ML Architecture</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#fff', marginTop: 4 }}>Isolation Forest</div>
-                <div style={{ fontSize: 11, color: 'var(--accent-cyan)', marginTop: 2 }}>5 Telemetry Dimensions</div>
-              </div>
+            <Help id="admin-health" title="What does this page show?"
+              need={[<>The AI engine on port 8001; it reads the Docker numbers and runs the model (an Isolation Forest).</>]}
+              steps={[
+                <><b>Scan live containers</b> reads CPU, memory, restarts and network in/out of every running container and sends them to the model.</>,
+                <>The model gives each container an <b>anomaly score</b> between -1 and 0. Lower = more unusual. Below the threshold it is flagged.</>,
+                <>Each container gets one of three statuses: <span className="badge badge-running">healthy</span> normal numbers, <span className="badge badge-building">degrading</span> one number is drifting high, <span className="badge badge-failed">anomalous</span> flagged by the model or over a hard limit.</>,
+                <>The <b>test bench</b> below lets you send made-up numbers to see how the model reacts, without touching a real container.</>,
+              ]}>
+              The anomaly score is the model's opinion of how unusual a container's numbers are compared with normal behaviour. It is not a pass/fail test; read it together with the "main factor" line.
+            </Help>
 
-              <div className="glass-panel" style={{ padding: '14px 18px', borderLeft: '3px solid #34d399' }}>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Healthy Containers</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#34d399', marginTop: 4 }}>
-                  {containerHealth.filter(c => c.status === 'HEALTHY').length}
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>Not flagged by model or limits</div>
-              </div>
-
-              <div className="glass-panel" style={{ padding: '14px 18px', borderLeft: '3px solid #fb7185' }}>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 0.5 }}>Anomalies Flagged</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#fb7185', marginTop: 4 }}>
-                  {containerHealth.filter(c => c.is_anomaly).length}
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>Immediate attention needed</div>
-              </div>
-
-              <div className="glass-panel" style={{ padding: '14px 18px', borderLeft: '3px solid var(--accent-purple)' }}>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 0.5 }}>AI Engine</div>
-                <div style={{ fontSize: 16, fontWeight: 700, color: aiOk ? '#34d399' : '#fb7185', marginTop: 4 }}>
-                  {aiOk ? 'Active (Port 8001)' : 'Offline'}
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>FastAPI + Scikit-Learn</div>
-              </div>
+            {/* Key numbers */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 20 }}>
+              <div className="stat"><div className="v" style={{ fontSize: 18 }}>Isolation Forest</div><div className="l">The model - 5 numbers per container</div></div>
+              <div className="stat"><div className="v">{containerHealth.filter(c => c.status === 'HEALTHY').length}</div><div className="l">Healthy containers</div></div>
+              <div className="stat"><div className="v" style={{ color: containerHealth.some(c => c.is_anomaly) ? 'var(--danger)' : undefined }}>{containerHealth.filter(c => c.is_anomaly).length}</div><div className="l">Flagged as anomalous</div></div>
+              <div className="stat"><div className="v" style={{ fontSize: 18 }}><span className={`status-dot ${aiOk ? 'on' : 'off'}`} />{aiOk ? 'AI engine online' : 'AI engine offline'}</div><div className="l">Port 8001</div></div>
             </div>
 
             {scanMsg && (
-              <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <CheckCircle2 size={13} color="#34d399" />
-                {scanMsg}
+              <div className="hint" style={{ marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <CheckCircle2 size={13} style={{ color: 'var(--ok)' }} /> {scanMsg}
               </div>
             )}
 
             {/* Live Containers List */}
             <div style={{ marginBottom: 28 }}>
-              <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <ServerIcon size={16} color="var(--accent-cyan)" />
-                Live Running Container Telemetry
+              <h3 style={{ fontSize: 17, fontWeight: 600, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <ServerIcon size={16} /> Running containers
               </h3>
 
               {containerHealth.length === 0 ? (
-                <div className="glass-panel" style={{ padding: 24, textAlign: 'center', color: 'var(--text-muted)' }}>
-                  <Activity size={32} style={{ opacity: 0.3, margin: '0 auto 10px' }} />
-                  <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-secondary)' }}>
-                    {healthError || 'No running Docker containers detected on host'}
-                  </div>
-                  <div style={{ fontSize: 12, marginTop: 4, maxWidth: 500, margin: '6px auto 0' }}>
-                    Deploy an app from the Applications tab or use the <strong>Fault Injection Simulator</strong> below to test the Isolation Forest anomaly detector.
-                  </div>
-                </div>
+                <Empty icon={<Activity size={32} />} title={healthError ? 'Nothing to show' : 'No running containers found'}
+                  subtitle={healthError
+                    ? <>{healthError}. Is the AI engine running on port 8001?</>
+                    : <>Click <b>Scan live containers</b> after deploying an app, or use the test bench below to try the model with made-up numbers.</>} />
               ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 16 }}>
+                <div className="grid">
                   {containerHealth.map((c, idx) => (
-                    <div key={idx} className="glass-panel" style={{
-                      padding: 20,
-                      borderColor: c.is_anomaly ? 'rgba(244,63,94,0.45)' : c.status === 'DEGRADING' ? 'rgba(251,191,36,0.45)' : 'rgba(52,211,153,0.35)',
-                      background: c.is_anomaly ? 'rgba(244,63,94,0.05)' : undefined,
-                    }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-                        <div style={{ fontWeight: 700, fontSize: 15, color: '#fff' }}>{c.container_name}</div>
-                        <span style={{
-                          fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 999,
-                          background: c.is_anomaly ? 'rgba(244,63,94,0.2)' : c.status === 'DEGRADING' ? 'rgba(251,191,36,0.2)' : 'rgba(52,211,153,0.2)',
-                          color: c.is_anomaly ? '#fb7185' : c.status === 'DEGRADING' ? '#fbbf24' : '#34d399',
-                          border: `1px solid ${c.is_anomaly ? '#fb7185' : c.status === 'DEGRADING' ? '#fbbf24' : '#34d399'}`,
-                        }}>
-                          {c.is_anomaly ? '⚠️ ANOMALY DETECTED' : c.status === 'DEGRADING' ? '⚠ DEGRADING' : '✓ HEALTHY'}
-                        </span>
+                    <div key={idx} className={healthPanel(c)}>
+                      <div className="panel-head">
+                        <h3 style={{ wordBreak: 'break-all' }}>{c.container_name}</h3>
+                        <span className={`badge ${healthCls(c)}`}>{healthWord(c)}</span>
                       </div>
 
-                      {/* Metrics 4-grid */}
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 14 }}>
-                        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 10px', borderRadius: 8, textAlign: 'center' }}>
-                          <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>CPU</div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: c.cpu_percent > 80 ? '#fb7185' : 'var(--accent-cyan)' }}>{c.cpu_percent}%</div>
-                        </div>
-                        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 10px', borderRadius: 8, textAlign: 'center' }}>
-                          <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>Memory</div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: c.mem_percent > 80 ? '#fb7185' : 'var(--accent-cyan)' }}>{c.mem_percent}%</div>
-                        </div>
-                        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 10px', borderRadius: 8, textAlign: 'center' }}>
-                          <div style={{ fontSize: 10, color: 'var(--text-muted)' }} title="Restarts in the last 10 minutes">Restarts (10m)</div>
-                          <div style={{ fontSize: 14, fontWeight: 700, color: c.restart_count > 3 ? '#fb7185' : '#fff' }}>{c.restart_count}</div>
-                        </div>
-                        <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 10px', borderRadius: 8, textAlign: 'center' }}>
-                          <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>Net In/Out</div>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: '#fff' }}>{c.warming_up ? '…' : `${c.net_in_kb}/${c.net_out_kb} KB/s`}</div>
-                        </div>
+                      {/* The four numbers the model looks at */}
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginBottom: 12 }}>
+                        <div className="stat" style={{ padding: '10px 12px' }}><div className="v" style={{ fontSize: 18, color: c.cpu_percent > 80 ? 'var(--danger)' : undefined }}>{c.cpu_percent}%</div><div className="l">CPU</div></div>
+                        <div className="stat" style={{ padding: '10px 12px' }}><div className="v" style={{ fontSize: 18, color: c.mem_percent > 80 ? 'var(--danger)' : undefined }}>{c.mem_percent}%</div><div className="l">Memory</div></div>
+                        <div className="stat" style={{ padding: '10px 12px' }}><div className="v" style={{ fontSize: 18, color: c.restart_count > 3 ? 'var(--danger)' : undefined }}>{c.restart_count}</div><div className="l" title="Restarts in the last 10 minutes">Restarts (10 min)</div></div>
+                        <div className="stat" style={{ padding: '10px 12px' }}><div className="v" style={{ fontSize: 14 }}>{c.warming_up ? '…' : `${c.net_in_kb}/${c.net_out_kb}`}</div><div className="l">Net in/out KB/s</div></div>
                       </div>
 
-                      {/* Anomaly diagnosis details */}
-                      <div style={{ background: 'rgba(0,0,0,0.4)', borderRadius: 8, padding: '10px 12px', fontSize: 12 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                          <span style={{ color: 'var(--text-muted)' }}>Isolation Forest Score:</span>
-                          <span style={{ fontWeight: 700, color: c.is_anomaly ? '#fb7185' : c.status === 'DEGRADING' ? '#fbbf24' : '#34d399' }}>
-                            {c.score ?? 'n/a'}{c.threshold != null && <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}> (flagged below {c.threshold})</span>}
-                          </span>
-                        </div>
-                        {c.is_anomaly && c.detected_by && (
-                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                            <span style={{ color: 'var(--text-muted)' }}>Detected by:</span>
-                            <span style={{ fontWeight: 600 }}>{c.detected_by.replace(/_/g, ' ')}</span>
-                          </div>
-                        )}
-                        {c.dominant_factor && (
-                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span style={{ color: 'var(--text-muted)' }}>Dominant Fault Factor:</span>
-                            <span style={{ fontWeight: 700, color: '#fbbf24', textTransform: 'uppercase' }}>{c.dominant_factor.replace(/_/g, ' ')}</span>
-                          </div>
-                        )}
+                      {/* What the model said */}
+                      <div className="kv" style={{ marginBottom: 0 }}>
+                        <div><Gauge size={13} /> Anomaly score: <b>{c.score ?? 'n/a'}</b>{c.threshold != null && <span>(flagged below {c.threshold})</span>}</div>
+                        {c.is_anomaly && c.detected_by && <div><AlertTriangle size={13} /> Detected by: <b>{nice(c.detected_by)}</b></div>}
+                        {c.dominant_factor && <div><Activity size={13} /> Main factor: <b>{nice(c.dominant_factor)}</b></div>}
+                        {c.message && <div style={{ display: 'block' }}>{c.message}</div>}
                       </div>
                     </div>
                   ))}
                 </div>
               )}
+              <StatusLegend items={[
+                { cls: 'badge-running', label: 'healthy', meaning: 'normal numbers' },
+                { cls: 'badge-building', label: 'degrading', meaning: 'one number is drifting high; keep an eye on it' },
+                { cls: 'badge-failed', label: 'anomalous', meaning: 'flagged by the model or over a hard limit' },
+              ]} />
             </div>
 
-            {/* ══ VIVA DEMO / FAULT INJECTION SIMULATOR ══ */}
-            <div className="glass-panel" style={{ padding: 26, border: '1px solid rgba(0,242,254,0.25)', marginBottom: 28 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            {/* ══ FAULT INJECTION TEST BENCH ══ */}
+            <div className="panel" style={{ marginBottom: 20 }}>
+              <div className="panel-head">
                 <div>
-                  <h3 style={{ fontSize: 17, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <FlaskConical size={18} color="var(--accent-cyan)" />
-                    Interactive Fault Injection Test Bench (Viva Demo)
-                  </h3>
-                  <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4 }}>
-                    Test how the Isolation Forest model classifies custom container telemetry & detects faults like Memory Leaks, CPU Spikes, Crash Loops, and Net Floods.
-                  </p>
+                  <h3 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><FlaskConical size={17} /> Fault-injection test bench</h3>
+                  <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>Send made-up numbers to the model and see what it says. Nothing is changed on any real container.</p>
                 </div>
               </div>
 
-              {/* Preset Scenario Buttons */}
-              <div style={{ marginBottom: 18 }}>
-                <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: 8, letterSpacing: 0.5 }}>Quick Fault Presets:</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                  {faultPresets.map(preset => (
-                    <button
-                      key={preset.label}
-                      onClick={() => setInjectForm(p => ({ ...p, ...preset.values }))}
-                      style={{
-                        padding: '6px 14px',
-                        background: 'rgba(255,255,255,0.06)',
-                        border: '1px solid var(--glass-border)',
-                        borderRadius: 8,
-                        color: '#fff',
-                        fontSize: 12,
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                      }}>
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
+              <Help id="admin-health-bench" title="How to use the test bench"
+                steps={[
+                  <>Pick a preset (green dot = should come back healthy, red dot = should be flagged), or type your own numbers.</>,
+                  <>Click <b>Run the check</b>. The numbers are sent to the AI engine exactly as a real scan would send them.</>,
+                  <>Read the verdict: the status, the score and the main factor the model blamed.</>,
+                ]}>
+                Useful for a demo: a memory leak looks like memory at 90%+, a crash loop like many restarts in 10 minutes, a network flood like thousands of KB/s.
+              </Help>
+
+              <div className="hint" style={{ marginBottom: 6 }}>Presets:</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+                {faultPresets.map(preset => (
+                  <button key={preset.label} type="button" className="btn ghost sm" onClick={() => setInjectForm(p => ({ ...p, ...preset.values }))}>
+                    <span className={`status-dot ${preset.ok ? 'on' : 'off'}`} />{preset.label}
+                  </button>
+                ))}
               </div>
 
-              {/* Sliders / Inputs */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 14, marginBottom: 20 }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5 }}>Container Name</label>
-                  <input
-                    value={injectForm.container_name}
-                    onChange={e => setInjectForm(p => ({ ...p, container_name: e.target.value }))}
-                    style={{ width: '100%', padding: '8px 12px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13 }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5 }}>CPU Usage: <strong style={{ color: 'var(--accent-cyan)' }}>{injectForm.cpu_percent}%</strong></label>
-                  <input
-                    type="range" min="0" max="100" step="1"
-                    value={injectForm.cpu_percent}
-                    onChange={e => setInjectForm(p => ({ ...p, cpu_percent: e.target.value }))}
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5 }}>Memory Usage: <strong style={{ color: 'var(--accent-cyan)' }}>{injectForm.mem_percent}%</strong></label>
-                  <input
-                    type="range" min="0" max="100" step="1"
-                    value={injectForm.mem_percent}
-                    onChange={e => setInjectForm(p => ({ ...p, mem_percent: e.target.value }))}
-                    style={{ width: '100%' }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5 }}>Restarts (last 10 min)</label>
-                  <input
-                    type="number" min="0" max="100"
-                    value={injectForm.restart_count}
-                    onChange={e => setInjectForm(p => ({ ...p, restart_count: e.target.value }))}
-                    style={{ width: '100%', padding: '8px 12px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13 }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5 }}>Net In (KB/s)</label>
-                  <input
-                    type="number" min="0"
-                    value={injectForm.net_in_kb}
-                    onChange={e => setInjectForm(p => ({ ...p, net_in_kb: e.target.value }))}
-                    style={{ width: '100%', padding: '8px 12px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13 }}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: 11, color: 'var(--text-muted)', marginBottom: 5 }}>Net Out (KB/s)</label>
-                  <input
-                    type="number" min="0"
-                    value={injectForm.net_out_kb}
-                    onChange={e => setInjectForm(p => ({ ...p, net_out_kb: e.target.value }))}
-                    style={{ width: '100%', padding: '8px 12px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13 }}
-                  />
-                </div>
+              <div className="form-grid">
+                <Field label="Container name" value={injectForm.container_name} onChange={v => setInjectForm(p => ({ ...p, container_name: v }))} mono
+                  hint="Any name; it is only echoed back. Example: demo-container" />
+                <label className="field">
+                  <span className="lbl"><span>CPU usage</span><span>{injectForm.cpu_percent}%</span></span>
+                  <input type="range" min="0" max="100" step="1" value={injectForm.cpu_percent} onChange={e => setInjectForm(p => ({ ...p, cpu_percent: e.target.value }))} style={{ width: '100%' }} />
+                  <div className="hint">0 to 100%. Normal is under 50%; 95% looks like a CPU spike.</div>
+                </label>
+                <label className="field">
+                  <span className="lbl"><span>Memory usage</span><span>{injectForm.mem_percent}%</span></span>
+                  <input type="range" min="0" max="100" step="1" value={injectForm.mem_percent} onChange={e => setInjectForm(p => ({ ...p, mem_percent: e.target.value }))} style={{ width: '100%' }} />
+                  <div className="hint">0 to 100%. Over 85% looks like a memory leak.</div>
+                </label>
+                <Field label="Restarts in the last 10 minutes" type="number" min={0} max={100} value={injectForm.restart_count} onChange={v => setInjectForm(p => ({ ...p, restart_count: v }))}
+                  hint="0 is normal. 12 looks like a crash loop." />
+                <Field label="Network in (KB/s)" type="number" min={0} value={injectForm.net_in_kb} onChange={v => setInjectForm(p => ({ ...p, net_in_kb: v }))}
+                  hint="Data coming in. Example: 150. Thousands look like a flood." />
+                <Field label="Network out (KB/s)" type="number" min={0} value={injectForm.net_out_kb} onChange={v => setInjectForm(p => ({ ...p, net_out_kb: v }))}
+                  hint="Data going out. Example: 80." />
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 16 }}>
-                <button
-                  onClick={runFaultInject}
-                  disabled={injecting}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 8, padding: '10px 24px',
-                    background: 'linear-gradient(135deg, var(--accent-cyan), var(--accent-blue))',
-                    color: '#000', fontWeight: 700, borderRadius: 10, cursor: 'pointer',
-                  }}>
-                  {injecting ? <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Cpu size={16} />}
-                  Run Anomaly Inference
+              <div className="form-actions">
+                <button type="button" className="btn blue" onClick={runFaultInject} disabled={injecting}>
+                  {injecting ? <Spin size={15} /> : <Cpu size={15} />} Run the check
                 </button>
               </div>
 
-              {/* Inference Result Card */}
+              {/* Verdict */}
               {injectResult && (
-                <div style={{
-                  padding: 20,
-                  borderRadius: 12,
-                  background: injectResult.is_anomaly ? 'rgba(244,63,94,0.12)' : 'rgba(52,211,153,0.12)',
-                  border: `1px solid ${injectResult.is_anomaly ? 'rgba(244,63,94,0.4)' : 'rgba(52,211,153,0.4)'}`,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexWrap: 'wrap',
-                  gap: 16,
-                }}>
+                <div className={`${healthPanel(injectResult)}`} style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }} role="status">
                   <div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: 1 }}>
-                      Inference Verdict · Container: <strong>{injectResult.container_name}</strong>
+                    <div className="hint">Verdict for <b>{injectResult.container_name}</b></div>
+                    <div style={{ fontSize: 22, fontWeight: 600, marginTop: 4, display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span className={`badge ${healthCls(injectResult)}`}>{healthWord(injectResult)}</span>
+                      {injectResult.is_anomaly ? 'The model flagged this container' : injectResult.status === 'DEGRADING' ? 'Drifting, not flagged yet' : 'Looks normal'}
                     </div>
-                    <div style={{
-                      fontSize: 26, fontWeight: 800, marginTop: 4,
-                      color: injectResult.is_anomaly ? '#fb7185' : '#34d399',
-                    }}>
-                      {injectResult.is_anomaly ? '🚨 ANOMALY DETECTED' : injectResult.status === 'DEGRADING' ? '⚠️ DEGRADING' : '✅ HEALTHY CONTAINER'}
-                    </div>
-                    {injectResult.message && <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 4, maxWidth: 520 }}>{injectResult.message}</div>}
+                    {injectResult.message && <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4, maxWidth: 520 }}>{injectResult.message}</div>}
                     {injectResult.dominant_factor && (
-                      <div style={{ fontSize: 13, color: '#fbbf24', marginTop: 4 }}>
-                        Primary Diagnostic Cause: <strong>{injectResult.dominant_factor.replace(/_/g, ' ').toUpperCase()}</strong>
-                      </div>
+                      <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4 }}>Main factor: <b style={{ color: 'var(--text-primary)' }}>{nice(injectResult.dominant_factor)}</b></div>
                     )}
                   </div>
-
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Isolation Forest Anomaly Score</div>
-                    <div style={{ fontSize: 24, fontWeight: 800, color: '#fff', marginTop: 2 }}>{injectResult.score ?? 'n/a'}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 2 }}>
-                      {injectResult.threshold != null && <>Flagged below <strong>{injectResult.threshold}</strong> · </>}
-                      {injectResult.detected_by ? <>Detected by: <strong>{injectResult.detected_by.replace('_', ' ')}</strong> · </> : null}
-                      Mode: <strong>{injectResult.confidence}</strong>
+                  <div className="stat" style={{ textAlign: 'right' }}>
+                    <div className="v">{injectResult.score ?? 'n/a'}</div>
+                    <div className="l">
+                      Anomaly score (-1 to 0, lower = more unusual)
+                      {injectResult.threshold != null && <><br />Flagged below {injectResult.threshold}</>}
+                      {injectResult.detected_by ? <><br />Detected by: {nice(injectResult.detected_by)}</> : null}
+                      <br />Mode: {injectResult.confidence}
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* ══ TRAFFIC FORECASTER (LEGACY TAB ACCORDION) ══ */}
-            <details className="glass-panel" style={{ padding: '16px 20px', cursor: 'pointer' }}>
-              <summary style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <TrendingUp size={15} color="var(--accent-purple)" />
-                Optional: Traffic Load Forecaster (Time-Series Random Forest)
+            {/* ══ TRAFFIC FORECASTER (optional) ══ */}
+            <details className="panel">
+              <summary style={{ fontWeight: 600, fontSize: 14, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                <TrendingUp size={15} /> Optional: traffic forecast (predicts how many copies an app will need)
               </summary>
               <div style={{ marginTop: 18 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14, marginBottom: 16 }}>
-                  {[['current', 'Current Rate (t)'], ['lag1', 'Lag 1m (t-1)'], ['lag5', 'Lag 5m (t-5)'], ['lag15', 'Lag 15m (t-15)']].map(([k, label]) => (
-                    <div key={k} style={{ background: 'rgba(0,0,0,0.3)', padding: '10px 14px', borderRadius: 8 }}>
-                      <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 4 }}>{label}</div>
-                      <input
-                        type="number"
-                        value={(traffic as any)[k]}
-                        onChange={e => setTraffic(p => ({ ...p, [k]: e.target.value }))}
-                        style={{ width: '100%', background: 'transparent', border: 'none', color: 'var(--accent-cyan)', fontSize: 20, fontWeight: 700 }}
-                      />
-                      <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>req/min</div>
-                    </div>
+                <p className="hint" style={{ marginBottom: 12 }}>Type the requests per minute now and 1, 5 and 15 minutes ago. The model predicts the next value and says whether to add or remove copies. Each copy is assumed to handle 120 requests per minute.</p>
+                <div className="form-grid">
+                  {[['current', 'Requests per minute now', 'Example: 420'], ['lag1', '1 minute ago', 'Example: 390'], ['lag5', '5 minutes ago', 'Example: 310'], ['lag15', '15 minutes ago', 'Example: 220']].map(([k, label, hint]) => (
+                    <Field key={k} label={label} type="number" min={0} value={(traffic as any)[k]} onChange={v => setTraffic(p => ({ ...p, [k]: v }))} hint={hint} />
                   ))}
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 14 }}>
-                  <button onClick={runPredict} disabled={predicting}
-                    style={{ padding: '8px 18px', background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1px solid var(--glass-border)', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer' }}>
-                    {predicting ? 'Forecasting...' : 'Run Traffic Forecast'}
+                <div className="form-actions">
+                  <button type="button" className="btn ghost" onClick={runPredict} disabled={predicting}>
+                    {predicting ? <><Spin size={14} /> Forecasting...</> : <><TrendingUp size={14} /> Run the forecast</>}
                   </button>
                 </div>
                 {prediction && (
-                  <div style={{ padding: 14, background: 'rgba(0,242,254,0.06)', borderRadius: 8, border: '1px solid rgba(0,242,254,0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Predicted Traffic: </span>
-                      <strong style={{ color: 'var(--accent-cyan)' }}>{prediction.predicted} req/min</strong>
-                    </div>
-                    <div>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Decision: </span>
-                      <strong style={{ color: prediction.decision === 'SCALE_UP' ? '#34d399' : '#fb7185' }}>{prediction.decision}</strong>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 10 }}>Target Replicas: <strong>{prediction.replicas}</strong></span>
-                    </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginTop: 14 }} role="status">
+                    <div className="stat"><div className="v">{prediction.predicted}</div><div className="l">Predicted requests per minute</div></div>
+                    <div className="stat"><div className="v" style={{ fontSize: 18 }}>{prediction.decision === 'SCALE_UP' ? 'Add copies' : prediction.decision === 'SCALE_DOWN' ? 'Remove copies' : 'Keep as is'}</div><div className="l">Decision ({prediction.decision})</div></div>
+                    <div className="stat"><div className="v">{prediction.replicas}</div><div className="l">Copies recommended</div></div>
                   </div>
                 )}
               </div>
@@ -1318,32 +1168,31 @@ export default function App({ customer, onLogout, startInDemo = false }: {
       )}
 
       {delTarget && (
-        <Modal title={`Delete “${delTarget.name}”?`} onClose={() => !delBusy && setDelTarget(null)}>
-          <div style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 14 }}>
-            This permanently removes the application:
-            <ul style={{ margin: '8px 0 0 18px' }}>
-              <li>stops and deletes all its containers (including replicas)</li>
-              <li>deletes its built Docker images and the cloned source code</li>
-              <li>frees its port <code>{delTarget.host_port ?? '–'}</code> and removes it from the dashboard</li>
-            </ul>
-            <div style={{ marginTop: 8 }}>Past deployment logs are kept. This cannot be undone.</div>
-          </div>
+        <Modal title={`Remove “${delTarget.name}”?`} onClose={() => !delBusy && setDelTarget(null)}>
+          <Help id="admin-delete" title="What happens when you remove an application"
+            steps={[
+              <>All its containers are stopped and deleted (every copy).</>,
+              <>Its built images and the cloned source code are deleted from the server.</>,
+              <>Its port (<code>{delTarget.host_port ?? '–'}</code>) is freed and the card disappears from the list.</>,
+            ]}
+            next="Past deployment logs are kept. The GitHub repository is not touched. This cannot be undone.">
+            This removes the application from the platform and from the server it runs on.
+          </Help>
           {delErr && (
-            <div style={{ color: '#fb7185', fontSize: 12, marginBottom: 12, lineHeight: 1.6 }}>⚠️ {delErr}
+            <div className="note note-error" role="alert">
+              {delErr}
               {/force=true/.test(delErr) && (
                 <div style={{ marginTop: 8 }}>
-                  <button onClick={() => deleteApp(true)} disabled={delBusy} style={{ padding: '6px 12px', background: 'rgba(244,63,94,0.2)', border: '1px solid rgba(244,63,94,0.5)', borderRadius: 8, color: '#fb7185', fontSize: 12, cursor: 'pointer' }}>
-                    Force delete (remove the record only)
-                  </button>
+                  <button type="button" className="btn danger sm" onClick={() => deleteApp(true)} disabled={delBusy}>Force remove (delete the record only)</button>
+                  <div className="hint">Use this when the server is gone and the containers cannot be reached any more.</div>
                 </div>
               )}
             </div>
           )}
-          <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
-            <button onClick={() => setDelTarget(null)} disabled={delBusy} style={{ padding: '9px 16px', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', borderRadius: 8, color: 'var(--text-secondary)', fontSize: 13, cursor: 'pointer' }}>Cancel</button>
-            <button onClick={() => deleteApp(false)} disabled={delBusy}
-              style={{ padding: '9px 20px', background: '#e11d48', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 7, opacity: delBusy ? 0.7 : 1 }}>
-              {delBusy ? <><Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> Deleting…</> : <><Trash2 size={14} /> Delete application</>}
+          <div className="form-actions">
+            <button type="button" className="btn ghost" onClick={() => setDelTarget(null)} disabled={delBusy}>Cancel</button>
+            <button type="button" className="btn danger solid" onClick={() => deleteApp(false)} disabled={delBusy}>
+              {delBusy ? <><Spin size={14} /> Removing…</> : <><Trash2 size={14} /> Remove application</>}
             </button>
           </div>
         </Modal>

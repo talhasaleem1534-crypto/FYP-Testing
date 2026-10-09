@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, CheckCircle2, FileText, Loader2, Play } from 'lucide-react';
+import { ArrowLeft, FileText, GitBranch, Globe, Hash, Link2, Loader2, Play, Server as ServerIcon, Tag, Terminal } from 'lucide-react';
 import { AppTypeInfo, FALLBACK_APP_TYPES, loadAppTypes, usesStartCommand } from './lib/appTypes';
+import { Help } from './components/ui';
 
 export interface NewAppPayload {
   name: string; repo_url: string; branch: string; domain: string; port: number;
   server_id: string; app_type: string; start_command?: string;
 }
 
-const CATEGORY_COLOR: Record<string, string> = {
-  Python: '#facc15', JavaScript: '#4facfe', Go: '#22d3ee', Other: '#a78bfa',
-};
 const CATEGORY_ORDER = ['Python', 'JavaScript', 'Go', 'Other'];
 
 /**
@@ -59,35 +57,39 @@ export default function NewAppWizard({ servers, useBackend, onCreate, onCancel }
     } finally { setBusy(null); }
   };
 
-  const input: React.CSSProperties = {
-    width: '100%', padding: '10px 14px', background: 'rgba(0,0,0,0.4)', border: '1px solid var(--glass-border)',
-    borderRadius: 8, color: '#fff', fontSize: 13, marginTop: 5,
-  };
-  const label: React.CSSProperties = { display: 'block', fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 14 };
+  /** Outline a required field in red once the user tried to submit without it. */
+  const missing = (k: 'name' | 'repo_url' | 'domain') => err.startsWith('App name, Git repository') && !form[k].trim();
+
+  const steps = (at: 1 | 2) => (
+    <div className="steps">
+      <span className={`step ${at === 1 ? 'on' : 'done'}`}><span className="n">1</span> What type of app?</span>
+      <span className={`step ${at === 2 ? 'on' : ''}`}><span className="n">2</span> Where is the code, where should it run?</span>
+    </div>
+  );
 
   // ── Step 1: pick the type ──────────────────────────────────────────────────
   if (!type) {
     const groups = CATEGORY_ORDER.map(c => ({ c, items: types.filter(t => t.category === c) })).filter(g => g.items.length);
     return (
       <div>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 18 }}>
-          <strong style={{ color: 'var(--text-primary)' }}>Step 1 of 2 — What type of app is this?</strong><br />
-          We use your answer to choose the right language version, install your dependencies and start the app.
-        </p>
-        <div style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: 4 }}>
+        {steps(1)}
+        <Help id="wizard-type" title="Step 1 of 2 — What type of app is this?"
+          need={['The language or framework your app is written in (Flask, Node.js, plain HTML...). Look at the files in your repository if unsure.']}
+          next={<>If you are not sure, pick <strong>"Not sure - detect it for me"</strong>; we look at your files and choose for you. You can change the type at any time.</>}>
+          Your answer decides which language version we install, how your dependencies (the libraries your code imports) are installed,
+          which port your app is expected to listen on, and which command starts it. Each card says which file your repository must contain.
+        </Help>
+        <div style={{ maxHeight: '55vh', overflowY: 'auto', paddingRight: 4 }}>
           {groups.map(({ c, items }) => (
             <div key={c} style={{ marginBottom: 16 }}>
-              <div style={{ fontSize: 11, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8 }}>{c}</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10 }}>
+              <div className="eyebrow" style={{ marginBottom: 8 }}>{c}</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 10 }}>
                 {items.map(t => (
-                  <button key={t.id} onClick={() => pick(t)} data-type={t.id}
-                    style={{ textAlign: 'left', padding: 14, background: 'rgba(255,255,255,0.03)', border: '1px solid var(--glass-border)', borderLeft: `3px solid ${CATEGORY_COLOR[t.category] || '#94a3b8'}`, borderRadius: 10, color: 'var(--text-primary)' }}>
-                    <div style={{ fontWeight: 600, fontSize: 14 }}>{t.label}</div>
-                    <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4, lineHeight: 1.45 }}>{t.description}</div>
+                  <button key={t.id} type="button" className="choice" onClick={() => pick(t)} data-type={t.id} aria-pressed={false}>
+                    <div className="t">{t.label}</div>
+                    <div className="d">{t.description}</div>
                     {t.required_files.length > 0 && (
-                      <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 8, display: 'flex', alignItems: 'center', gap: 5 }}>
-                        <FileText size={11} /> needs {t.required_files.join(' or ')}
-                      </div>
+                      <div className="f"><FileText size={11} /> needs {t.required_files.join(' or ')}</div>
                     )}
                   </button>
                 ))}
@@ -95,8 +97,8 @@ export default function NewAppWizard({ servers, useBackend, onCreate, onCancel }
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
-          <button onClick={onCancel} style={{ padding: '9px 16px', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', borderRadius: 8, color: 'var(--text-secondary)', fontSize: 13 }}>Cancel</button>
+        <div className="form-actions">
+          <button type="button" className="btn ghost" onClick={onCancel}>Cancel</button>
         </div>
       </div>
     );
@@ -104,77 +106,115 @@ export default function NewAppWizard({ servers, useBackend, onCreate, onCancel }
 
   // ── Step 2: details ────────────────────────────────────────────────────────
   const showStart = usesStartCommand(type.id);
+  const chosen = servers.find(s => s.id === (form.server_id || servers[0]?.id));
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-        <button onClick={() => setType(null)} title="Choose another type"
-          style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 10px', background: 'rgba(255,255,255,0.06)', borderRadius: 8, color: 'var(--text-secondary)', fontSize: 12 }}>
+      {steps(2)}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
+        <button type="button" className="btn ghost sm" onClick={() => setType(null)} title="Choose another type">
           <ArrowLeft size={13} /> Change type
         </button>
         <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
-          <strong style={{ color: 'var(--text-primary)' }}>Step 2 of 2</strong> — {type.label}
+          <strong style={{ color: 'var(--text-primary)' }}>Step 2 of 2</strong> — you chose <span className="chip">{type.label}</span>
         </div>
       </div>
 
       {/* What the platform will do for this type */}
-      <div style={{ background: 'rgba(0,242,254,0.06)', border: '1px solid rgba(0,242,254,0.2)', borderRadius: 10, padding: '12px 14px', marginBottom: 18, fontSize: 13 }}>
-        <div style={{ fontWeight: 600, marginBottom: 6 }}>What we will do</div>
-        <ol style={{ margin: '0 0 0 18px', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-          {type.steps.map(s => <li key={s}>{s}</li>)}
-        </ol>
-        {(type.required_files.length > 0 || type.tips.length > 0) && (
-          <div style={{ marginTop: 8, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            {type.required_files.length > 0 && (
-              <div style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
-                <CheckCircle2 size={13} color="#34d399" style={{ marginTop: 3, flexShrink: 0 }} />
-                <span>Your repository must contain <code>{type.required_files.join(' or ')}</code></span>
-              </div>
-            )}
-            {type.tips.map(t => (
-              <div key={t} style={{ display: 'flex', gap: 6, alignItems: 'flex-start' }}>
-                <CheckCircle2 size={13} color="#34d399" style={{ marginTop: 3, flexShrink: 0 }} /><span>{t}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <Help id="wizard-details" title="What we will do with your code"
+        steps={[
+          'Download (clone) your repository from GitHub using git.',
+          ...type.steps,
+          'Give you a link to open the running app.',
+        ]}
+        need={[
+          ...(type.required_files.length > 0 ? [<>Your repository must contain <code>{type.required_files.join(' or ')}</code>.</>] : []),
+          ...type.tips,
+          'The repository must be public (no password needed to download it).',
+        ]}
+        next="Fill in the form below. Fields marked with * are required; the others already have a sensible value.">
+        OmniDeploy fetches your code, builds it into a container (a small box that runs the same way on every machine) and starts it on the server you pick.
+      </Help>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', columnGap: 14 }}>
-        <label style={label}>App name<input style={input} placeholder="e.g. my-flask-app" value={form.name} onChange={set('name')} /></label>
-        <label style={label}>Branch<input style={input} placeholder="main" value={form.branch} onChange={set('branch')} /></label>
+      <div className="form-grid">
+        <label className="field">
+          <span className="lbl"><span>App name<span className="req">*</span></span></span>
+          <span className="input-wrap"><span className="ico"><Tag size={15} /></span>
+            <input className={`input${missing('name') ? ' bad' : ''}`} placeholder="e.g. my-flask-app" value={form.name} onChange={set('name')} />
+          </span>
+          <div className="hint">Letters, numbers and dashes, e.g. <code>my-flask-app</code>. Used in the container name and the app's link.</div>
+        </label>
+        <label className="field">
+          <span className="lbl"><span>Branch</span></span>
+          <span className="input-wrap"><span className="ico"><GitBranch size={15} /></span>
+            <input className="input" placeholder="main" value={form.branch} onChange={set('branch')} />
+          </span>
+          <div className="hint">A branch is a named version of your code in git. Usually <code>main</code> (or <code>master</code> on older repositories).</div>
+        </label>
       </div>
-      <label style={label}>Git repository URL<input style={input} placeholder="https://github.com/you/your-repo" value={form.repo_url} onChange={set('repo_url')} /></label>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', columnGap: 14 }}>
-        <label style={label}>Domain<input style={input} placeholder="app.example.com or app.local" value={form.domain} onChange={set('domain')} /></label>
-        <label style={label}>Port your app listens on<input style={input} type="number" value={form.port} onChange={set('port')} /></label>
+      <label className="field">
+        <span className="lbl"><span>Git repository URL<span className="req">*</span></span></span>
+        <span className="input-wrap"><span className="ico"><Link2 size={15} /></span>
+          <input className={`input${missing('repo_url') ? ' bad' : ''}`} placeholder="https://github.com/you/your-repo" value={form.repo_url} onChange={set('repo_url')} />
+        </span>
+        <div className="hint">The link of your public GitHub repository, copied from the browser address bar, e.g. <code>https://github.com/you/your-repo</code>.</div>
+      </label>
+      <div className="form-grid">
+        <label className="field">
+          <span className="lbl"><span>Domain<span className="req">*</span></span></span>
+          <span className="input-wrap"><span className="ico"><Globe size={15} /></span>
+            <input className={`input${missing('domain') ? ' bad' : ''}`} placeholder="app.example.com or app.local" value={form.domain} onChange={set('domain')} />
+          </span>
+          <div className="hint">A name for your app, e.g. <code>myapp.local</code>. The router uses it to send visitors to the right app. You still get a direct link with a port.</div>
+        </label>
+        <label className="field">
+          <span className="lbl"><span>Port your app listens on</span></span>
+          <span className="input-wrap"><span className="ico"><Hash size={15} /></span>
+            <input className="input" type="number" value={form.port} onChange={set('port')} />
+          </span>
+          <div className="hint">The port (numbered door) your code listens on inside the container. Pre-filled with the usual value for {type.label} (<code>{type.default_port}</code>); change it only if your code uses another one.</div>
+        </label>
       </div>
       {showStart && (
-        <label style={label}>Start command <span style={{ textTransform: 'none' }}>(leave empty for the default)</span>
-          <input style={{ ...input, fontFamily: 'var(--font-mono)' }} placeholder={type.default_start_command || 'Detected automatically'}
-            value={form.start_command} onChange={set('start_command')} />
+        <label className="field">
+          <span className="lbl"><span>Start command (optional)</span></span>
+          <span className="input-wrap"><span className="ico"><Terminal size={15} /></span>
+            <input className="input" style={{ fontFamily: 'var(--font-mono)' }} placeholder={type.default_start_command || 'Detected automatically'}
+              value={form.start_command} onChange={set('start_command')} />
+          </span>
+          <div className="hint">The command that starts your app. Leave it empty to use the default{type.default_start_command ? <>: <code>{type.default_start_command}</code></> : ''}.</div>
         </label>
       )}
       {servers.length > 0 && (
-        <label style={label}>Deploy to server
-          <select style={input} value={form.server_id || servers[0].id} onChange={set('server_id')}>
-            {servers.map(s => <option key={s.id} value={s.id}>{s.name} ({s.host}){s.status && s.status !== 'verified' ? ' - not ready' : ''}</option>)}
-          </select>
+        <label className="field">
+          <span className="lbl"><span>Deploy to server</span></span>
+          <span className="input-wrap"><span className="ico"><ServerIcon size={15} /></span>
+            <select className="input" value={form.server_id || servers[0].id} onChange={set('server_id')}>
+              {servers.map(s => <option key={s.id} value={s.id}>{s.name} ({s.host}){s.status && s.status !== 'verified' ? ' - not ready' : ''}</option>)}
+            </select>
+          </span>
+          <div className="hint">
+            Which machine runs your app. {chosen && chosen.status && chosen.status !== 'verified'
+              ? 'This server is marked "not ready": the deploy will fail until it passes its checks.'
+              : 'Pick a server marked verified; "not ready" servers cannot run apps yet.'}
+          </div>
         </label>
       )}
+      {servers.length === 0 && (
+        <div className="note note-warn">There is no server to deploy to yet. Add a server first (section "Where your apps run"), then come back here.</div>
+      )}
 
-      {err && <div style={{ color: '#fb7185', fontSize: 12, marginBottom: 12, lineHeight: 1.5 }}>⚠️ {err}</div>}
+      {err && <div className="note note-error" role="alert">{err} {err.startsWith('App name, Git repository') ? 'Fill in the fields marked with * and try again.' : ''}</div>}
 
-      <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-        <button onClick={onCancel} disabled={!!busy} style={{ padding: '9px 16px', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--glass-border)', borderRadius: 8, color: 'var(--text-secondary)', fontSize: 13 }}>Cancel</button>
-        <button onClick={() => submit(false)} disabled={!!busy}
-          style={{ padding: '9px 16px', background: 'rgba(255,255,255,0.08)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>
+      <div className="form-actions" style={{ alignItems: 'center' }}>
+        <button type="button" className="btn ghost" onClick={onCancel} disabled={!!busy}>Cancel</button>
+        <button type="button" className="btn ghost" onClick={() => submit(false)} disabled={!!busy} title="Save the app without deploying it">
           {busy === 'create' && <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} />} Create only
         </button>
-        <button onClick={() => submit(true)} disabled={!!busy}
-          style={{ padding: '9px 20px', background: 'linear-gradient(135deg,var(--accent-blue),var(--accent-purple))', color: '#fff', borderRadius: 8, fontWeight: 600, fontSize: 13, display: 'flex', alignItems: 'center', gap: 7 }}>
+        <button type="button" className="btn blue" onClick={() => submit(true)} disabled={!!busy}>
           {busy === 'deploy' ? <Loader2 size={14} style={{ animation: 'spin 1s linear infinite' }} /> : <Play size={14} />} Create &amp; deploy
         </button>
       </div>
+      <div className="hint" style={{ textAlign: 'right', marginTop: 6 }}>"Create only" saves the app without deploying it. "Create &amp; deploy" saves it and starts the build right away.</div>
     </div>
   );
 }

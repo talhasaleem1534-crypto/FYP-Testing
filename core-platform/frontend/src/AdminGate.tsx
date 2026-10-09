@@ -14,7 +14,12 @@ export default function AdminGate() {
   const [status, setStatus] = useState<{ admin_exists: boolean; on_admin_laptop: boolean } | null>(null);
   const backendOk = useBackendOk();
 
+  // /admin?demo opens the dashboard with sample data straight away (no backend needed).
+  const demoLink = typeof window !== 'undefined' && /(^|[?&])demo(=|&|$)/.test(window.location.search || '');
+  const demoAdmin: Customer = { id: 'demo', name: 'Demo admin', email: 'demo mode', role: 'admin', demo: true };
+
   useEffect(() => {
+    if (demoLink) { setAdmin(demoAdmin); setChecking(false); return; }
     Promise.all([currentUser('admin'), authStatus().catch(() => null)]).then(([u, st]) => {
       setAdmin(u); setStatus(st); setChecking(false);
     });
@@ -26,5 +31,5 @@ export default function AdminGate() {
       onLogout={async () => { if (!admin.demo) await logout('admin'); setAdmin(null); }} />;
   }
   return <LoginPage portal="admin" lockPortal status={status} backendOk={backendOk} onLogin={setAdmin}
-    onDemo={() => setAdmin({ id: 'demo', name: 'Demo admin', email: 'demo mode', role: 'admin', demo: true })} />;
+    onDemo={() => setAdmin(demoAdmin)} />;
 }

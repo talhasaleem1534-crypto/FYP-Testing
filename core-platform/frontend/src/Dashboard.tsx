@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Activity, Pause, Play, Trash2, Boxes, Rocket, Timer, Network, Gauge, Layers } from 'lucide-react';
-import { BarDatum, ChartCard, Donut, HBars, Kpi, LineChart, NoData, Sparkline, StackedBars } from './components/Charts';
+import {
+  BarDatum, CHART_AMBER, CHART_BLUE, CHART_GREEN, CHART_GREY, CHART_RED, ChartCard, Donut, HBars, Kpi, LineChart, NoData, Sparkline, StackedBars,
+} from './components/Charts';
+import { Help, PageHead } from './components/ui';
 import { Sample, fmtDuration, seriesFor, totalSeries } from './lib/telemetry';
 import type { Series } from './components/Charts';
 
@@ -11,7 +14,9 @@ export interface DeploymentRec {
 interface AppLite { id: string; name: string; status: string; replicas: number }
 
 const WINDOWS = [{ label: '5 min', ms: 5 * 60e3 }, { label: '15 min', ms: 15 * 60e3 }, { label: '1 hour', ms: 60 * 60e3 }];
-const STATUS_COLOR: Record<string, string> = { HEALTHY: '#34d399', DEGRADING: '#fbbf24', ANOMALOUS: '#fb7185' };
+/** Container health -> badge class and sparkline colour. */
+const STATUS_BADGE: Record<string, string> = { HEALTHY: 'badge-success', DEGRADING: 'badge-pending', ANOMALOUS: 'badge-failed' };
+const STATUS_COLOR: Record<string, string> = { HEALTHY: CHART_GREEN, DEGRADING: CHART_AMBER, ANOMALOUS: CHART_RED };
 
 export default function Dashboard(p: {
   apps: AppLite[]; deployments: DeploymentRec[]; history: Sample[]; telemetryError: string; telemetryLoading: boolean;
@@ -53,8 +58,8 @@ export default function Dashboard(p: {
   const mem = useMemo(() => seriesFor(history, c => c.mem, windowMs), [history, windowMs]);
   const score = useMemo(() => seriesFor(history, c => c.score, windowMs), [history, windowMs]);
   const net = useMemo(() => [
-    totalSeries(history, 'Inbound', '#00f2fe', c => c.netIn, windowMs),
-    totalSeries(history, 'Outbound', '#a78bfa', c => c.netOut, windowMs),
+    totalSeries(history, 'Inbound', CHART_BLUE, c => c.netIn, windowMs),
+    totalSeries(history, 'Outbound', CHART_GREY, c => c.netOut, windowMs),
   ], [history, windowMs]);
   const reqNow = p.traffic.length ? p.traffic.reduce((a, s) => a + (s.points[s.points.length - 1]?.v || 0), 0) : null;
 
@@ -66,53 +71,55 @@ export default function Dashboard(p: {
     : p.telemetryLoading ? 'Collecting the first samples… (the first scan takes a few seconds)' : 'No running containers found.';
 
   const hdr = (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+    <>
       {WINDOWS.map(w => (
-        <button key={w.ms} onClick={() => p.onWindow(w.ms)} style={{
-          padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: 'pointer',
-          background: windowMs === w.ms ? 'rgba(0,242,254,0.15)' : 'rgba(255,255,255,0.05)', color: windowMs === w.ms ? '#00f2fe' : 'var(--text-secondary)',
-          border: `1px solid ${windowMs === w.ms ? 'rgba(0,242,254,0.4)' : 'var(--glass-border)'}` }}>{w.label}</button>
+        <button key={w.ms} type="button" className={`btn sm ${windowMs === w.ms ? 'blue' : 'ghost'}`} aria-pressed={windowMs === w.ms} onClick={() => p.onWindow(w.ms)}>{w.label}</button>
       ))}
-      <button onClick={() => p.onPause(!p.paused)} title={p.paused ? 'Resume live updates' : 'Pause live updates'}
-        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', border: '1px solid var(--glass-border)' }}>
-        {p.paused ? <><Play size={12} /> Resume</> : <><Pause size={12} /> Pause</>}
+      <button type="button" className="btn ghost sm" onClick={() => p.onPause(!p.paused)} title={p.paused ? 'Resume live updates' : 'Pause live updates'}>
+        {p.paused ? <><Play size={13} /> Resume</> : <><Pause size={13} /> Pause</>}
       </button>
-      <button onClick={p.onClearHistory} title="Clear collected samples"
-        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 10px', borderRadius: 8, fontSize: 12, cursor: 'pointer', background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', border: '1px solid var(--glass-border)' }}>
-        <Trash2 size={12} />
+      <button type="button" className="btn subtle sm icon" onClick={p.onClearHistory} title="Clear collected samples" aria-label="Clear collected samples">
+        <Trash2 size={13} />
       </button>
-      <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: p.paused ? '#fbbf24' : '#34d399' }}>
-        <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'currentColor', animation: p.paused ? undefined : 'pulse 2s infinite' }} />{p.paused ? 'Paused' : 'Live'}
+      <span className="hint" style={{ display: 'inline-flex', alignItems: 'center', marginTop: 0, alignSelf: 'center' }}>
+        <span className={`status-dot ${p.paused ? '' : 'on'}`} />{p.paused ? 'Paused' : 'Live'}
       </span>
-    </div>
+    </>
   );
 
   return (
     <div className="animate-slide-up">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <div>
-          <h2 style={{ fontSize: 24, fontWeight: 700 }}>Dashboard</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 14, marginTop: 5 }}>
-            Live traffic, resource usage, anomaly scores and deployment history{p.demo ? ' — simulated data (Demo Mode)' : ''}.
-          </p>
-        </div>
-        {hdr}
-      </div>
+      <PageHead title="Dashboard" actions={hdr}
+        text={<>Live traffic, resource usage, anomaly scores and deployment history{p.demo ? ' — simulated data (Demo Mode)' : ''}.</>} />
+
+      <Help id="admin-dashboard" title="What am I looking at?"
+        steps={[
+          <>The <strong>AI engine</strong> reads every running container every 5 seconds and sends the CPU, memory, network and anomaly numbers here.</>,
+          <>Requests per second come from <strong>Prometheus</strong>, which counts what the Traefik router sees. Without that stack the request chart stays empty.</>,
+          <>In <strong>Demo Mode</strong> every number is simulated so you can explore the page without servers.</>,
+        ]}
+        next={<>When a container turns <strong>DEGRADING</strong>, keep an eye on it: its numbers are drifting away from normal. When it turns <strong>ANOMALOUS</strong>, open its log in Applications, ask the Copilot, and restart or redeploy the app if it stays red.</>}>
+        Each chart is about the apps running on your servers. <strong>HTTP requests / second</strong> is how many visits the router sees for each app.
+        {' '}<strong>CPU</strong> and <strong>Memory</strong> show how hard each container is working, as a percent.
+        {' '}<strong>Network in / out</strong> is the data the containers receive and send.
+        {' '}The <strong>anomaly score</strong> is the AI engine's opinion of how normal a container looks: lower is more unusual, and the dashed line is the limit.
+      </Help>
 
       {/* KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 14, marginBottom: 18 }}>
-        <Kpi label="Applications" icon={<Layers size={15} />} value={`${running}/${apps.length}`} sub={`running · ${replicas} replica${replicas === 1 ? '' : 's'}`} color="#34d399" />
-        <Kpi label="Deployments" icon={<Rocket size={15} />} value={dep.total} sub={dep.rate === null ? 'none finished yet' : `${dep.rate}% succeeded · ${dep.failed} failed`} />
-        <Kpi label="Avg deploy time" icon={<Timer size={15} />} value={fmtDuration(dep.avg)} sub="successful deployments" />
-        <Kpi label="Containers" icon={<Boxes size={15} />} value={containers.length}
-          sub={`${counts.HEALTHY} healthy · ${counts.DEGRADING} degrading · ${counts.ANOMALOUS} anomalous`} color={counts.ANOMALOUS ? '#fb7185' : counts.DEGRADING ? '#fbbf24' : '#f8fafc'} />
-        <Kpi label="Requests / sec" icon={<Network size={15} />} value={reqNow === null ? '–' : reqNow.toFixed(1)} sub={p.trafficError ? 'Prometheus not reachable' : 'via Traefik'} />
-        <Kpi label="Anomaly alerts" icon={<Gauge size={15} />} value={counts.ANOMALOUS} sub="right now" color={counts.ANOMALOUS ? '#fb7185' : '#34d399'} />
+      <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', marginBottom: 16 }}>
+        <Kpi label="Applications" icon={<Layers size={13} />} value={`${running}/${apps.length}`} sub={`running · ${replicas} replica${replicas === 1 ? '' : 's'}`} />
+        <Kpi label="Deployments" icon={<Rocket size={13} />} value={dep.total} sub={dep.rate === null ? 'none finished yet' : `${dep.rate}% succeeded · ${dep.failed} failed`} />
+        <Kpi label="Avg deploy time" icon={<Timer size={13} />} value={fmtDuration(dep.avg)} sub="successful deployments" />
+        <Kpi label="Containers" icon={<Boxes size={13} />} value={containers.length}
+          sub={`${counts.HEALTHY} healthy · ${counts.DEGRADING} degrading · ${counts.ANOMALOUS} anomalous`}
+          color={counts.ANOMALOUS ? 'var(--danger)' : counts.DEGRADING ? 'var(--warn)' : 'var(--text-primary)'} />
+        <Kpi label="Requests / sec" icon={<Network size={13} />} value={reqNow === null ? '–' : reqNow.toFixed(1)} sub={p.trafficError ? 'Prometheus not reachable' : 'via Traefik'} />
+        <Kpi label="Anomaly alerts" icon={<Gauge size={13} />} value={counts.ANOMALOUS} sub="right now" color={counts.ANOMALOUS ? 'var(--danger)' : 'var(--ok)'} />
       </div>
 
       {/* Traffic */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 16, marginBottom: 16 }}>
-        <ChartCard title="HTTP requests / second" subtitle="Per application, measured by Traefik (needs the Traefik + Prometheus stack)">
+      <div className="grid two" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', marginBottom: 14 }}>
+        <ChartCard title="HTTP requests / second" subtitle="Higher is busier. One line per app, counted by the Traefik router (needs the Traefik + Prometheus stack).">
           {p.trafficError ? (
             <NoData>Could not read request rates from Prometheus at <code>{p.promUrl}</code>.<br />
               Start the stack with <code>cd devops && docker compose up -d</code> and open a deployed app a few times.<br />
@@ -120,66 +127,66 @@ export default function Dashboard(p: {
           ) : <LineChart series={p.traffic} unit=" req/s" windowMs={windowMs} area={p.traffic.length === 1}
             emptyText="No requests seen yet — open one of your deployed apps through its domain." />}
         </ChartCard>
-        <ChartCard title="Network throughput" subtitle="KB/s, summed over all running containers">
+        <ChartCard title="Network in / out" subtitle="KB per second, all running containers added together. Inbound = received, outbound = sent.">
           {noContainers ? <NoData>{waiting}</NoData> : <LineChart series={net} unit=" KB/s" area windowMs={windowMs} />}
         </ChartCard>
       </div>
 
       {/* Resources */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: 16, marginBottom: 16 }}>
-        <ChartCard title="CPU usage" subtitle="% of one core, per container · dashed line = hard alert limit">
-          {noContainers ? <NoData>{waiting}</NoData> : <LineChart series={cpu} unit="%" yMax={100} windowMs={windowMs} thresholds={[{ value: 85, label: 'alert 85%', color: '#fb7185' }]} />}
+      <div className="grid two" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', marginBottom: 14 }}>
+        <ChartCard title="CPU usage" subtitle="Higher is busier. % of one core, per container. Dashed line = alert limit.">
+          {noContainers ? <NoData>{waiting}</NoData> : <LineChart series={cpu} unit="%" yMax={100} windowMs={windowMs} thresholds={[{ value: 85, label: 'alert 85%', color: 'var(--danger)' }]} />}
         </ChartCard>
-        <ChartCard title="Memory usage" subtitle="% of the memory limit, per container">
-          {noContainers ? <NoData>{waiting}</NoData> : <LineChart series={mem} unit="%" yMax={100} windowMs={windowMs} thresholds={[{ value: 82, label: 'alert 82%', color: '#fb7185' }]} />}
+        <ChartCard title="Memory usage" subtitle="Higher is fuller. % of the memory limit, per container. Dashed line = alert limit.">
+          {noContainers ? <NoData>{waiting}</NoData> : <LineChart series={mem} unit="%" yMax={100} windowMs={windowMs} thresholds={[{ value: 82, label: 'alert 82%', color: 'var(--danger)' }]} />}
         </ChartCard>
       </div>
 
       {/* Anomaly */}
-      <ChartCard title="Anomaly score (Isolation Forest)" subtitle="Lower = more unusual. Below the red line a container is flagged ANOMALOUS; between the lines it is DEGRADING."
-        right={<span style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: 'var(--text-muted)' }}><Activity size={13} />ML</span>}>
+      <ChartCard title="Anomaly score" subtitle="Lower is more unusual; below the dashed line = anomaly. Between the two lines = degrading."
+        right={<span className="chip" style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><Activity size={12} /> AI engine</span>}>
         {noContainers || score.length === 0 ? <NoData>{waiting}</NoData> : (
           <LineChart series={score} height={190} yMin={-0.9} yMax={-0.25} decimals={3} windowMs={windowMs}
             thresholds={[
-              ...(latest?.threshold != null ? [{ value: latest.threshold, label: 'anomalous', color: '#fb7185' }] : []),
-              ...(latest?.degrading != null ? [{ value: latest.degrading, label: 'degrading', color: '#fbbf24' }] : []),
+              ...(latest?.threshold != null ? [{ value: latest.threshold, label: 'anomalous', color: 'var(--danger)' }] : []),
+              ...(latest?.degrading != null ? [{ value: latest.degrading, label: 'degrading', color: 'var(--warn)' }] : []),
             ]} />
         )}
       </ChartCard>
 
       {/* Deployments */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16, margin: '16px 0' }}>
-        <ChartCard title={`Deployments per day (last ${showAllDays ? 30 : 14})`}
-          right={<button onClick={() => setShowAllDays(v => !v)} style={{ fontSize: 11, color: 'var(--accent-cyan)', background: 'none', cursor: 'pointer' }}>{showAllDays ? 'show 14 days' : 'show 30 days'}</button>}>
-          <StackedBars data={dep.buckets} colors={{ success: '#34d399', failed: '#fb7185' }} emptyText="No deployments yet — deploy an app to see history here." />
+      <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', margin: '14px 0' }}>
+        <ChartCard title={`Deployments per day (last ${showAllDays ? 30 : 14})`} subtitle="Green = succeeded, red = failed. Taller is more deploys that day."
+          right={<button type="button" className="linkish" style={{ fontSize: 12, whiteSpace: 'nowrap' }} onClick={() => setShowAllDays(v => !v)}>{showAllDays ? 'show 14 days' : 'show 30 days'}</button>}>
+          <StackedBars data={dep.buckets} colors={{ success: CHART_GREEN, failed: CHART_RED }} emptyText="No deployments yet — deploy an app to see history here." />
         </ChartCard>
-        <ChartCard title="Outcomes">
-          <Donut parts={[{ label: 'Succeeded', value: dep.ok, color: '#34d399' }, { label: 'Failed', value: dep.failed, color: '#fb7185' }]} center={dep.rate === null ? '–' : `${dep.rate}%`} />
+        <ChartCard title="Outcomes" subtitle="Share of finished deployments that succeeded.">
+          <Donut parts={[{ label: 'Succeeded', value: dep.ok, color: CHART_GREEN }, { label: 'Failed', value: dep.failed, color: CHART_RED }]} center={dep.rate === null ? '–' : `${dep.rate}%`} />
         </ChartCard>
-        <ChartCard title="Recent deploy durations" subtitle="Newest first">
+        <ChartCard title="Recent deploy durations" subtitle="Newest first. Time from start until the app was online.">
           <HBars rows={dep.recent} emptyText="No successful deployments yet" />
         </ChartCard>
       </div>
 
       {/* Container table */}
-      <ChartCard title="Containers right now" subtitle="Latest sample with a short CPU trend">
+      <ChartCard title="Containers right now" subtitle="The latest sample from every running container, with a short CPU trend.">
         {noContainers ? <NoData height={100}>{waiting}</NoData> : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
-              <thead><tr style={{ color: 'var(--text-muted)', textAlign: 'left' }}>
-                {['Container', 'Status', 'CPU', 'Memory', 'Net in / out (KB/s)', 'Restarts', 'Score', 'CPU trend'].map(h => <th key={h} style={{ padding: '6px 10px', fontWeight: 500, borderBottom: '1px solid var(--glass-border)' }}>{h}</th>)}
+          <div className="table-wrap">
+            <table className="table">
+              <thead><tr>
+                {['Container', 'Status', 'CPU', 'Memory', 'Net in / out (KB/s)', 'Restarts', 'Score', 'CPU trend'].map(h => <th key={h}>{h}</th>)}
               </tr></thead>
               <tbody>
                 {containers.sort(([a], [b]) => a.localeCompare(b)).map(([name, c]) => (
-                  <tr key={name} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <td style={{ padding: '7px 10px', fontWeight: 600 }}>{name}</td>
-                    <td style={{ padding: '7px 10px' }}><span style={{ color: STATUS_COLOR[c.status] || '#94a3b8', fontWeight: 700 }}>● {c.status}</span></td>
-                    <td style={{ padding: '7px 10px' }}>{c.cpu.toFixed(1)}%</td>
-                    <td style={{ padding: '7px 10px' }}>{c.mem.toFixed(1)}%</td>
-                    <td style={{ padding: '7px 10px' }}>{c.netIn.toFixed(0)} / {c.netOut.toFixed(0)}</td>
-                    <td style={{ padding: '7px 10px' }}>{c.restarts}</td>
-                    <td style={{ padding: '7px 10px', fontFamily: 'var(--font-mono)' }}>{c.score != null ? c.score.toFixed(4) : 'n/a'}</td>
-                    <td style={{ padding: '7px 10px' }}><Sparkline values={history.slice(-30).map(s => s.c[name]?.cpu).filter((v): v is number => v !== undefined)} color={STATUS_COLOR[c.status]} /></td>
+                  <tr key={name}>
+                    <td><b>{name}</b></td>
+                    <td><span className={`badge ${STATUS_BADGE[c.status] || 'badge-idle'}`}>{c.status}</span></td>
+                    <td>{c.cpu.toFixed(1)}%</td>
+                    <td>{c.mem.toFixed(1)}%</td>
+                    <td>{c.netIn.toFixed(0)} / {c.netOut.toFixed(0)}</td>
+                    <td>{c.restarts}</td>
+                    <td style={{ fontFamily: 'var(--font-mono)' }}>{c.score != null ? c.score.toFixed(4) : 'n/a'}</td>
+                    <td><Sparkline values={history.slice(-30).map(s => s.c[name]?.cpu).filter((v): v is number => v !== undefined)} color={STATUS_COLOR[c.status]} /></td>
                   </tr>
                 ))}
               </tbody>

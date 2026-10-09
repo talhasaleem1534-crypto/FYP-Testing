@@ -1,19 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  AlertCircle, AlertTriangle, ArrowDown, CheckCircle2, ChevronDown, ChevronRight, Copy, Download,
-  ExternalLink, Loader2, Search, Trash2, WrapText, Check, Circle, XCircle,
+  AlertCircle, ArrowDown, CheckCircle2, ChevronDown, ChevronRight, Copy, Download,
+  ExternalLink, Info, Loader2, Search, Trash2, WrapText, Check, Circle, XCircle,
 } from 'lucide-react';
 import {
   Level, LogGroup, LogLine, URL_RE, countByLevel, groupLines, parseLogs, pipelineStages, splitHighlight, toPlainText,
 } from '../lib/logs';
 
-const LEVEL_STYLE: Record<Level, { color: string; bg?: string; label: string }> = {
-  error:   { color: '#fb7185', bg: 'rgba(244,63,94,0.10)', label: 'ERR' },
-  warn:    { color: '#fbbf24', bg: 'rgba(245,158,11,0.08)', label: 'WRN' },
-  success: { color: '#34d399', label: 'OK' },
-  step:    { color: '#00f2fe', label: 'STEP' },
-  info:    { color: '#e2e8f0', label: 'INF' },
-  dim:     { color: '#7d8aa1', label: '' },
+/* Line colours come from the theme tokens: red = error, amber = warning, green = success. */
+const LEVEL_STYLE: Record<Level, { color: string; label: string }> = {
+  error:   { color: 'var(--danger)', label: 'ERR' },
+  warn:    { color: 'var(--warn)', label: 'WRN' },
+  success: { color: 'var(--ok)', label: 'OK' },
+  step:    { color: 'var(--text-primary)', label: 'STEP' },
+  info:    { color: 'var(--text-secondary)', label: 'INF' },
+  dim:     { color: 'var(--text-muted)', label: '' },
 };
 
 type Filter = 'all' | 'error' | 'warn' | 'step';
@@ -34,14 +35,14 @@ function Text({ text, query }: { text: string; query: string }) {
   const re = new RegExp(URL_RE.source, 'g');
   let m: RegExpExecArray | null;
   const plain = (s: string) => splitHighlight(s, query).map(p => p.hit
-    ? <mark key={k++} style={{ background: '#fbbf24', color: '#0a0d14', borderRadius: 2, padding: '0 1px' }}>{p.text}</mark>
+    ? <mark key={k++} style={{ background: 'var(--warn)', color: 'var(--bg-primary)', borderRadius: 2, padding: '0 1px' }}>{p.text}</mark>
     : <React.Fragment key={k++}>{p.text}</React.Fragment>);
   while ((m = re.exec(text))) {
     if (m.index > last) nodes.push(...plain(text.slice(last, m.index)));
     const url = m[0].replace(/[.,;]+$/, '');
     nodes.push(
       <a key={k++} href={browserUrl(url)} target="_blank" rel="noreferrer"
-        style={{ color: '#00f2fe', textDecoration: 'underline', textUnderlineOffset: 2, wordBreak: 'break-all' }}>{url}</a>,
+        style={{ color: 'var(--text-primary)', textDecoration: 'underline', textUnderlineOffset: 2, wordBreak: 'break-all' }}>{url}</a>,
     );
     last = m.index + url.length;
     re.lastIndex = last;
@@ -55,21 +56,20 @@ function Row({ l, query, wrap, showNums }: { l: LogLine; query: string; wrap: bo
   if (l.isAppUrl) {
     const url = browserUrl(l.urls[0]);
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '8px 0', padding: '10px 14px', borderRadius: 10,
-        background: 'linear-gradient(90deg, rgba(52,211,153,0.18), rgba(0,242,254,0.10))', border: '1px solid rgba(52,211,153,0.5)' }}>
-        <span style={{ fontSize: 12, color: '#34d399', fontWeight: 700, letterSpacing: '0.5px' }}>APP URL</span>
-        <a href={url} target="_blank" rel="noreferrer" style={{ color: '#fff', fontWeight: 700, fontSize: 15, textDecoration: 'none', flex: 1, wordBreak: 'break-all' }}>{l.urls[0]}</a>
-        <a href={url} target="_blank" rel="noreferrer"
-          style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: '#10b981', color: '#04120c', fontWeight: 700, fontSize: 12, textDecoration: 'none' }}>
+      <div className="url-box" style={{ margin: '8px 0', fontFamily: 'var(--font-sans)' }}>
+        <span className="chip" style={{ color: 'inherit', borderColor: 'currentColor' }}>APP URL</span>
+        <a href={url} target="_blank" rel="noreferrer" style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: 15, textDecoration: 'none', flex: 1, wordBreak: 'break-all' }}>{l.urls[0]}</a>
+        <a href={url} target="_blank" rel="noreferrer" className="btn ok sm" style={{ textDecoration: 'none' }}>
           <ExternalLink size={13} /> Open
         </a>
       </div>
     );
   }
+  const marked = l.level === 'error' || l.level === 'warn';
   return (
-    <div style={{ display: 'flex', gap: 10, padding: '1px 8px', background: st.bg, borderLeft: `2px solid ${l.level === 'error' || l.level === 'warn' ? st.color : 'transparent'}`, alignItems: 'baseline' }}>
-      {showNums && <span style={{ width: 30, textAlign: 'right', color: '#3b475c', userSelect: 'none', flexShrink: 0 }}>{l.n}</span>}
-      <span style={{ width: 74, color: '#4b5870', flexShrink: 0, userSelect: 'none', fontSize: 11 }}>{l.time.replace(/ (AM|PM)$/, '')}</span>
+    <div style={{ display: 'flex', gap: 10, padding: '1px 8px', borderLeft: `2px solid ${marked ? st.color : 'transparent'}`, alignItems: 'baseline' }}>
+      {showNums && <span style={{ width: 30, textAlign: 'right', color: 'var(--text-muted)', userSelect: 'none', flexShrink: 0 }}>{l.n}</span>}
+      <span style={{ width: 74, color: 'var(--text-muted)', flexShrink: 0, userSelect: 'none', fontSize: 11 }}>{l.time.replace(/ (AM|PM)$/, '')}</span>
       <span style={{ color: st.color, whiteSpace: wrap ? 'pre-wrap' : 'pre', wordBreak: wrap ? 'break-word' : undefined, fontWeight: l.level === 'step' ? 700 : 400, flex: 1, minWidth: 0 }}>
         <Text text={l.text} query={query} />
       </span>
@@ -77,22 +77,21 @@ function Row({ l, query, wrap, showNums }: { l: LogLine; query: string; wrap: bo
   );
 }
 
+const STAGE_BADGE: Record<string, string> = { done: 'badge-success', active: 'badge-building', failed: 'badge-failed', pending: 'badge-idle' };
+
 function StageBar({ stages }: { stages: { label: string; state: string }[] }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-      {stages.map((s, i) => {
-        const c = s.state === 'done' ? '#34d399' : s.state === 'active' ? '#00f2fe' : s.state === 'failed' ? '#fb7185' : '#4b5870';
-        return (
-          <React.Fragment key={s.label}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 11px', borderRadius: 20, fontSize: 12, fontWeight: 600, color: c, background: `${c}18`, border: `1px solid ${c}55` }}>
-              {s.state === 'done' ? <Check size={13} /> : s.state === 'active' ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} />
-                : s.state === 'failed' ? <XCircle size={13} /> : <Circle size={11} />}
-              {i + 1}. {s.label}
-            </div>
-            {i < stages.length - 1 && <div style={{ width: 14, height: 1, background: '#334155' }} />}
-          </React.Fragment>
-        );
-      })}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }} aria-label="Pipeline steps">
+      {stages.map((s, i) => (
+        <React.Fragment key={s.label}>
+          <span className={`badge ${STAGE_BADGE[s.state] || 'badge-idle'}`} title={s.state} style={{ textTransform: 'none', fontSize: 12 }}>
+            {s.state === 'done' ? <Check size={13} /> : s.state === 'active' ? <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} />
+              : s.state === 'failed' ? <XCircle size={13} /> : <Circle size={11} />}
+            {i + 1}. {s.label}
+          </span>
+          {i < stages.length - 1 && <span style={{ width: 14, height: 1, background: 'var(--line-strong)' }} />}
+        </React.Fragment>
+      ))}
     </div>
   );
 }
@@ -158,38 +157,39 @@ export default function LogViewer({ lines, status, title, onClear, minHeight = 4
   };
   const toggleAll = (open: boolean) => setCollapsed(Object.fromEntries(groups.map(g => [g.id, !open])));
 
-  const pill = (id: Filter, label: string, n: number | null, color: string) => (
-    <button key={id} onClick={() => setFilter(id)} style={{
-      padding: '5px 11px', borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: 'pointer',
-      background: filter === id ? `${color}28` : 'rgba(255,255,255,0.04)', color: filter === id ? color : 'var(--text-secondary)',
-      border: `1px solid ${filter === id ? color : 'var(--glass-border)'}`,
-    }}>{label}{n !== null && <span style={{ marginLeft: 6, opacity: 0.85 }}>{n}</span>}</button>
-  );
-  const tool = (onClick: () => void, icon: React.ReactNode, label: string, active = false) => (
-    <button onClick={onClick} title={label} style={{
-      display: 'flex', alignItems: 'center', gap: 5, padding: '6px 10px', borderRadius: 8, fontSize: 12, cursor: 'pointer',
-      background: active ? 'rgba(0,242,254,0.14)' : 'rgba(255,255,255,0.05)', color: active ? '#00f2fe' : 'var(--text-secondary)',
-      border: `1px solid ${active ? 'rgba(0,242,254,0.4)' : 'var(--glass-border)'}`,
-    }}>{icon}{label}</button>
+  const pill = (id: Filter, label: string, n: number | null, color: string) => {
+    const on = filter === id;
+    return (
+      <button key={id} type="button" className="chip" aria-pressed={on} onClick={() => setFilter(id)} style={{
+        cursor: 'pointer', padding: '5px 10px', fontSize: 12, background: on ? 'var(--bg-tertiary)' : 'transparent',
+        color: on ? color : 'var(--text-secondary)', borderColor: on ? color : 'var(--line-strong)',
+      }}>{label}{n !== null && <span style={{ marginLeft: 6, opacity: 0.85 }}>{n}</span>}</button>
+    );
+  };
+  // `active` is only passed for toggles (Wrap, Line #); plain actions get no aria-pressed.
+  const tool = (onClick: () => void, icon: React.ReactNode, label: string, active?: boolean) => (
+    <button type="button" className={`btn sm ${active ? 'ghost' : 'subtle'}`} onClick={onClick} title={label} aria-pressed={active} style={{ gap: 5, fontSize: 12 }}>
+      {icon}{label}
+    </button>
   );
 
-  const groupIcon = (g: LogGroup) => g.status === 'failed' ? <AlertCircle size={14} color="#fb7185" />
-    : g.status === 'running' ? <Loader2 size={14} color="#00f2fe" style={{ animation: 'spin 1s linear infinite' }} />
-    : <CheckCircle2 size={14} color="#34d399" />;
+  const groupIcon = (g: LogGroup) => g.status === 'failed' ? <AlertCircle size={14} color="var(--danger)" />
+    : g.status === 'running' ? <Loader2 size={14} color="var(--text-secondary)" style={{ animation: 'spin 1s linear infinite' }} />
+    : <CheckCircle2 size={14} color="var(--ok)" />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {showStages && <StageBar stages={stages} />}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
-        {pill('all', 'All', parsed.filter(l => !l.divider).length, '#94a3b8')}
-        {pill('error', 'Errors', counts.error, '#fb7185')}
-        {pill('warn', 'Warnings', counts.warn, '#fbbf24')}
-        {pill('step', 'Key events', null, '#00f2fe')}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }} role="toolbar" aria-label="Log tools">
+        {pill('all', 'All', parsed.filter(l => !l.divider).length, 'var(--text-primary)')}
+        {pill('error', 'Errors', counts.error, 'var(--danger)')}
+        {pill('warn', 'Warnings', counts.warn, 'var(--warn)')}
+        {pill('step', 'Key events', null, 'var(--text-primary)')}
         <div style={{ position: 'relative', flex: '1 1 180px', minWidth: 160 }}>
-          <Search size={13} style={{ position: 'absolute', left: 10, top: 9, color: 'var(--text-muted)' }} />
-          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search logs…"
-            style={{ width: '100%', padding: '7px 10px 7px 29px', background: 'rgba(0,0,0,0.35)', border: '1px solid var(--glass-border)', borderRadius: 8, color: '#fff', fontSize: 12 }} />
+          <Search size={13} style={{ position: 'absolute', left: 10, top: 9, color: 'var(--text-muted)', pointerEvents: 'none' }} />
+          <input className="input" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search logs…" aria-label="Search logs"
+            style={{ padding: '6px 10px 6px 30px', fontSize: 13 }} />
         </div>
         {tool(() => setWrap(w => !w), <WrapText size={13} />, 'Wrap', wrap)}
         {tool(() => setShowNums(n => !n), <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11 }}>#</span>, 'Line #', showNums)}
@@ -202,14 +202,19 @@ export default function LogViewer({ lines, status, title, onClear, minHeight = 4
         {onClear && tool(onClear, <Trash2 size={13} />, 'Clear')}
       </div>
 
+      <div className="hint" style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 0 }}>
+        <Info size={13} style={{ flexShrink: 0 }} />
+        <span><strong style={{ color: 'var(--text-secondary)' }}>How to read this:</strong> the four steps are fetch, build, start, check. The first red line is usually the cause.</span>
+      </div>
+
       <div style={{ position: 'relative' }}>
-        <div ref={box} onScroll={onScroll} className="terminal-window"
-          style={{ minHeight, maxHeight: 'calc(100vh - 330px)', overflowY: 'auto', fontFamily: 'var(--font-mono)', fontSize: 12.5, lineHeight: 1.65, padding: '12px 6px' }}>
-          {parsed.length === 0 && <div style={{ color: '#4b5870', padding: 20 }}>No log output yet. Deploy an application to see its pipeline here.</div>}
+        <div ref={box} onScroll={onScroll} className="terminal-window" role="log" aria-live="polite"
+          style={{ minHeight, maxHeight: 'calc(100vh - 330px)', overflowY: 'auto', fontSize: 12.5, lineHeight: 1.65, padding: '12px 6px' }}>
+          {parsed.length === 0 && <div style={{ color: 'var(--text-muted)', padding: 20 }}>No log output yet. Deploy an application to see its pipeline here.</div>}
 
           {flat ? (
             <>
-              <div style={{ color: '#64748b', padding: '0 8px 8px', fontSize: 11 }}>{flatLines.length} matching line{flatLines.length === 1 ? '' : 's'}</div>
+              <div style={{ color: 'var(--text-muted)', padding: '0 8px 8px', fontSize: 11 }}>{flatLines.length} matching line{flatLines.length === 1 ? '' : 's'}</div>
               {flatLines.map(l => <Row key={l.n} l={l} query={query} wrap={wrap} showNums={showNums} />)}
             </>
           ) : groups.map(g => {
@@ -219,29 +224,29 @@ export default function LogViewer({ lines, status, title, onClear, minHeight = 4
             const bodyLines = g.title === 'Setup' ? g.lines : g.lines.slice(1);
             return (
               <div key={g.id} style={{ marginBottom: 6 }}>
-                <button onClick={() => setCollapsed(c => ({ ...c, [g.id]: open }))} style={{
+                <button type="button" aria-expanded={open} onClick={() => setCollapsed(c => ({ ...c, [g.id]: open }))} style={{
                   display: 'flex', alignItems: 'center', gap: 8, width: '100%', textAlign: 'left', cursor: 'pointer', padding: '6px 8px', margin: '4px 0 2px',
-                  background: 'rgba(255,255,255,0.035)', borderRadius: 6, color: '#e2e8f0', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600,
+                  background: 'var(--bg-secondary)', border: '1px solid var(--line)', borderRadius: 3, color: 'var(--text-primary)', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600,
                 }}>
                   {open ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                   {groupIcon(g)}
                   <span style={{ flex: 1 }}>{g.title}</span>
-                  {errs > 0 && <span style={{ color: '#fb7185', fontSize: 11 }}>{errs} error{errs > 1 ? 's' : ''}</span>}
-                  <span style={{ color: '#64748b', fontSize: 11, fontWeight: 400 }}>{g.lines.length} lines</span>
+                  {errs > 0 && <span style={{ color: 'var(--danger)', fontSize: 11 }}>{errs} error{errs > 1 ? 's' : ''}</span>}
+                  <span style={{ color: 'var(--text-muted)', fontSize: 11, fontWeight: 400 }}>{g.lines.length} lines</span>
                 </button>
                 {open && bodyLines.map(l => <Row key={l.n} l={l} query={query} wrap={wrap} showNums={showNums} />)}
               </div>
             );
           })}
           {status === 'building' || status === 'deploying' ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#00f2fe', padding: '6px 10px', fontSize: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-secondary)', padding: '6px 10px', fontSize: 12 }}>
               <Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> Running…
             </div>
           ) : null}
         </div>
         {!follow && (
-          <button onClick={() => { setFollow(true); box.current && (box.current.scrollTop = box.current.scrollHeight); }}
-            style={{ position: 'absolute', right: 16, bottom: 14, display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px', borderRadius: 20, background: '#00f2fe', color: '#04121a', fontWeight: 700, fontSize: 12, cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,242,254,0.35)' }}>
+          <button type="button" className="btn blue sm" onClick={() => { setFollow(true); box.current && (box.current.scrollTop = box.current.scrollHeight); }}
+            style={{ position: 'absolute', right: 16, bottom: 14 }}>
             <ArrowDown size={13} /> Jump to latest
           </button>
         )}

@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import { Check, CheckCircle2, Copy, XCircle } from 'lucide-react';
 import { ServerCheck } from '../lib/servers';
 
-/** A command the user copies to the Linux server. */
+/** A command the user copies to the Linux server. A black mono box with a "Copy" button. */
 export function CommandBox({ cmd }: { cmd: string }) {
   const [done, setDone] = useState(false);
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, background: '#06090e', border: '1px solid #1e293b', borderRadius: 8, padding: '8px 10px', marginTop: 6 }}>
-      <code style={{ flex: 1, fontFamily: 'var(--font-mono)', fontSize: 12, color: '#7dd3fc', wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{cmd}</code>
-      <button type="button" title="Copy" aria-label="Copy command"
-        onClick={async () => { try { await navigator.clipboard.writeText(cmd.replace(/\s+#.*$/, '')); setDone(true); setTimeout(() => setDone(false), 1200); } catch { /* blocked */ } }}
-        style={{ background: 'rgba(255,255,255,0.06)', borderRadius: 6, padding: 5, color: done ? '#34d399' : 'var(--text-muted)', flexShrink: 0 }}>
-        {done ? <Check size={13} /> : <Copy size={13} />}
+    <div className="note" style={{ display: 'flex', alignItems: 'flex-start', gap: 8, margin: '6px 0 0' }}>
+      <code style={{ flex: 1, wordBreak: 'break-all', whiteSpace: 'pre-wrap' }}>{cmd}</code>
+      <button type="button" className="btn ghost sm" title="Copy" aria-label="Copy command" style={{ flexShrink: 0 }}
+        onClick={async () => { try { await navigator.clipboard.writeText(cmd.replace(/\s+#.*$/, '')); setDone(true); setTimeout(() => setDone(false), 1200); } catch { /* blocked */ } }}>
+        {done ? <><Check size={13} style={{ color: 'var(--ok)' }} /> Copied</> : <><Copy size={13} /> Copy</>}
       </button>
     </div>
   );
@@ -21,16 +20,23 @@ export function CommandBox({ cmd }: { cmd: string }) {
 export default function ServerChecks({ checks, compact = false }: { checks?: ServerCheck[]; compact?: boolean }) {
   if (!checks?.length) return null;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: compact ? 3 : 6 }}>
+    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: compact ? 4 : 8, fontSize: compact ? 12 : 13 }}>
       {checks.map(c => (
-        <div key={c.key} style={{ fontSize: compact ? 12 : 13 }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, color: c.ok ? 'var(--text-secondary)' : '#fb7185' }}>
-            {c.ok ? <CheckCircle2 size={14} color="#34d399" style={{ flexShrink: 0, marginTop: 2 }} /> : <XCircle size={14} style={{ flexShrink: 0, marginTop: 2 }} />}
-            <span><strong style={{ color: c.ok ? 'var(--text-primary)' : '#fb7185' }}>{c.label}</strong> — {c.detail}</span>
+        <li key={c.key}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 7, color: c.ok ? 'var(--text-secondary)' : 'var(--danger)' }}>
+            {c.ok
+              ? <CheckCircle2 size={14} aria-label="passed" style={{ color: 'var(--ok)', flexShrink: 0, marginTop: 2 }} />
+              : <XCircle size={14} aria-label="failed" style={{ flexShrink: 0, marginTop: 2 }} />}
+            <span><b style={{ color: c.ok ? 'var(--text-primary)' : 'var(--danger)', fontWeight: 600 }}>{c.label}</b> — {c.detail}</span>
           </div>
-          {!c.ok && c.fix && !compact && <div style={{ marginLeft: 20 }}><div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>Fix - run on the server:</div><CommandBox cmd={c.fix} /></div>}
-        </div>
+          {!c.ok && c.fix && !compact && (
+            <div style={{ marginLeft: 21, marginTop: 4 }}>
+              <div className="hint">Fix - run on the server, then press "Check again":</div>
+              <CommandBox cmd={c.fix} />
+            </div>
+          )}
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
